@@ -1,0 +1,3 @@
+Saves holds two types of information:
+Player data (Inventory, world location, health, etc)
+World data (Game states, item locations, etc.)
