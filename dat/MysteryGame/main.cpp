@@ -5,8 +5,16 @@
 	in this file.
 */
 #include <iostream>
+#include "Room.h"
+#include "Input.h"
+#include "Character.h"
+#include "Game.h"
+using namespace std;
 
 int main()
 {
+
+	Room testroom(location);
+	cout << "this works at least";
 	return 0;
 }

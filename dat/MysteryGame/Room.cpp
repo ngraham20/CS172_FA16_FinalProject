@@ -1,18 +1,24 @@
 /*
 	This file impliments the methods as initialized in Room.h
 */
+#include <iostream>
 #include "Room.h"
+using namespace std;
 
-Room::Room(location coordinates)
+Room::Room(location coordinates) // TODO change struct to integers. Struct acts like a class!
 {
-	// create instance of location struct
-	location location = coordinates;
+
 
 	// set a string to equal the xy coordinates of the room + ".txt"
-	string fileName = to_string(location.x) + to_string(location.y) + ".txt";
+	string fileName = "room\\" + to_string(coordinates.x) + to_string(coordinates.y) + ".txt";
 
 	ifstream input;
 	input.open(fileName);
+	if (!input.fail())
+	{
+		cout << "File Accessed";
+	}
+	else cout << "File not accessible.";
 	// if the file opens
 		// read from the file all room information
 	// otherwise

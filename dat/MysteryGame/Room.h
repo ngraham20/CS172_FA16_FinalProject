@@ -21,6 +21,8 @@ private:
 		int y;
 	};
 
+	location coordinates = {};
+
 	// defines the active doors of the room n,s,e,w,u,d and
 	// stores them in a struct
 	struct doors
@@ -32,6 +34,7 @@ private:
 		bool up;
 		bool down;
 	};
+	doors doors = {};
 
 	string name; // the name of the room
 
@@ -44,8 +47,8 @@ private:
 	string description;
 
 public:
-	// creates a room based only on location. The rest is read from file.
-	Room(struct location);
+	// creates a room based only on location struct. The rest is read from file.
+	Room(location coordinates);
 
 	// changes the current room. It does this by
 	// creating four new rooms in the direction of travel, entering the new room,
