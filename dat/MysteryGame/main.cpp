@@ -5,6 +5,7 @@
 	in this file.
 */
 #include <iostream>
+#include "Coordinates.h"
 #include "Room.h"
 #include "Input.h"
 #include "Character.h"
@@ -13,8 +14,7 @@ using namespace std;
 
 int main()
 {
-
+	Coordinates location = { 0,0,0 };
 	Room testroom(location);
-	cout << "this works at least";
 	return 0;
 }

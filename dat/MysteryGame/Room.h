@@ -3,29 +3,22 @@
 	be read from a file to be loaded by the Game class.
 */
 #pragma once
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
+#include "Coordinates.h"
 #include "Item.h"
 using namespace std;
 
 class Room
 {
+// ----------------------------------PRIVATE--------------------------------------
 private:
-
-	// defines the location values of the room x and y
-	// stores them in a struct
-	struct location
-	{
-		int x;
-		int y;
-	};
-
-	location coordinates = {};
 
 	// defines the active doors of the room n,s,e,w,u,d and
 	// stores them in a struct
-	struct doors
+	struct Door
 	{
 		bool north;
 		bool south;
@@ -34,7 +27,7 @@ private:
 		bool up;
 		bool down;
 	};
-	doors doors = {};
+	Door door = {};
 
 	string name; // the name of the room
 
@@ -46,14 +39,15 @@ private:
 	// describes the room in detail
 	string description;
 
+// -----------------------------------PUBLIC--------------------------------------
 public:
 	// creates a room based only on location struct. The rest is read from file.
-	Room(location coordinates);
+	Room(Coordinates coordinates);
 
 	// changes the current room. It does this by
 	// creating four new rooms in the direction of travel, entering the new room,
 	// and destructing the three rooms surrounding the previous one.
-	bool changeRoom(struct location);
+	bool changeRoom(Coordinates coordinates);
 
 	// when the destructor is activated, this method is called to update the
 	// room file within a temporary folder. (Which will be read from upon game saving)
@@ -63,10 +57,10 @@ public:
 	vector<Item*> getInventory();
 
 	// returns the struct location of the room
-	location getLocation();
+	Coordinates getLocation();
 
 	// returns all possible doors, stating which are open, and which are closed.
-	doors getDoors();
+	Door getDoors();
 
 	~Room();
 };

@@ -1,32 +1,92 @@
 /*
 	This file impliments the methods as initialized in Room.h
 */
-#include <iostream>
 #include "Room.h"
 using namespace std;
 
-Room::Room(location coordinates) // TODO change struct to integers. Struct acts like a class!
+Room::Room(Coordinates coordinates)
 {
-
-
-	// set a string to equal the xy coordinates of the room + ".txt"
-	string fileName = "room\\" + to_string(coordinates.x) + to_string(coordinates.y) + ".txt";
-
 	ifstream input;
-	input.open(fileName);
+	// set the fileName variable
+	string fileName = ".\\room\\" + to_string(coordinates.y) + 
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+
+	// get the name of the room from file
+	input.open(fileName.c_str());
+
+	// if file opens
 	if (!input.fail())
 	{
-		cout << "File Accessed";
+		// set the name variable
+		getline(input, name);
+		cout << name << endl; // TODO remove this to properly play game
+		input.close();
 	}
-	else cout << "File not accessible.";
-	// if the file opens
-		// read from the file all room information
 	// otherwise
-		// print to console that the file failed to open
+	else
+	{
 		// call destructor
+		cout << "Could not open file. . ." << endl;
+		this->~Room();
+	}
+
+	// set the fileName variable
+	fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+
+	// get the name of the room from file
+	input.open(fileName.c_str());
+	// if file opens
+	if (!input.fail())
+	{
+		cout << "Accessing inventory.txt" << endl; // TODO remove this to properly play game
+		// set the inventory variables
+		while (!input.eof())
+		{
+			string temp;
+			input >> temp;
+			if (temp != "")
+				cout << temp << endl; // TODO replace cout with inventory.push_back(item)
+		}
+		input.close();
+	}
+	//otherwise
+	else
+	{
+		// call destructor
+		this->~Room();
+	}
+
+	// set the fileName variable
+	fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+
+	// get the name of the room from file
+	input.open(fileName.c_str());
+	// if file opens
+	if (!input.fail())
+	{
+		cout << "Accessing description.txt" << endl;
+		// set the inventory variables
+		while (!input.eof())
+		{
+			string temp;
+			getline(input, temp);
+			description = description + temp + "\n";
+		}
+		cout << description << endl; // TODO remove this to properly play game
+		input.close();
+	}
+	//otherwise
+	else
+	{
+		// call destructor
+		cout << "Could not open file. . .\n";
+		this->~Room();
+	}
 }
 
-bool Room::changeRoom(location coordinates)
+bool Room::changeRoom(Coordinates coordinates)
 {
 	// constructs the room at the given coordinates
 	// constructs all adjacent connecting rooms
@@ -37,24 +97,31 @@ bool Room::changeRoom(location coordinates)
 
 bool Room::updateFile()
 {
+	// open output file with current room label
+	// read all variables to file
 	return false;
 }
 
 vector<Item*> Room::getInventory()
 {
+	// return inventory as a vector of items
 	return vector<Item*>();
 }
 
-Room::location Room::getLocation()
+Coordinates Room::getLocation()
 {
-	return location();
+	// return the yxz coordinates within this class's Coordinates struct
+	return Coordinates();
 }
 
-Room::doors Room::getDoors()
+Room::Door Room::getDoors()
 {
-	return doors();
+	// return the bools of every door within this Class's Door struct
+	return Door();
 }
 
 Room::~Room()
 {
+	// calls the updateRoom() function to update the temp files with all variable information
+	// deletes the allocated memory for the items within inventory
 }

@@ -1,0 +1,21 @@
+ROOM INFORMATION FORMATTING
+
+room_name
+##
+north_door_bool
+south_door_bool
+east_door_bool
+west_door_bool
+upper_door_bool
+lower_door_bool
+#
+item_1
+item_2
+item_3
+item_4
+item_5
+#
+The rest of the file will include the description. This way,
+the loop only has to check for end of file once the other information
+has been recorded into the variables.
+#
