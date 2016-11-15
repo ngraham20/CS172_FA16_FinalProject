@@ -45,6 +45,15 @@ public:
 	// creates a room based only on location struct. The rest is read from file.
 	Room(Coordinates coordinates);
 
+	// creates temporary files to be read from and written to during gameplay
+	bool createTemp();
+
+	// reads from the temporary files created by the constructor
+	bool readTemp();
+
+	// reads from the original files created pre-compile
+	bool readOrigin();
+
 	// changes the current room. It does this by
 	// creating four new rooms in the direction of travel, entering the new room,
 	// and destructing the three rooms surrounding the previous one.
@@ -52,7 +61,7 @@ public:
 
 	// when the destructor is activated, this method is called to update the
 	// room file within a temporary folder. (Which will be read from upon game saving)
-	bool updateFile();
+	bool updateTemp();
 
 	// returns as a vector of pointer variables the entire inventory of the room
 	vector<Item*> getInventory();
