@@ -28,6 +28,7 @@ private:
 		bool down;
 	};
 	Door door = {};
+	Coordinates coordinates = {};
 
 	string name; // the name of the room
 
