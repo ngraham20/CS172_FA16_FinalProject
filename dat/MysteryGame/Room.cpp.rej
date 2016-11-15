@@ -1,0 +1,7 @@
+diff a/dat/MysteryGame/Room.cpp b/dat/MysteryGame/Room.cpp	(rejected hunks)
+@@ -51,4 +51,5 @@
+ 
+ Room::~Room()
+ {
++
+ }
