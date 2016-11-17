@@ -10,5 +10,13 @@ class Item
 public:
 	Item();
 	~Item();
+private:
+	double lumosity;
+protected: 
+	// getLumosity is a method that can be used inherantly by another class
+	virtual double getLumosity();
+
+	// setLumosity is also an inheritance method
+	virtual double setLumosity();
 };
 
