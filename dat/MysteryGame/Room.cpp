@@ -300,4 +300,5 @@ Room::~Room()
 {
 	// calls the updateRoom() function to update the temp files with all variable information
 	// deletes the allocated memory for the items within inventory
+
 }
