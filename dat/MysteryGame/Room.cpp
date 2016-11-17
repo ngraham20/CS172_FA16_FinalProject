@@ -4,6 +4,9 @@
 #include "Room.h"
 using namespace std;
 
+// TODO split up the constructor to make readability better
+// this could be done by making readTemp(), createTemp(), 
+// readOrigin() and simply callling these three from the constructor
 Room::Room(Coordinates coordinates)
 {
 	ifstream input;
@@ -33,9 +36,7 @@ Room::Room(Coordinates coordinates)
 	}
 }
 
-// TODO create overloaded constructor to be called upon loadGame()
-
-bool Room::createTemp() // TODO create the temp files with Coordinates as an input
+bool Room::createTemp()
 {
 	ofstream output;
 	// set the fileName variable

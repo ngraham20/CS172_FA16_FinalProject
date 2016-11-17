@@ -16,8 +16,5 @@ int main()
 {
 	Coordinates location = { 0,0,0 };
 	Room testroom(location);
-
-	location = { 0,0,1 };
-	Room test(location);
 	return 0;
 }
