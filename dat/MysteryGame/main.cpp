@@ -5,6 +5,8 @@
 	in this file.
 */
 #include <iostream>
+#include "Item.h"
+#include "Weapon.h"
 #include "Coordinates.h"
 #include "Room.h"
 #include "Input.h"
@@ -15,9 +17,16 @@ using namespace std;
 int main()
 {
 	Coordinates location = { 0,0,0 };
-	Room testroom(location);
+
+	cout << "Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
+	Room _000(location);
 
 	location = { 0,0,1 };
-	Room test(location);
+	cout << "Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
+	Room _001(location);
+
+	_000.deleteTemp();
+
+	_001.deleteTemp();
 	return 0;
 }

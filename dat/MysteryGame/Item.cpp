@@ -13,3 +13,13 @@ Item::Item()
 Item::~Item()
 {
 }
+
+double Item::getLumosity()
+{
+	return 0.0;
+}
+
+bool Item::setLumosity()
+{
+	return false;
+}

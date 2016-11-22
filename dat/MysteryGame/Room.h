@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <stdio.h>
 #include "Coordinates.h"
 #include "Item.h"
 using namespace std;
@@ -15,6 +16,8 @@ class Room
 {
 // ----------------------------------PRIVATE--------------------------------------
 private:
+	// this is the file string which will be used to open any files during gameplay
+	string fileName;
 
 	// defines the active doors of the room n,s,e,w,u,d and
 	// stores them in a struct
@@ -40,28 +43,32 @@ private:
 	// describes the room in detail
 	string description;
 
-// -----------------------------------PUBLIC--------------------------------------
-public:
-	// creates a room based only on location struct. The rest is read from file.
-	Room(Coordinates coordinates);
+	// reads from the original files created pre-compile
+	bool readOrigin();
 
 	// creates temporary files to be read from and written to during gameplay
 	bool createTemp();
 
-	// reads from the temporary files created by the constructor
-	bool readTemp();
-
-	// reads from the original files created pre-compile
-	bool readOrigin();
+// -----------------------------------PUBLIC--------------------------------------
+public:
+	// creates a room based only on location struct. The rest is read from file.
+	Room(Coordinates coordinates);
 
 	// changes the current room. It does this by
 	// creating four new rooms in the direction of travel, entering the new room,
 	// and destructing the three rooms surrounding the previous one.
 	bool changeRoom(Coordinates coordinates);
 
+	// reads from the temporary files created by the constructor
+	bool readTemp();
+
 	// when the destructor is activated, this method is called to update the
 	// room file within a temporary folder. (Which will be read from upon game saving)
 	bool updateTemp();
+
+	// this method deletes the temp files. This is NOT called in the destructor. It is
+	// ONLY called in the GAME class destructor. Hence it is a public method.
+	bool deleteTemp();
 
 	// returns as a vector of pointer variables the entire inventory of the room
 	vector<Item*> getInventory();

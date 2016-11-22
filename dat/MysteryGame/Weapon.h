@@ -6,5 +6,6 @@ class Weapon : public Item
 public:
 	Weapon();
 	~Weapon();
+
 };
 

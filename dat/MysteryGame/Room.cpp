@@ -6,30 +6,38 @@ using namespace std;
 
 Room::Room(Coordinates coordinates)
 {
+	this->coordinates = coordinates;
+
 	ifstream input;
 
-	string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+	// check to see if the name file exists
+	fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
+		to_string(this->coordinates.x) + to_string(this->coordinates.z) + "\\name.txt";
 	
 	input.open(fileName.c_str());
-	// if the temp file does not exist
-	if (input.fail())
+	// if the temp files do exist
+	if (!input.fail())
 	{
-		readOrigin();
-
-		// create the temp files
-		createTemp();
-
-		// write to the temp files
-		updateTemp();
-
-	}
-	// else if the temp files do exist, read from them
-	else
-	{
+		// close the file
 		input.close();
 
+		// read the temp files into the room properties
 		readTemp();
+	}
+	// else if the temp files do not exist
+	else
+	{
+
+		// read the origin file into the room properties
+		readOrigin();
+
+		// create blank temp files
+		cout << "Creating temp files." << endl; // TODO delete before release
+		createTemp();
+
+		// write to the temp files from rom properties
+		updateTemp();
+
 	}
 }
 
@@ -37,59 +45,100 @@ Room::Room(Coordinates coordinates)
 
 bool Room::createTemp() // TODO create the temp files with Coordinates as an input
 {
+	// createTemp is only called privately, and only by the constructor...
+	// it is also only to CREATE blank files. They will always open.
+
 	ofstream output;
-	// set the fileName variable
-	string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+
+	string filename = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
-	// get the name of the room from file
-	output.open(fileName.c_str());
+	output.open(filename.c_str());
+	if (output.fail()) { return false; }
+	output.close();
+	cout << "Created name.txt" << endl;
 
-	// if file opens
-	if (output.fail())
-	{
-		cout << fileName << " failed to open." << endl;
-		return false;
-	}
-	else output.close();
-
-	// set the fileName variable
-	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	filename = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
-	// get the name of the room from file
-	output.open(fileName.c_str());
+	output.open(filename.c_str());
+	if (output.fail()) { return false; }
+	output.close();
+	cout << "Created invnentory.txt" << endl;
 
-	// if file opens
-	if (output.fail())
-	{
-		cout << fileName << " failed to open." << endl;
-		return false;
-	}
-	else output.close();
-	// set the fileName variable
-	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	filename = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
 
-	// get the name of the room from file
-	output.open(fileName.c_str());
-
-	// if file opens
-	if (output.fail())
-	{
-		cout << fileName << " failed to open." << endl;
-		return false;
-	}
-	else output.close();
+	output.open(filename.c_str());
+	if (output.fail()) { return false; }
+	output.close();
+	cout << "Created description.txt" << endl;
 
 	return true;
+	// TODO delete all this crap
+	//ofstream output;
+	//ifstream input;
+	//// set the fileName variable
+	//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+
+	//// get the name of the room from file
+	//input.open(fileName.c_str());
+
+	//// if file opens, then it already exists as a directory.
+
+	//// TODO revise this...
+	//if (!input.fail()) // if successful
+	//{
+	//	// set the fileName variable
+	//	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	//		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+
+	//	// get the name of the room from file
+	//	output.open(fileName.c_str());
+
+	//	// close file
+	//	output.close();
+	//}
+	//else
+	//{
+	//	cout << fileName << " failed to open when attempting temp creation." << endl;
+	//	return false;
+	//}
+
+	//// if file opens
+	//if (output.fail())
+	//{
+	//	cout << fileName << " failed to open." << endl;
+	//	return false;
+	//}
+	//// else create the temp files
+	//else {
+	//	output.close();
+	//}
+	//// set the fileName variable
+	//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+
+	//// get the name of the room from file
+	//output.open(fileName.c_str());
+
+	//// if file opens
+	//if (output.fail())
+	//{
+	//	cout << fileName << " failed to open." << endl;
+	//	return false;
+	//}
+	//else output.close();
+
+	//return true;
 }
 
 bool Room::readTemp()
 {
 	ifstream input;
 	// set the fileName variable
-	string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
 	// get the name of the room from file
@@ -177,7 +226,7 @@ bool Room::readOrigin()
 {
 	ifstream input;
 	// set the fileName variable
-	string fileName = ".\\room\\" + to_string(coordinates.y) +
+	fileName = ".\\room\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
 	// get the name of the room from file
@@ -273,14 +322,17 @@ bool Room::updateTemp()
 	// open output file with current room label
 	ofstream output;
 
-	string fileName = ".\\room\\temp\\" + to_string(coordinates.y) + 
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) + 
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
 	output.open(fileName.c_str());
 
 	if (!output.fail())
 	{
-		cout << fileName << " accessed to be update. . .!" << endl;
+		cout << fileName << " accessed to be updated. . .!" << endl;
+
+		// closes the file once it's been opened (and written to)
+		output.close();
 	}
 	else
 	{
@@ -288,6 +340,50 @@ bool Room::updateTemp()
 	}
 	// read all variables to file
 	return false;
+}
+
+bool Room::deleteTemp()
+{
+	// changes filename to name
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+
+	// tests the deletion
+	if (remove(fileName.c_str()) != 0)
+	{
+		cout << "Could not delete " << fileName << ". . ." << endl;
+		return false;
+	}
+	else
+	{
+		cout << "Deleted " << fileName << endl;
+	}
+
+	// changes filename to inventory
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+	if (remove(fileName.c_str()) != 0)
+	{
+		cout << "Could not delete " << fileName << ". . ." << endl;
+		return false;
+	}
+	else
+	{
+		cout << "Deleted " << fileName << endl;
+	}
+
+	// changes filename to description
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+	if (remove(fileName.c_str()) != 0)
+	{
+		cout << "Could not delete " << fileName << ". . ." << endl;
+		return false;
+	}
+	else
+	{
+		cout << "Deleted " << fileName << endl;
+	}
 }
 
 vector<Item*> Room::getInventory() { return inventory; }
