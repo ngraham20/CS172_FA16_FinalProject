@@ -244,7 +244,7 @@ bool Room::readOrigin()
 	else
 	{
 		// call destructor
-		cout << "Could not open file. . ." << endl;
+		cout << fileName << " does not exist. . ." << endl;
 		this->~Room();
 		return false;
 	}
@@ -321,18 +321,21 @@ bool Room::updateTemp()
 {
 	// open output file with current room label
 	ofstream output;
+	ifstream input;
 
 	fileName = ".\\room\\temp\\" + to_string(coordinates.y) + 
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
-	output.open(fileName.c_str());
+	input.open(fileName.c_str());
 
-	if (!output.fail())
+	if (!input.fail())
 	{
 		cout << fileName << " accessed to be updated. . .!" << endl;
 
 		// closes the file once it's been opened (and written to)
-		output.close();
+		input.close();
+
+		// TODO write to temp files
 	}
 	else
 	{
@@ -394,7 +397,7 @@ Room::Door Room::getDoors() { return door; }
 
 Room::~Room()
 {
-	// calls the updateRoom() function to update the temp files with all variable information
+	// calls the updateTemp() function to update the temp files with all variable information
 	// deletes the allocated memory for the items within inventory
 
 }
