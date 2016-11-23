@@ -372,5 +372,8 @@ Room::~Room()
 	updateTemp();
 
 	// deletes the allocated memory for the items within inventory
-
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		delete inventory.at(i);
+	}
 }

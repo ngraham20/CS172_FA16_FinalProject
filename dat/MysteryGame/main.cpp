@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-	Coordinates location = { 0,0,0 };
+	/*Coordinates location = { 0,0,0 };
 
 	cout << "[main]: Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
 	Room _000(location);
@@ -34,6 +34,12 @@ int main()
 
 	_000.deleteTemp();
 
-	_001.deleteTemp();
+	_001.deleteTemp();*/
+
+
+	Game game;
+
+	game.~Game();
+
 	return 0;
 }
