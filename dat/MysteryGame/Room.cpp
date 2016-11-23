@@ -292,8 +292,13 @@ bool Room::updateTemp()
 		output.open(fileName.c_str());
 		for (int i = 0; i < inventory.size(); i++)
 		{
-			cout << "[updateTemp]: " << inventory.at(i) << endl;
-			output << inventory.at(i) << endl;
+			Item* item = inventory.at(i);
+			string inventoryItem = item->getName();
+			if (inventoryItem != "")
+			{
+				cout << "[updateTemp]: " << inventoryItem << endl;
+				output << inventoryItem << endl;
+			}
 		}
 		output.close();
 
