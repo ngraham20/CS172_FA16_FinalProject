@@ -18,12 +18,19 @@ int main()
 {
 	Coordinates location = { 0,0,0 };
 
-	cout << "Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
+	cout << "[main]: Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
 	Room _000(location);
 
 	location = { 0,0,1 };
-	cout << "Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
+	cout << "[main]: Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
 	Room _001(location);
+
+	_000.~Room();
+
+	_001.~Room();
+
+	location = { 0,0,0 };
+	Room _001_2(location);
 
 	_000.deleteTemp();
 

@@ -32,7 +32,7 @@ Room::Room(Coordinates coordinates)
 		readOrigin();
 
 		// create blank temp files
-		cout << "Creating temp files." << endl; // TODO delete before release
+		cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
 		createTemp();
 
 		// write to the temp files from rom properties
@@ -56,7 +56,7 @@ bool Room::createTemp() // TODO create the temp files with Coordinates as an inp
 	output.open(filename.c_str());
 	if (output.fail()) { return false; }
 	output.close();
-	cout << "Created name.txt" << endl;
+	cout << "[createTemp]: Created name.txt" << endl;
 
 	filename = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
@@ -64,7 +64,7 @@ bool Room::createTemp() // TODO create the temp files with Coordinates as an inp
 	output.open(filename.c_str());
 	if (output.fail()) { return false; }
 	output.close();
-	cout << "Created invnentory.txt" << endl;
+	cout << "[createTemp]: Created invnentory.txt" << endl;
 
 	filename = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
@@ -72,66 +72,9 @@ bool Room::createTemp() // TODO create the temp files with Coordinates as an inp
 	output.open(filename.c_str());
 	if (output.fail()) { return false; }
 	output.close();
-	cout << "Created description.txt" << endl;
+	cout << "[createTemp]: Created description.txt" << endl;
 
 	return true;
-	// TODO delete all this crap
-	//ofstream output;
-	//ifstream input;
-	//// set the fileName variable
-	//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
-
-	//// get the name of the room from file
-	//input.open(fileName.c_str());
-
-	//// if file opens, then it already exists as a directory.
-
-	//// TODO revise this...
-	//if (!input.fail()) // if successful
-	//{
-	//	// set the fileName variable
-	//	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
-
-	//	// get the name of the room from file
-	//	output.open(fileName.c_str());
-
-	//	// close file
-	//	output.close();
-	//}
-	//else
-	//{
-	//	cout << fileName << " failed to open when attempting temp creation." << endl;
-	//	return false;
-	//}
-
-	//// if file opens
-	//if (output.fail())
-	//{
-	//	cout << fileName << " failed to open." << endl;
-	//	return false;
-	//}
-	//// else create the temp files
-	//else {
-	//	output.close();
-	//}
-	//// set the fileName variable
-	//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
-
-	//// get the name of the room from file
-	//output.open(fileName.c_str());
-
-	//// if file opens
-	//if (output.fail())
-	//{
-	//	cout << fileName << " failed to open." << endl;
-	//	return false;
-	//}
-	//else output.close();
-
-	//return true;
 }
 
 bool Room::readTemp()
@@ -149,14 +92,14 @@ bool Room::readTemp()
 	{
 		// set the name variable
 		getline(input, name);
-		cout << name << endl; // TODO remove this to properly play game
+		cout << "[readTemp]: roomName" << name << endl; // TODO remove this to properly play game
 		input.close();
 	}
 	// otherwise
 	else
 	{
 		// call destructor
-		cout << "Failed to access " << fileName << endl;
+		cout << "[readTemp]: Failed to access " << fileName << endl;
 		this->~Room();
 		return false;
 	}
@@ -170,14 +113,14 @@ bool Room::readTemp()
 	// if file opens
 	if (!input.fail())
 	{
-		cout << "Accessing inventory.txt" << endl; // TODO remove this to properly play game
+		cout << "[readTemp]: Accessing inventory.txt" << endl; // TODO remove this to properly play game
 												   // set the inventory variables
 		while (!input.eof())
 		{
 			string temp;
 			input >> temp;
 			if (temp != "")
-				cout << temp << endl; // TODO replace cout with inventory.push_back(item)
+				cout << "[readTemp]: roomInventory: " << temp << endl; // TODO replace cout with inventory.push_back(item)
 		}
 		input.close();
 	}
@@ -185,7 +128,7 @@ bool Room::readTemp()
 	else
 	{
 		// call destructor
-		cout << "Failed to access " << fileName << endl;
+		cout << "[readTemp]: Failed to access " << fileName << endl;
 		this->~Room();
 		return false;
 	}
@@ -199,7 +142,7 @@ bool Room::readTemp()
 	// if file opens
 	if (!input.fail())
 	{
-		cout << "Accessing description.txt" << endl;
+		cout << "[readTemp]: Accessing description.txt" << endl;
 		// set the inventory variables
 		while (!input.eof())
 		{
@@ -207,14 +150,14 @@ bool Room::readTemp()
 			getline(input, temp);
 			description = description + temp + "\n";
 		}
-		cout << description << endl; // TODO remove this to properly play game
+		cout << "[readTemp]: roomDescription: " << description << endl; // TODO remove this to properly play game
 		input.close();
 	}
 	//otherwise
 	else
 	{
 		// call destructor
-		cout << "Failed to access " << fileName << endl;
+		cout << "[readTemp]: Failed to access " << fileName << endl;
 		this->~Room();
 		return false;
 	}
@@ -237,14 +180,14 @@ bool Room::readOrigin()
 	{
 		// set the name variable
 		getline(input, name);
-		cout << name << endl; // TODO remove this to properly play game
+		cout << "[origin]: roomName: " << name << endl; // TODO remove this to properly play game
 		input.close();
 	}
 	// otherwise
 	else
 	{
 		// call destructor
-		cout << fileName << " does not exist. . ." << endl;
+		cout << "[readOrigin]: " << fileName << " does not exist. . ." << endl;
 		this->~Room();
 		return false;
 	}
@@ -258,14 +201,16 @@ bool Room::readOrigin()
 	// if file opens
 	if (!input.fail())
 	{
-		cout << "Accessing inventory.txt" << endl; // TODO remove this to properly play game
+		cout << "[readOrigin]: Accessing inventory.txt" << endl; // TODO remove this to properly play game
 												   // set the inventory variables
 		while (!input.eof())
 		{
 			string temp;
 			input >> temp;
 			if (temp != "")
-				cout << temp << endl; // TODO replace cout with inventory.push_back(item)
+				cout << "[origin]: roomInventory:" << temp << endl; // TODO replace cout with inventory.push_back(item)
+			Item* item = new Item(temp);
+			inventory.push_back(item);
 		}
 		input.close();
 	}
@@ -286,7 +231,7 @@ bool Room::readOrigin()
 	// if file opens
 	if (!input.fail())
 	{
-		cout << "Accessing description.txt" << endl;
+		cout << "[readOrigin]: Accessing description.txt" << endl;
 		// set the inventory variables
 		while (!input.eof())
 		{
@@ -294,14 +239,14 @@ bool Room::readOrigin()
 			getline(input, temp);
 			description = description + temp + "\n";
 		}
-		cout << description << endl; // TODO remove this to properly play game
+		cout << "[origin]: roomDescription: " << description << endl; // TODO remove this to properly play game
 		input.close();
 	}
 	//otherwise
 	else
 	{
 		// call destructor
-		cout << "Could not open file. . .\n";
+		cout << "[readOrigin]: Could not open file. . .\n";
 		this->~Room();
 		return false;
 	}
@@ -330,16 +275,37 @@ bool Room::updateTemp()
 
 	if (!input.fail())
 	{
-		cout << fileName << " accessed to be updated. . .!" << endl;
+		cout << "[updateTemp]: " << fileName << " accessed to be updated. . .!" << endl;
 
 		// closes the file once it's been opened (and written to)
 		input.close();
 
 		// TODO write to temp files
+
+		output.open(fileName.c_str());
+		output << name;
+		output.close();
+
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+
+		output.open(fileName.c_str());
+		for (int i = 0; i < inventory.size(); i++)
+		{
+			cout << "[updateTemp]: " << inventory.at(i) << endl;
+			output << inventory.at(i) << endl;
+		}
+		output.close();
+
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+		output.open(fileName.c_str());
+		output << description;
+		output.close();
 	}
 	else
 	{
-		cout << fileName << " could not be accessed." << endl;
+		cout << "[updateTemp]: " << fileName << " could not be accessed." << endl;
 	}
 	// read all variables to file
 	return false;
@@ -354,12 +320,12 @@ bool Room::deleteTemp()
 	// tests the deletion
 	if (remove(fileName.c_str()) != 0)
 	{
-		cout << "Could not delete " << fileName << ". . ." << endl;
+		cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
 		return false;
 	}
 	else
 	{
-		cout << "Deleted " << fileName << endl;
+		cout << "[deleteTemp]: Deleted " << fileName << endl;
 	}
 
 	// changes filename to inventory
@@ -367,12 +333,12 @@ bool Room::deleteTemp()
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 	if (remove(fileName.c_str()) != 0)
 	{
-		cout << "Could not delete " << fileName << ". . ." << endl;
+		cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
 		return false;
 	}
 	else
 	{
-		cout << "Deleted " << fileName << endl;
+		cout << "[deleteTemp]: Deleted " << fileName << endl;
 	}
 
 	// changes filename to description
@@ -380,12 +346,12 @@ bool Room::deleteTemp()
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
 	if (remove(fileName.c_str()) != 0)
 	{
-		cout << "Could not delete " << fileName << ". . ." << endl;
+		cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
 		return false;
 	}
 	else
 	{
-		cout << "Deleted " << fileName << endl;
+		cout << "[deleteTemp]: Deleted " << fileName << endl;
 	}
 }
 
@@ -398,6 +364,8 @@ Room::Door Room::getDoors() { return door; }
 Room::~Room()
 {
 	// calls the updateTemp() function to update the temp files with all variable information
+	updateTemp();
+
 	// deletes the allocated memory for the items within inventory
 
 }

@@ -12,7 +12,11 @@ class Item
 {
 public:
 	Item();
+	Item(string name);
 	~Item();
+
+	// returns the name
+	string getName();
 
 	// getLumosity is a method that can be used inherantly by another class
 	virtual double getLumosity();
