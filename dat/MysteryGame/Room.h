@@ -9,6 +9,7 @@
 #include <vector>
 #include <stdio.h>
 #include "Coordinates.h"
+#include "Doors.h"
 #include "Item.h"
 using namespace std;
 
@@ -19,18 +20,10 @@ private:
 	// this is the file string which will be used to open any files during gameplay
 	string fileName;
 
-	// defines the active doors of the room n,s,e,w,u,d and
-	// stores them in a struct
-	struct Door
-	{
-		bool north;
-		bool south;
-		bool east;
-		bool west;
-		bool up;
-		bool down;
-	};
-	Door door = {};
+	// a static vector of all temp files created to be modified by Game class
+	static vector<Coordinates>createdTempFiles;
+
+	Doors doors = {};
 	Coordinates coordinates = {};
 
 	string name; // the name of the room
@@ -51,6 +44,7 @@ private:
 
 // -----------------------------------PUBLIC--------------------------------------
 public:
+
 	// creates a room based only on location struct. The rest is read from file.
 	Room(Coordinates coordinates);
 
@@ -66,18 +60,16 @@ public:
 	// room file within a temporary folder. (Which will be read from upon game saving)
 	bool updateTemp();
 
-	// this method deletes the temp files. This is NOT called in the destructor. It is
-	// ONLY called in the GAME class destructor. Hence it is a public method.
-	bool deleteTemp();
-
 	// returns as a vector of pointer variables the entire inventory of the room
 	vector<Item*> getInventory();
 
 	// returns the struct location of the room
 	Coordinates getLocation();
 
+	static vector<Coordinates> getcreatedTempFiles();
+
 	// returns all possible doors, stating which are open, and which are closed.
-	Door getDoors();
+	Doors getDoors();
 
 	~Room();
 };

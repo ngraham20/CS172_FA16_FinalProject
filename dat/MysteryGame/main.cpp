@@ -5,40 +5,18 @@
 	in this file.
 */
 #include <iostream>
-#include "Item.h"
-#include "Weapon.h"
 #include "Coordinates.h"
-#include "Room.h"
-#include "Input.h"
-#include "Character.h"
+#include "Doors.h"
 #include "Game.h"
+#include "Input.h"
 using namespace std;
 
 int main()
 {
-	/*Coordinates location = { 0,0,0 };
-
-	cout << "[main]: Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
-	Room _000(location);
-
-	location = { 0,0,1 };
-	cout << "[main]: Accessing File: " << location.y << location.x << location.z << ". . ." << endl;
-	Room _001(location);
-
-	_000.~Room();
-
-	_001.~Room();
-
-	location = { 0,0,0 };
-	Room _001_2(location);
-
-	_000.deleteTemp();
-
-	_001.deleteTemp();*/
-
-
+	// turns on a game, constructs (at the moment) three rooms
 	Game game;
 
+	// deletes all pointers and temp files
 	game.~Game();
 
 	return 0;

@@ -15,14 +15,17 @@ public:
 	Item(string name);
 	~Item();
 
+	static Item* createItemfromFile(string type);
+
 	// returns the name
 	string getName();
 
-	// getLumosity is a method that can be used inherantly by another class
+	// getLumosity is a method that can be used inherantly by another class which ALWAYS returns
+	// the lumosity
 	virtual double getLumosity();
 
-	// setLumosity is also an inheritance method
-	virtual bool setLumosity();
+	// setLumosity sets the lumosity for any item
+	virtual bool setLumosity(double lumosity);
 private:
 	string name;
 	double lumosity;

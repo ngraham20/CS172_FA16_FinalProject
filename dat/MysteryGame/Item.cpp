@@ -2,6 +2,7 @@
 	This file impliments the methods as initialized in Item.h
 */
 #include "Item.h"
+#include "Weapon.h"
 
 
 
@@ -19,14 +20,18 @@ Item::~Item()
 {
 }
 
-string Item::getName() { return name; }
-
-double Item::getLumosity()
+Item* Item::createItemfromFile(string type)
 {
-	return 0.0;
+	
+	return new Weapon;
 }
 
-bool Item::setLumosity()
+string Item::getName() { return name; }
+
+double Item::getLumosity() { return lumosity; }
+
+bool Item::setLumosity(double lumosity)
 {
-	return false;
+	this->lumosity = lumosity;
+	return true;
 }

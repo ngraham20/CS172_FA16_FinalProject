@@ -18,24 +18,83 @@ Game::Game()
 	}
 }
 
-
 Game::~Game()
 {
-	// loop through all currently loaded rooms
 	for (int i = 0; i < loadedRooms.size(); i++)
 	{
-		// gain access to vector contents
-		Room* temp = loadedRooms.at(i);
-
-		// delete temporary files for loaded rooms
-		temp->deleteTemp();
-
-		// unload rooms
 		delete loadedRooms.at(i);
 	}
+
+	deleteTemp();
+}
+
+Room * Game::getCurrentRoom() { return currentRoom; }
+
+bool Game::deleteTemp()
+{
+	// creates a temporary vector of coordinates
+	vector<Coordinates> temp = Room::getcreatedTempFiles();
+
+	// loops through all open coordinates
+	for (int i = 0; i < temp.size(); i++)
+	{
+		// sets the coordinates to the current one in the vector
+		Coordinates coordinates = temp.at(i);
+
+		// changes filename to name
+		string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+
+		// tests the deletion
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+
+		// changes filename to inventory
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+
+		// changes filename to description
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+	}
+	return true;
 }
 
 bool Game::changeRoom()
 {
+	// checks which direciton the player wants to move
+	return false;
+}
+
+bool Game::checkRoomChangeValidity()
+{
+	Room* tRoom = getCurrentRoom();
+	Doors temp = tRoom->getDoors();
 	return false;
 }
