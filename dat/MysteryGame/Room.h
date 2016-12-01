@@ -23,7 +23,9 @@ private:
 	// a static vector of all temp files created to be modified by Game class
 	static vector<Coordinates>createdTempFiles;
 
-	Doors doors = {};
+	// doors are always n,s,e,w,u,d
+	vector<bool> doors;
+
 	Coordinates coordinates = {};
 
 	string name; // the name of the room
@@ -69,7 +71,7 @@ public:
 	static vector<Coordinates> getcreatedTempFiles();
 
 	// returns all possible doors, stating which are open, and which are closed.
-	Doors getDoors();
+	vector<bool> getDoors();
 
 	~Room();
 };

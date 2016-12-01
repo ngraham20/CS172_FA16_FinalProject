@@ -9,6 +9,7 @@
 #include "Doors.h"
 #include "Game.h"
 #include "Input.h"
+#include "Room.h"
 using namespace std;
 
 int main()
