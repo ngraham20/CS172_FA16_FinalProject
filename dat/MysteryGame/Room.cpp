@@ -123,13 +123,19 @@ bool Room::readTemp()
 	if (!input.fail())
 	{
 		cout << "[readTemp]: Accessing inventory.txt" << endl; // TODO remove this to properly play game
-												   // set the inventory variables
+
+		// set the inventory variables
 		while (!input.eof())
 		{
 			string temp;
 			input >> temp;
 			if (temp != "")
 				cout << "[readTemp]: roomInventory: " << temp << endl; // TODO replace cout with inventory.push_back(item)
+
+			// creates an item with specific properties based on the item type
+			Item* item = Item::createItemfromFile(temp);
+			inventory.push_back(item);
+			
 		}
 		input.close();
 	}

@@ -30,6 +30,5 @@ private:
 	string name;
 	double lumosity;
 	int power;
-protected: 
 };
 

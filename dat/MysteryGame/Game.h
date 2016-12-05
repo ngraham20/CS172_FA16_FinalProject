@@ -19,7 +19,11 @@ public:
 	Room* getCurrentRoom();
 
 	bool deleteTemp();
-	bool changeRoom();
+	bool changeRoom(int relativeY, int relativeX, int relativeZ);
+
+	void playGame();
+	string getAction();
+
 private:
 	// the game has loaded rooms
 	// these rooms will be ordered as follows <n,s,e,w,u,d>

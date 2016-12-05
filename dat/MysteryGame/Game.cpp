@@ -4,21 +4,22 @@
 #include "Game.h"
 
 
-
+// this constructor begins the game and calls playGame()
 Game::Game()
 {
 	// the following is a test procedure for the map of loaded rooms
 	// TODO change this to begin at the front door
 	// creates rooms 000
-	for (int i = 0; i < 1; i++)
+	/*for (int i = 0; i < 1; i++)
 	{
 		Coordinates roomNumber = { 0,0,i };
 		Room* pointer = new Room(roomNumber);
 		loadedRooms.push_back(pointer);
-	}
-	Coordinates roomNumber = { 0,0,0 };
-	// this is a repeated opening of the same room. This should cause readTemp to activate
-	Room newroom(roomNumber);
+	}*/
+	//Coordinates roomNumber = { 0,0,0 };
+	//// this is a repeated opening of the same room. This should cause readTemp to activate
+	//Room newroom(roomNumber);
+	playGame();
 }
 
 Game::~Game()
@@ -103,10 +104,71 @@ bool Game::deleteTemp()
 	return true;
 }
 
-bool Game::changeRoom()
+bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 {
 	// checks which direciton the player wants to move
-	return false;
+	Coordinates coordinates = currentRoom->getLocation();
+	coordinates.y += relativeY;
+	coordinates.x += relativeX;
+	coordinates.z += relativeZ;
+
+	Room newroom(coordinates);
+	return true;
+}
+
+void Game::playGame()
+{
+	// this method is run constantly and acts as the stateMachine for the game
+	// begin the game in the proper room
+	Coordinates firstRoom = { 0,4,2 };
+	Room* _042 = new Room(firstRoom);
+	currentRoom = _042;
+	// do while input is not quit
+	string playerInput;
+	do
+	{
+		// call getPlayerInput()
+		 playerInput = getAction();
+
+	} while (playerInput != "quit");
+
+	this->~Game();
+}
+
+string Game::getAction()
+{
+	string input;
+	cout << ">>";
+	//cin.clear();
+	//getline(cin, input);
+	cin >> input;
+	// TODO change this code to work for words
+	if (input == "n")
+	{
+		// go north
+		changeRoom(0,1,0);
+		return input;
+	}
+	else if (input == "s")
+	{
+		// go south
+		changeRoom(0,-1,0);
+		return input;
+	}
+	else if (input == "e")
+	{
+		// go east
+		changeRoom(0,0,1);
+		return input;
+	}
+	else if (input == "w")
+	{
+		// go west
+		changeRoom(0,0,-1);
+		return input;
+	}
+
+	return "quit";
 }
 
 bool Game::checkRoomChangeValidity()
