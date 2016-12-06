@@ -4,21 +4,15 @@
 #include "Game.h"
 
 
-// this constructor begins the game and calls playGame()
-Game::Game()
+// this constructor begins a new game and calls playGame()
+Game::Game() // TODO allow for load/save option
 {
-	// the following is a test procedure for the map of loaded rooms
-	// TODO change this to begin at the front door
-	// creates rooms 000
-	/*for (int i = 0; i < 1; i++)
-	{
-		Coordinates roomNumber = { 0,0,i };
-		Room* pointer = new Room(roomNumber);
-		loadedRooms.push_back(pointer);
-	}*/
-	//Coordinates roomNumber = { 0,0,0 };
-	//// this is a repeated opening of the same room. This should cause readTemp to activate
-	//Room newroom(roomNumber);
+	// sets the current room for begining of game
+	Coordinates firstRoom = { 1,4,2 };
+	Room* startingRoom = new Room(firstRoom);
+	currentRoom = startingRoom;
+
+	// begins the game.
 	playGame();
 }
 
@@ -208,10 +202,6 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 void Game::playGame()
 {
 	// this method is run constantly and acts as the stateMachine for the game
-	// begin the game in the proper room
-	Coordinates firstRoom = { 1,4,2 };
-	Room* startingRoom = new Room(firstRoom);
-	currentRoom = startingRoom;
 	// do while input is not quit
 	string playerInput;
 	do
@@ -323,7 +313,27 @@ string Game::getAction()
 	}
 	else if (input == "quit")
 	{
-		return "quit";
+		cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
+		string answer;
+		cin >> answer;
+		if (answer == "yes")
+		{
+			return "quit";
+		}
+		else if (answer == "no")
+		{
+			cout << "Resuming game. . ." << endl;
+			input = "continue";
+		}
+		else
+		{
+			cout << "Invalid Input. Please Try again." << endl;
+			input = "continue";
+		}
+	}
+	else if (input == "instructions" || input == "help")
+	{
+		displayInstructions();
 	}
 	else
 	{
@@ -332,6 +342,16 @@ string Game::getAction()
 	//	getAction();
 	}
 	return input;
+}
+
+void Game::displayInstructions()
+{
+	cout << "------------------------------------------------------------------------" << endl;
+	cout << "          To move, type a cardinal direction or up or down.             " << endl;
+	cout << "              If you would like to quit, type \"quit.\"                 " << endl;
+	cout << "------------------------------------------------------------------------" << endl;
+
+	return;
 }
 
 bool Game::checkRoomChangeValidity()

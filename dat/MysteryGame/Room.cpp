@@ -48,7 +48,7 @@ Room::Room(Coordinates coordinates)
 	}
 }
 
-// TODO create overloaded constructor to be called upon loadGame() to read from saves
+// TODO create overloaded constructor to be called upon loadGame() to read from saves, NOT from Origin
 
 bool Room::createTemp()
 {
@@ -218,7 +218,7 @@ return false;
 		// print the description
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << description << endl;
-		cout << "-------------------------------------------------------------------------" << endl;
+		cout << "------------------------------------------------------------------------" << endl;
 		input.close();
 	}
 	//otherwise
@@ -356,7 +356,7 @@ bool Room::readOrigin()
 		}
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << description << endl;
-		cout << "-------------------------------------------------------------------------" << endl;
+		cout << "------------------------------------------------------------------------" << endl;
 		input.close();
 	}
 	//otherwise

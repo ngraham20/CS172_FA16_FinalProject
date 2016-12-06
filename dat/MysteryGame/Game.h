@@ -11,23 +11,33 @@
 class Game
 {
 public:
+	// constructor creates the game
 	Game();
+
+	// destructor deletes the game and all temp files.
 	~Game();
 
 	// the room the player is currently in
 	Room* getCurrentRoom();
 
+	// only deletes the temp files which have been opened by the game
 	bool deleteTemp();
 
-	// this is to be called when erros occur, and the game
+	// this is to be called when errors occur, and the game
 	// needs to completely clear all temp. (Only to be called
 	// by user)
 	static bool fullTempClear();
 
+	// this changes the coordinates of the current room and activates the new room
 	bool changeRoom(int relativeY, int relativeX, int relativeZ);
 
+	// this acts as the state machine, running the game
 	void playGame();
+
+	// this receives player action and returns a string
 	string getAction();
+
+	void displayInstructions();
 
 private:
 	// the game has loaded rooms
@@ -37,6 +47,7 @@ private:
 	// the game has a player
 	Character* player;
 
+	// pointer to the current room
 	Room* currentRoom;
 
 	// checks through the current room's doors to make sure that
