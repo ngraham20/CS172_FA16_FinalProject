@@ -100,7 +100,8 @@ bool Room::readTemp()
 	{
 		// set the name variable
 		getline(input, name);
-		cout << endl << "[Temp]: " << name << endl;
+		// cout << endl << "[Temp]: ";
+		cout << endl << "[" << name << "]:" << endl;
 		input.close();
 	}
 	// otherwise
@@ -250,7 +251,8 @@ bool Room::readOrigin()
 		getline(input, name);
 
 		// print the room name
-		cout << endl << "[Origin]: " << name << endl;
+		// cout << endl << "[Origin]: ";
+		cout << endl << "[" << name << "]:" << endl;
 		input.close();
 	}
 	// otherwise

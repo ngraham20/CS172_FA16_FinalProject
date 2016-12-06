@@ -1,6 +1,6 @@
 You stand in the middle of a grand room lined with marble.
 Above your head, edging the walls, is a balcony. Above that,
 a wonderous glass dome glints brightly in the sunlight.
-In the north wall lies a sliding glass door leading outside,
-a wooden door lies in the west wall, a white door lies in
-the eastern wall, and a grand archway leads south.
+In the north wall lies a sliding glass door leading outside and
+a white door lies in the eastern wall. To the west is what appears to be
+a room with a long table. In the southern part of the room is a grand archway

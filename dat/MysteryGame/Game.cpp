@@ -229,14 +229,13 @@ string Game::getAction()
 {
 	string input;
 	cout << ">>";
-	//cin.clear();
 	//getline(cin, input);
 	cin >> input;
 	// TODO change this code to work for words
 	// get a temporary fix on the current room's door situation
 	vector<bool> temp = currentRoom->getDoors();
 
-	if (input == "n")
+	if (input == "north")
 	{
 		// only go north if there's a north door
 		if (temp.at(0) == true)
@@ -250,7 +249,7 @@ string Game::getAction()
 		//	getAction();
 		}
 	}
-	else if (input == "s")
+	else if (input == "south")
 	{
 		// only go south if there's a south door
 		if (temp.at(1) == true)
@@ -266,7 +265,7 @@ string Game::getAction()
 		//	getAction();
 		}
 	}
-	else if (input == "e")
+	else if (input == "east")
 	{
 		// only go east if there's an east door
 		if (temp.at(2) == true)
@@ -280,7 +279,7 @@ string Game::getAction()
 	//		getAction();
 		}
 	}
-	else if (input == "w")
+	else if (input == "west")
 	{
 		// only go west if there's a west door
 		if (temp.at(3) == true)
@@ -294,7 +293,7 @@ string Game::getAction()
 		//	getAction();
 		}
 	}
-	else if (input == "u")
+	else if (input == "up")
 	{
 		// only go up if there's an upper door
 		if (temp.at(4) == true)
@@ -308,7 +307,7 @@ string Game::getAction()
 			//	getAction();
 		}
 	}
-	else if (input == "d")
+	else if (input == "down")
 	{
 		// only go down if there's a lower door
 		if (temp.at(5) == true)

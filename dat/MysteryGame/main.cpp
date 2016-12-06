@@ -14,6 +14,9 @@ using namespace std;
 int main()
 {
 	// basic game menu to play game
+	cout << "------------------------------------------------" << endl;
+	cout << "        WELCOME TO THE JACKSONBURG MANSION      " << endl;
+	cout << "------------------------------------------------" << endl;
 	cout << "Type 'play' to begin!\n>>";
 	string input;
 	cin >> input;
