@@ -61,6 +61,12 @@ public:
 	// room file within a temporary folder. (Which will be read from upon game saving)
 	bool updateTemp();
 
+	// returns the description of the room
+	string getDescription();
+
+	// returns the name of the room
+	string getName();
+
 	// returns as a vector of pointer variables the entire inventory of the room
 	vector<Item*> getInventory();
 

@@ -335,6 +335,10 @@ string Game::getAction()
 	{
 		displayInstructions();
 	}
+	else if (input == "room" || input == "describe")
+	{
+		displayRoom();
+	}
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
@@ -352,6 +356,14 @@ void Game::displayInstructions()
 	cout << "------------------------------------------------------------------------" << endl;
 
 	return;
+}
+
+void Game::displayRoom()
+{
+	cout << endl << "[" << this->currentRoom->getName() << "]:" << endl;
+	cout << "------------------------------------------------------------------------" << endl;
+	cout << this->currentRoom->getDescription() << endl;
+	cout << "------------------------------------------------------------------------" << endl;
 }
 
 bool Game::checkRoomChangeValidity()

@@ -454,6 +454,10 @@ bool Room::updateTemp()
 	return false;
 }
 
+string Room::getDescription() { return description; }
+
+string Room::getName() { return name; }
+
 vector<Item*> Room::getInventory() { return inventory; }
 
 Coordinates Room::getLocation() { return coordinates; }

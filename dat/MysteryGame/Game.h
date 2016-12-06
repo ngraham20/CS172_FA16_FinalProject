@@ -39,6 +39,9 @@ public:
 
 	void displayInstructions();
 
+	// re-displays the room for the player to read
+	void displayRoom();
+
 private:
 	// the game has loaded rooms
 	// these rooms will be ordered as follows <n,s,e,w,u,d>
