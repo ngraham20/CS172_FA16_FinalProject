@@ -6,7 +6,6 @@
 */
 #include <iostream>
 #include "Coordinates.h"
-#include "Doors.h"
 #include "Game.h"
 #include "Input.h"
 #include "Room.h"

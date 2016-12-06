@@ -9,7 +9,6 @@
 #include <vector>
 #include <stdio.h>
 #include "Coordinates.h"
-#include "Doors.h"
 #include "Item.h"
 using namespace std;
 

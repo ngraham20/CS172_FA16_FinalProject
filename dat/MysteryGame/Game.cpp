@@ -112,7 +112,8 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	coordinates.x += relativeX;
 	coordinates.z += relativeZ;
 
-	Room newroom(coordinates);
+	Room* temp = new Room(coordinates);
+	currentRoom = temp;
 	return true;
 }
 
@@ -121,8 +122,8 @@ void Game::playGame()
 	// this method is run constantly and acts as the stateMachine for the game
 	// begin the game in the proper room
 	Coordinates firstRoom = { 0,4,2 };
-	Room* _042 = new Room(firstRoom);
-	currentRoom = _042;
+	Room* startingRoom = new Room(firstRoom);
+	currentRoom = startingRoom;
 	// do while input is not quit
 	string playerInput;
 	do
@@ -143,32 +144,78 @@ string Game::getAction()
 	//getline(cin, input);
 	cin >> input;
 	// TODO change this code to work for words
+	// get a temporary fix on the current room's door situation
+	vector<bool> temp = currentRoom->getDoors();
+
 	if (input == "n")
 	{
-		// go north
-		changeRoom(0,1,0);
-		return input;
+		// only go north if there's a north door
+		if (temp.at(0) == true)
+		{
+			// go north
+			changeRoom(0, -1, 0);
+		}
+		else
+		{
+			cout << "You can't go that direction." << endl;
+		//	getAction();
+		}
 	}
 	else if (input == "s")
 	{
-		// go south
-		changeRoom(0,-1,0);
-		return input;
+		// only go south if there's a south door
+		if (temp.at(1) == true)
+		{
+			// go south
+			changeRoom(0, 1, 0);
+			return input;
+		}
+		else
+		{
+			cout << "You can't go that direction." << endl;
+			return input;
+		//	getAction();
+		}
 	}
 	else if (input == "e")
 	{
-		// go east
-		changeRoom(0,0,1);
-		return input;
+		// only go east if there's an east door
+		if (temp.at(2) == true)
+		{
+			// go east
+			changeRoom(0, 0, 1);
+		}
+		else
+		{
+			cout << "You can't go that direction." << endl;
+	//		getAction();
+		}
 	}
 	else if (input == "w")
 	{
-		// go west
-		changeRoom(0,0,-1);
-		return input;
+		// only go west if there's a west door
+		if (temp.at(3) == true)
+		{
+			// go west
+			changeRoom(0, 0, -1);
+		}
+		else
+		{
+			cout << "You can't go that direction." << endl;
+		//	getAction();
+		}
 	}
-
-	return "quit";
+	else if (input == "quit")
+	{
+		return "quit";
+	}
+	else
+	{
+		cout << "Invalid input. Please Try Again." << endl;
+		input.clear();
+	//	getAction();
+	}
+	return input;
 }
 
 bool Game::checkRoomChangeValidity()
