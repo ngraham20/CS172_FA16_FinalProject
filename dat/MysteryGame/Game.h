@@ -18,6 +18,12 @@ public:
 	Room* getCurrentRoom();
 
 	bool deleteTemp();
+
+	// this is to be called when erros occur, and the game
+	// needs to completely clear all temp. (Only to be called
+	// by user)
+	static bool fullTempClear();
+
 	bool changeRoom(int relativeY, int relativeX, int relativeZ);
 
 	void playGame();

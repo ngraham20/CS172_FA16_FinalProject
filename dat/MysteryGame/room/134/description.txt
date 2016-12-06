@@ -1,0 +1,11 @@
+You stand in the middle of an enormous library. The
+smell of old books penetrates your nostrils, and
+the sense of knowledge and adventure radiates from 
+the room. Looking up, you see a balcony surrounding 
+the room, leaving a square-shaped gap through which
+you can see a second floor of bookshelves. On one of
+the many pillars supporting the balcony, hangs a tall 
+ladder by which you can climb to the second floor. To 
+the north, lies a dark, wooden door. To the east lies a 
+stairwell, leading downwards, and to the west, lies two 
+oaken doors.

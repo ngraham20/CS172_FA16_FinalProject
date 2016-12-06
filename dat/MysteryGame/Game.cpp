@@ -104,6 +104,92 @@ bool Game::deleteTemp()
 	return true;
 }
 
+bool Game::fullTempClear()
+{
+	// creates a temporary vector of coordinates
+	vector<Coordinates> temp;
+	Coordinates yxz;
+
+	// this calculates the y value
+	for (int i = 0; i < 4; i++)
+	{
+		// this calculates the x value
+		for (int j = 0; j < 10; j++)
+		{
+			// this calculates the z value
+			for (int k = 0; k < 10; k++)
+			{
+				yxz = { i,j,k };
+				temp.push_back(yxz);
+			}
+		}
+	}
+
+	// loops through all open coordinates
+	for (int i = 0; i < temp.size(); i++)
+	{
+		// sets the coordinates to the current one in the vector
+		Coordinates coordinates = temp.at(i);
+
+		//--------------------------------------name--------------------------------------
+		// changes filename to name
+		string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+
+		// tests the deletion
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			// return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+
+		//---------------------------------------inventory------------------------------
+		// changes filename to inventory
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			// return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+		//-----------------------------------------doors-------------------------------------------------
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			// return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+		//--------------------------------------description----------------------------------------------
+		// changes filename to description
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+		if (remove(fileName.c_str()) != 0)
+		{
+			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			// return false;
+		}
+		else
+		{
+			cout << "[deleteTemp]: Deleted " << fileName << endl;
+		}
+	}
+	return true;
+}
+
 bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 {
 	// checks which direciton the player wants to move
@@ -111,6 +197,8 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	coordinates.y += relativeY;
 	coordinates.x += relativeX;
 	coordinates.z += relativeZ;
+
+	// TODO this needs to delete all unneeded rooms
 
 	Room* temp = new Room(coordinates);
 	currentRoom = temp;
@@ -121,7 +209,7 @@ void Game::playGame()
 {
 	// this method is run constantly and acts as the stateMachine for the game
 	// begin the game in the proper room
-	Coordinates firstRoom = { 0,4,2 };
+	Coordinates firstRoom = { 1,4,2 };
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
 	// do while input is not quit
@@ -136,6 +224,7 @@ void Game::playGame()
 	this->~Game();
 }
 
+// TODO this needs to be re-named to travel() once the fullly-implimented getAction function is created
 string Game::getAction()
 {
 	string input;
@@ -203,6 +292,34 @@ string Game::getAction()
 		{
 			cout << "You can't go that direction." << endl;
 		//	getAction();
+		}
+	}
+	else if (input == "u")
+	{
+		// only go up if there's an upper door
+		if (temp.at(4) == true)
+		{
+			// go up
+			changeRoom(1, 0, 0);
+		}
+		else 
+		{
+			cout << "You can't go that direction." << endl;
+			//	getAction();
+		}
+	}
+	else if (input == "d")
+	{
+		// only go down if there's a lower door
+		if (temp.at(5) == true)
+		{
+			// go down
+			changeRoom(-1, 0, 0);
+		}
+		else
+		{
+			cout << "You can't go that direction." << endl;
+			//	getAction();
 		}
 	}
 	else if (input == "quit")
