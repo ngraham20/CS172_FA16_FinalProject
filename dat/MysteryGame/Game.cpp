@@ -366,6 +366,8 @@ void Game::displayRoom()
 	cout << "------------------------------------------------------------------------" << endl;
 }
 
+// this function makes sure that the doors exist
+// TODO maybe flush this out and replace some code in getAction() with this
 bool Game::checkRoomChangeValidity()
 {
 	Room* tRoom = getCurrentRoom();

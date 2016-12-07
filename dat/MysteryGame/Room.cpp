@@ -280,7 +280,7 @@ bool Room::readOrigin()
 		{
 			string temp;
 			input >> temp;
-			if (temp != "")
+			if (temp != "") // TODO make each Item look for Item type as well as name
 			{
 				// cout << "[origin]: roomInventory:" << temp << endl;
 				Item* item = Item::createItemfromFile(temp);
