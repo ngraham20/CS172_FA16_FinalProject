@@ -25,7 +25,7 @@ Item::~Item()
 }
 
 // Returns a pointer to a specific type of Item, based upon input from system
-Item* Item::createItemfromFile(string type)
+Item* Item::createItemfromFile(string type) // TODO set this item's properties
 {
 	if (type == "weapon")
 	{

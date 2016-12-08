@@ -28,6 +28,7 @@ public:
 	virtual bool setLumosity(double lumosity);
 private:
 	string name;
+	string type;
 	double lumosity;
 	int power;
 };

@@ -5,7 +5,7 @@
 
 
 // this constructor begins a new game and calls playGame()
-Game::Game() // TODO allow for load/save option
+Game::Game()
 {
 	// sets the current room for begining of game
 	Coordinates firstRoom = { 1,4,2 };
@@ -14,6 +14,10 @@ Game::Game() // TODO allow for load/save option
 
 	// begins the game.
 	playGame();
+}
+
+Game::Game(string slot)
+{
 }
 
 Game::~Game()
@@ -49,101 +53,101 @@ bool Game::saveGame(int slotNumber)
 
 		// TODO the following:
 
-		//-----------------------------------------NAME-------------------------------------------------------
-			// collect the name of the room in the current temp coordinate
+		////-----------------------------------------NAME-------------------------------------------------------
+		//	// collect the name of the room in the current temp coordinate
 
-			// changes filename to name
-		string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-			to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+		//	// changes filename to name
+		//string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
-		input.open(fileName.c_str());
-		if (!input.fail())
-		{
-			// sets tempName
-			getline(input, tempName);
-			input.close();
-		}
-		else
-		{
-			cout << "[Save]: Failed to open temp file for saving" << endl;
-		}
+		//input.open(fileName.c_str());
+		//if (!input.fail())
+		//{
+		//	// sets tempName
+		//	getline(input, tempName);
+		//	input.close();
+		//}
+		//else
+		//{
+		//	cout << "[Save]: Failed to open temp file for saving" << endl;
+		//}
 
 			// save the name into the current temp coordinate in the given save slot
 
 		// sets fileName to saveslot location
-		fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
+		/*fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
 			to_string(coordinates.y) + to_string(coordinates.x) +
 			to_string(coordinates.z) + "\\name.txt";
 
 		output.open(fileName.c_str());
 		output << tempName;
-		output.close();
+		output.close();*/
 
-		//------------------------------------------------DOORS------------------------------------------------------------
-		// DOORS
+		////------------------------------------------------DOORS------------------------------------------------------------
+		//// DOORS
 
-			// collect the door info
-			// set the filename variable
-		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-			to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+		//	// collect the door info
+		//	// set the filename variable
+		//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
 
-		// open the file
-		input.open(fileName.c_str());
+		//// open the file
+		//input.open(fileName.c_str());
 
-		// if the file opens
-		if (!input.fail())
-		{
-			// read to the door struct from file
-			string temp;
-			constexpr int doorCount = 6;
-			for (int i = 0; i < doorCount; i++)
-			{
-				input >> temp;
-				if (temp == "true")
-				{
-					tempDoors.push_back(true);
-					// cout << "[readOrigin]: door " << i << ": true" << endl;
-				}
-				else if (temp == "false")
-				{
-					tempDoors.push_back(false);
-					// cout << "[readOrigin]: door " << i << ": false" << endl;
-				}
-				else
-				{
-					cout << "[Save]: temp File failed." << endl;
-				}
-			}
-			input.close();
-		}
-			// save the door info
-		fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
-			to_string(coordinates.y) + to_string(coordinates.x) +
-			to_string(coordinates.z) + "\\doors.txt";
+		//// if the file opens
+		//if (!input.fail())
+		//{
+		//	// read to the door struct from file
+		//	string temp;
+		//	constexpr int doorCount = 6;
+		//	for (int i = 0; i < doorCount; i++)
+		//	{
+		//		input >> temp;
+		//		if (temp == "true")
+		//		{
+		//			tempDoors.push_back(true);
+		//			// cout << "[readOrigin]: door " << i << ": true" << endl;
+		//		}
+		//		else if (temp == "false")
+		//		{
+		//			tempDoors.push_back(false);
+		//			// cout << "[readOrigin]: door " << i << ": false" << endl;
+		//		}
+		//		else
+		//		{
+		//			cout << "[Save]: temp File failed." << endl;
+		//		}
+		//	}
+		//	input.close();
+		//}
+		//	// save the door info
+		//fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
+		//	to_string(coordinates.y) + to_string(coordinates.x) +
+		//	to_string(coordinates.z) + "\\doors.txt";
 
-		output.open(fileName.c_str());
-		for (int i = 0; i < tempDoors.size(); i++)
-		{
-			if (tempDoors.at(i) == true)
-			{
-				output << "true" << endl;
-			}
-			else if (tempDoors.at(i) == false)
-			{
-				output << "false" << endl;
-			}
-			else
-			{
-				cout << "[updateTemp]: Could not write bool to file" << endl;
-			}
-		}
-		output.close();
+		//output.open(fileName.c_str());
+		//for (int i = 0; i < tempDoors.size(); i++)
+		//{
+		//	if (tempDoors.at(i) == true)
+		//	{
+		//		output << "true" << endl;
+		//	}
+		//	else if (tempDoors.at(i) == false)
+		//	{
+		//		output << "false" << endl;
+		//	}
+		//	else
+		//	{
+		//		cout << "[updateTemp]: Could not write bool to file" << endl;
+		//	}
+		//}
+		//output.close();
 
 		//----------------------------------------------INVENTORY-------------------------------------------
 			// collect the inventory
 
 			// set the fileName variable
-		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
 		// get the name of the room from file
@@ -195,50 +199,50 @@ bool Game::saveGame(int slotNumber)
 		}
 		output.close();
 
-		//---------------------------------------DESCRIPTION-------------------------------------------
-			// collect the description
+	//	//---------------------------------------DESCRIPTION-------------------------------------------
+	//		// collect the description
 
-			// set the fileName variable
-		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-			to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+	//		// set the fileName variable
+	//	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+	//		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
 
-		// get the name of the room from file
-		input.open(fileName.c_str());
-		// if file opens
-		if (!input.fail())
-		{
-			// cout << "[readTemp]: Accessing description.txt" << endl;
-			// set the inventory variables
-			while (!input.eof())
-			{
-				string temp;
-				getline(input, temp);
-				tempDescription = tempDescription + temp + "\n";
-			}
+	//	// get the name of the room from file
+	//	input.open(fileName.c_str());
+	//	// if file opens
+	//	if (!input.fail())
+	//	{
+	//		// cout << "[readTemp]: Accessing description.txt" << endl;
+	//		// set the inventory variables
+	//		while (!input.eof())
+	//		{
+	//			string temp;
+	//			getline(input, temp);
+	//			tempDescription = tempDescription + temp + "\n";
+	//		}
 
-			// gets rid of extra newline characters (always two of them for some reason)
-			while (tempDescription.at(tempDescription.size() - 1) == '\n')
-			{
-				tempDescription.pop_back();
-			}
-			input.close();
-		}
-		//otherwise
-		else
-		{
-			// call destructor
-			cout << "[Save]: Failed to access temp file: " << fileName << endl;
-			return false;
-		}
+	//		// gets rid of extra newline characters (always two of them for some reason)
+	//		while (tempDescription.at(tempDescription.size() - 1) == '\n')
+	//		{
+	//			tempDescription.pop_back();
+	//		}
+	//		input.close();
+	//	}
+	//	//otherwise
+	//	else
+	//	{
+	//		// call destructor
+	//		cout << "[Save]: Failed to access temp file: " << fileName << endl;
+	//		return false;
+	//	}
 
-			// save the description
-		fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
-			to_string(coordinates.y) + to_string(coordinates.x) +
-			to_string(coordinates.z) + "\\description.txt";
+	//		// save the description
+	//	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
+	//		to_string(coordinates.y) + to_string(coordinates.x) +
+	//		to_string(coordinates.z) + "\\description.txt";
 
-		output.open(fileName.c_str());
-		output << tempDescription;
-		output.close();
+	//	output.open(fileName.c_str());
+	//	output << tempDescription;
+	//	output.close();
 	}
 	return true;
 }

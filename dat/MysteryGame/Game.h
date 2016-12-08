@@ -14,6 +14,9 @@ public:
 	// constructor creates the game
 	Game();
 
+	// overloaded constructor loads a game with specific save slot
+	Game(string slot);
+
 	// destructor deletes the game and all temp files.
 	~Game();
 

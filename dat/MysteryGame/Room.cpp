@@ -62,14 +62,6 @@ bool Room::createTempInventory()
 
 	ofstream output;
 
-	//string filename = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
-
-	//output.open(filename.c_str());
-	//if (output.fail()) { return false; }
-	//output.close();
-	//// cout << "[createTemp]: Created name.txt" << endl;
-
 	string filename = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
@@ -77,14 +69,6 @@ bool Room::createTempInventory()
 	if (output.fail()) { return false; }
 	output.close();
 	// cout << "[createTemp]: Created invnentory.txt" << endl;
-
-	//filename = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
-
-	//output.open(filename.c_str());
-	//if (output.fail()) { return false; }
-	//output.close();
-	//// cout << "[createTemp]: Created description.txt" << endl;
 
 	return true;
 }
@@ -245,34 +229,6 @@ bool Room::readTempInventory()
 bool Room::readRoomProperties()
 {
 	ifstream input;
-
-	//// ------------------------------------name-----------------------------------------------
-	//// set the fileName variable
-	//fileName = ".\\room\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
-
-	//// get the name of the room from file
-	//input.open(fileName.c_str());
-
-	//// if file opens
-	//if (!input.fail())
-	//{
-	//	// set the name variable
-	//	getline(input, name);
-
-	//	// print the room name
-	//	// cout << endl << "[Origin]: ";
-	//	cout << endl << "[" << name << "]:" << endl;
-	//	input.close();
-	//}
-	//// otherwise
-	//else
-	//{
-	//	// call destructor
-	//	cout << "[readOrigin]: " << fileName << " does not exist. . ." << endl;
-	//	this->~Room();
-	//	return false;
-	//}
 	// --------------------------------------inventory--------------------------------
 	// set the fileName variable
 	fileName = ".\\room\\" + to_string(coordinates.y) +
@@ -288,12 +244,14 @@ bool Room::readRoomProperties()
 		// set the inventory variables
 		while (!input.eof())
 		{
-			string temp;
-			input >> temp;
-			if (temp != "") // TODO make each Item look for Item type as well as name
+			string tempItem;
+			string type;
+			input >> tempItem;
+			input >> type;
+			if (type != "") // TODO make each Item look for Item type as well as name
 			{
 				// cout << "[origin]: roomInventory:" << temp << endl;
-				Item* item = Item::createItemfromFile(temp);
+				Item* item = Item::createItemfromFile(type);
 				inventory.push_back(item);
 			}
 		}
@@ -306,77 +264,7 @@ bool Room::readRoomProperties()
 		this->~Room();
 		return false;
 	}
-	//// -----------------------------------------doors---------------------------------------------------
-	//// set the filename variable
-	//fileName = ".\\room\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
-
-	//// open the file
-	//input.open(fileName.c_str());
-
-	//// if the file opens
-	//if (!input.fail())
-	//{
-	//	// read to the door struct from file
-	//	string temp;
-	//	constexpr int doorCount = 6;
-	//	for (int i = 0; i < doorCount; i++)
-	//	{
-	//		input >> temp;
-	//		if (temp == "true")
-	//		{
-	//			doors.push_back(true);
-	//			// cout << "[readOrigin]: door " << i << ": true" << endl;
-	//		}
-	//		else if (temp == "false")
-	//		{
-	//			doors.push_back(false);
-	//			// cout << "[readOrigin]: door " << i << ": false" << endl;
-	//		}
-	//		else
-	//		{
-	//			// cout << "[readOrigin]: file input is not true or false." << endl;
-	//		}
-	//	}
-	//	input.close();
-	//}
-
-	//// -----------------------------------------description--------------------------------------------
-	//// set the fileName variable
-	//fileName = ".\\room\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
-
-	//// get the name of the room from file
-	//input.open(fileName.c_str());
-	//// if file opens
-	//if (!input.fail())
-	//{
-	//	// cout << "[readOrigin]: Accessing description.txt" << endl;
-	//	// set the inventory variables
-	//	while (!input.eof())
-	//	{
-	//		string temp;
-	//		getline(input, temp);
-	//		description = description + temp + "\n";
-	//	}
-	//	// gets rid of extra newline characters (always two of them for some reason)
-	//	while (description.at(description.size() - 1) == '\n')
-	//	{
-	//		description.pop_back();
-	//	}
-	//	cout << "------------------------------------------------------------------------" << endl;
-	//	cout << description << endl;
-	//	cout << "------------------------------------------------------------------------" << endl;
-	//	input.close();
-	//}
-	////otherwise
-	//else
-	//{
-	//	// call destructor
-	//	cout << "[readOrigin]: Could not open file. . .\n";
-	//	this->~Room();
-	//	return false;
-	//}
+	
 	return true;
 }
 
@@ -404,16 +292,6 @@ bool Room::updateTemp()
 	{
 		input.close();
 
-	//// -------------------------------------------name----------------------------------------------
-	//	// cout << "[updateTemp]: " << fileName << " accessed to be updated. . .!" << endl;
-
-	//	// closes the file once it's been opened (and written to)
-		//input.close();
-
-	//	output.open(fileName.c_str());
-	//	output << name;
-	//	output.close();
-
 		//------------------------------------inventory----------------------------------------------
 		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
@@ -425,38 +303,11 @@ bool Room::updateTemp()
 			string inventoryItem = item->getName();
 			if (inventoryItem != "")
 			{
-				// cout << "[updateTemp]: " << inventoryItem << endl;
+				cout << "[updateTemp]: " << inventoryItem << endl;
 				output << inventoryItem << endl;
 			}
 		}
 		output.close();
-	//	//--------------------------------------doors----------------------------------------------------
-	//	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
-	//	output.open(fileName.c_str());
-	//	for (int i = 0; i < doors.size(); i++)
-	//	{
-	//		if (doors.at(i) == true)
-	//		{
-	//			output << "true" << endl;
-	//		}
-	//		else if (doors.at(i) == false)
-	//		{
-	//			output << "false" << endl;
-	//		}
-	//		else
-	//		{
-	//			cout << "[updateTemp]: Could not write bool to file" << endl;
-	//		}
-	//	}
-	//	output.close();
-
-	//	//------------------------------------description------------------------------------------------
-	//	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
-	//	output.open(fileName.c_str());
-	//	output << description;
-	//	output.close();
 	}
 	else
 	{
