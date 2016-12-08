@@ -214,18 +214,8 @@ void Game::playGame()
 	this->~Game();
 }
 
-// TODO this needs to be re-named to travel() once the fullly-implimented getAction function is created
-string Game::getAction()
+void Game::changeRoomsFromInput(string action)
 {
-	string input;
-	cout << ">>";
-	getline(cin, input);
-	
-	Input userin(input);
-
-	string action = userin.checkAction();
-	// TODO change this code to work for words
-	// get a temporary fix on the current room's door situation
 	vector<bool> temp = currentRoom->getDoors();
 
 	if (action == "goNorth")
@@ -248,7 +238,6 @@ string Game::getAction()
 		{
 			// go south
 			changeRoom(0, 1, 0);
-			return input;
 		}
 		else
 		{
@@ -289,7 +278,7 @@ string Game::getAction()
 			// go up
 			changeRoom(1, 0, 0);
 		}
-		else 
+		else
 		{
 			cout << "You can't go that direction." << endl;
 		}
@@ -307,25 +296,28 @@ string Game::getAction()
 			cout << "You can't go that direction." << endl;
 		}
 	}
+}
+
+// TODO this needs to be re-named to travel() once the fullly-implimented getAction function is created
+string Game::getAction()
+{
+	string input;
+	cout << ">>";
+	getline(cin, input);
+	
+	Input userin(input);
+
+	string action = userin.checkAction();
+	// TODO change this code to work for words
+	// get a temporary fix on the current room's door situation
+
+	if (action == "goNorth" || action == "goSouth" || action == "goEast" || action == "goWest" || action == "goUp" || action == "goDown")
+	{
+		changeRoomsFromInput(action);
+	}
 	else if (action == "quit")
 	{
-		cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
-		string answer;
-		cin >> answer;
-		if (answer == "yes")
-		{
-			return "quit";
-		}
-		else if (answer == "no")
-		{
-			cout << "Resuming game. . ." << endl;
-			input = "continue";
-		}
-		else
-		{
-			cout << "Invalid Input. Please Try again." << endl;
-			input = "continue";
-		}
+		input = quitGame();
 	}
 	else if (action == "help")
 	{
@@ -359,6 +351,27 @@ void Game::displayRoom()
 	cout << "------------------------------------------------------------------------" << endl;
 	cout << this->currentRoom->getDescription() << endl;
 	cout << "------------------------------------------------------------------------" << endl;
+}
+
+string Game::quitGame()
+{
+	cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
+	string answer;
+	cin >> answer;
+	if (answer == "yes")
+	{
+		return "quit";
+	}
+	else if (answer == "no")
+	{
+		cout << "Resuming game. . ." << endl;
+		return "continue";
+	}
+	else
+	{
+		cout << "Invalid Input. Please Try again." << endl;
+		return "continue";
+	}
 }
 
 bool Game::checkRoomChangeValidity()

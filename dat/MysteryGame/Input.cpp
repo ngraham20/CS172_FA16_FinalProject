@@ -72,7 +72,7 @@ string Input::checkAction()
 	{
 		return "help";
 	}
-	else if (action == "room" || action == "describe")
+	else if (verb == "room" || verb == "describe")
 	{
 		return "room";
 	}

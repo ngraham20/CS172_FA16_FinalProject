@@ -35,6 +35,9 @@ public:
 	// this acts as the state machine, running the game
 	void playGame();
 
+	// this will change the room according to the users input
+	void changeRoomsFromInput(string action);
+
 	// this receives player action and returns a string
 	string getAction();
 
@@ -42,6 +45,9 @@ public:
 
 	// re-displays the room for the player to read
 	void displayRoom();
+
+	// makes necessary calls to quit the game
+	string quitGame();
 
 private:
 	// the game has loaded rooms
