@@ -10,8 +10,14 @@ Input::Input(string userin)
 	stringstream instream;
 	instream << userin;
 
-	instream >> verb;
-	instream >> subject;
+	string temp;
+	instream >> temp;
+	transform(temp.begin(), temp.end(), temp.begin(), tolower);
+	verb = temp;
+
+	instream >> temp;
+	transform(temp.begin(), temp.end(), temp.begin(), tolower);
+	subject = temp;
 }
 
 

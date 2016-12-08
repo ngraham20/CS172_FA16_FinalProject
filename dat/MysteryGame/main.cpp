@@ -22,6 +22,8 @@ int main()
 	cin >> input;
 	bool quit = false;
 
+	cin.ignore();
+
 	if (input == "play")
 		Game game;
 

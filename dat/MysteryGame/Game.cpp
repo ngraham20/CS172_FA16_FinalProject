@@ -220,7 +220,7 @@ string Game::getAction()
 	string input;
 	cout << ">>";
 	getline(cin, input);
-
+	
 	Input userin(input);
 
 	string verb = userin.getVerb();
@@ -229,7 +229,7 @@ string Game::getAction()
 	// get a temporary fix on the current room's door situation
 	vector<bool> temp = currentRoom->getDoors();
 
-	if (subject == "north")
+	if (userin.getSubject() == "north")
 	{
 		// only go north if there's a north door
 		if (temp.at(0) == true)
