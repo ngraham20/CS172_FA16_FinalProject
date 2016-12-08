@@ -223,8 +223,6 @@ string Game::getAction()
 	
 	Input userin(input);
 
-	string verb = userin.getVerb();
-	string subject = userin.getSubject();
 	// TODO change this code to work for words
 	// get a temporary fix on the current room's door situation
 	vector<bool> temp = currentRoom->getDoors();
@@ -243,7 +241,7 @@ string Game::getAction()
 		//	getAction();
 		}
 	}
-	else if (subject == "south")
+	else if (userin.getSubject() == "south")
 	{
 		// only go south if there's a south door
 		if (temp.at(1) == true)
@@ -259,7 +257,7 @@ string Game::getAction()
 		//	getAction();
 		}
 	}
-	else if (subject == "east")
+	else if (userin.getSubject() == "east")
 	{
 		// only go east if there's an east door
 		if (temp.at(2) == true)
@@ -273,7 +271,7 @@ string Game::getAction()
 	//		getAction();
 		}
 	}
-	else if (subject == "west")
+	else if (userin.getSubject() == "west")
 	{
 		// only go west if there's a west door
 		if (temp.at(3) == true)
@@ -287,7 +285,7 @@ string Game::getAction()
 		//	getAction();
 		}
 	}
-	else if (subject == "up")
+	else if (userin.getSubject() == "up")
 	{
 		// only go up if there's an upper door
 		if (temp.at(4) == true)
@@ -301,7 +299,7 @@ string Game::getAction()
 			//	getAction();
 		}
 	}
-	else if (subject == "down")
+	else if (userin.getSubject() == "down")
 	{
 		// only go down if there's a lower door
 		if (temp.at(5) == true)
@@ -315,7 +313,7 @@ string Game::getAction()
 			//	getAction();
 		}
 	}
-	else if (verb == "quit")
+	else if (userin.getVerb() == "quit")
 	{
 		cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
 		string answer;

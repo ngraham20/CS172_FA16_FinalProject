@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 class Input
@@ -16,7 +17,8 @@ public:
 	~Input();
 	string getVerb();
 	string getSubject();
-
+	void checkAction();
+	string returnSubjectFromAction(string verb);
 
 private:
 	string verb;
