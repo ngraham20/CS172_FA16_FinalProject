@@ -17,6 +17,8 @@ public:
 	// destructor deletes the game and all temp files.
 	~Game();
 
+	bool saveGame(int slotNumber);
+
 	// the room the player is currently in
 	Room* getCurrentRoom();
 
