@@ -26,7 +26,6 @@ Game::~Game()
 	deleteTemp();
 }
 
-// TODO finish this
 bool Game::saveGame(int slotNumber)
 {
 	ifstream input;
@@ -140,15 +139,114 @@ bool Game::saveGame(int slotNumber)
 		}
 		output.close();
 
-		// INVENTORY
+		//----------------------------------------------INVENTORY-------------------------------------------
 			// collect the inventory
+
+			// set the fileName variable
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
+
+		// get the name of the room from file
+		input.open(fileName.c_str());
+		// if file opens
+		if (!input.fail())
+		{
+			// cout << "[readTemp]: Accessing inventory.txt" << endl;
+
+			// set the inventory variables
+			while (!input.eof())
+			{
+				string temp;
+				input >> temp;
+				if (temp != "")
+				{
+					//	cout << "[readTemp]: roomInventory: " << temp << endl; // TODO replace cout with inventory.push_back(item)
+
+					// creates an item with specific properties based on the item type
+					Item* item = Item::createItemfromFile(temp);
+					tempInventory.push_back(item);
+				}
+
+			}
+			input.close();
+		}
+		//otherwise
+		else
+		{
+			cout << "[Save]: Failed to access temp file: " << fileName << endl;
+			// return false;
+		}
+
 			// save the inventory
+		fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
+			to_string(coordinates.y) + to_string(coordinates.x) +
+			to_string(coordinates.z) + "\\inventory.txt";
 
-		// DESCRIPTION
+		output.open(fileName.c_str());
+		for (int i = 0; i < tempInventory.size(); i++)
+		{
+			Item* item = tempInventory.at(i);
+			string inventoryItem = item->getName();
+			if (inventoryItem != "")
+			{
+				// cout << "[updateTemp]: " << inventoryItem << endl;
+				output << inventoryItem << endl;
+			}
+		}
+		output.close();
+
+		//---------------------------------------DESCRIPTION-------------------------------------------
 			// collect the description
-			// save the description
 
+			// set the fileName variable
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+
+		// get the name of the room from file
+		input.open(fileName.c_str());
+		// if file opens
+		if (!input.fail())
+		{
+			// cout << "[readTemp]: Accessing description.txt" << endl;
+			// set the inventory variables
+			while (!input.eof())
+			{
+				string temp;
+				getline(input, temp);
+				tempDescription = tempDescription + temp + "\n";
+			}
+
+			// gets rid of extra newline characters (always two of them for some reason)
+			while (tempDescription.at(tempDescription.size() - 1) == '\n')
+			{
+				tempDescription.pop_back();
+			}
+			input.close();
+		}
+		//otherwise
+		else
+		{
+			// call destructor
+			cout << "[Save]: Failed to access temp file: " << fileName << endl;
+			return false;
+		}
+
+			// save the description
+		fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
+			to_string(coordinates.y) + to_string(coordinates.x) +
+			to_string(coordinates.z) + "\\description.txt";
+
+		output.open(fileName.c_str());
+		output << tempDescription;
+		output.close();
 	}
+	return true;
+}
+
+bool Game::loadGame(int slotNumber)
+{
+	// initialize temporary variables
+
 	return true;
 }
 
@@ -472,12 +570,25 @@ string Game::getAction()
 		cin >> answer;
 		if (answer == '1')
 		{
+			cout << "Overwrighting Save Data. . ." << endl;
 			saveGame(1);
 			cout << "Game saved to slot 1." << endl;
-		} // TODO add other two save slots
+		}
+		else if (answer == '2')
+		{
+			cout << "Overwrighting Save Data. . ." << endl;
+			saveGame(1);
+			cout << "Game saved to slot 2." << endl;
+		}
+		else if (answer == '3')
+		{
+			cout << "Overwrighting Save Data. . ." << endl;
+			saveGame(1);
+			cout << "Game saved to slot 3." << endl;
+		}
 		else
 		{
-			cout << "Invalid Input. Please Try again." << endl;
+			cout << "Invalid Save Slot." << endl;
 			input = "continue";
 		}
 		

@@ -17,7 +17,22 @@ public:
 	// destructor deletes the game and all temp files.
 	~Game();
 
+	// this function saves all created temp files to a save slot.
+	// because the room constructor checks for temp files, the save
+	// function needn't fill all rooms with original data.
+	// TODO save player current room as well
+	// TODO maybe change this to only save for current save slot?
 	bool saveGame(int slotNumber);
+
+	// TODO Impliment this
+	// This method will delete all files in a save slot. This
+	// should happen when a new game is created over a save slot.
+	// This way, file management won't have to be a problem.
+	bool deleteSave(int slotNumber);
+
+	// this method will load all temp files from save slots, then place
+	// the player in the saved current room
+	bool loadGame(int slotNumber);
 
 	// the room the player is currently in
 	Room* getCurrentRoom();
