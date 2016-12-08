@@ -60,6 +60,10 @@ string Input::checkAction()
 	{
 		action = returnSubjectFromAction("observe");
 	}
+	else if (verb == "drop" || verb == "leave" || verb == "throw" || verb == "give" || verb == "discard")
+	{
+		action = returnSubjectFromAction("drop");
+	}
 	else if (verb == "quit")
 	{
 		return "quit";
@@ -89,13 +93,18 @@ string Input::returnSubjectFromAction(string verb)
 		else if (subject == "west") { return "goWest"; }
 		else if (subject == "up") { return "goUp"; }
 		else if (subject == "down") { return "goDown"; }
+		else { return "fail"; }
 	}
 	else if (verb == "take") 
 	{
-
+		return "";
+	}
+	else if (verb == "drop")
+	{
+		return "";
 	}
 	else if (verb == "observe") 
 	{
-
+		return "";
 	}
 }
