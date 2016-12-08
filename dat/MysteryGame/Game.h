@@ -8,6 +8,7 @@
 #include <vector>
 #include "Character.h"
 #include "Room.h"
+#include "Input.h"
 class Game
 {
 public:
@@ -52,6 +53,8 @@ private:
 
 	// pointer to the current room
 	Room* currentRoom;
+
+	Input* currentInput;
 
 	// checks through the current room's doors to make sure that
 	// the player can move the direction he wants to
