@@ -263,25 +263,25 @@ bool Game::deleteTemp()
 		// sets the coordinates to the current one in the vector
 		Coordinates coordinates = temp.at(i);
 
-		//--------------------------------------name--------------------------------------
-		// changes filename to name
-		string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-			to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+		////--------------------------------------name--------------------------------------
+		//// changes filename to name
+		//string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
 
-		// tests the deletion
-		if (remove(fileName.c_str()) != 0)
-		{
-			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
-			return false;
-		}
-		else
-		{
-			cout << "[deleteTemp]: Deleted " << fileName << endl;
-		}
+		//// tests the deletion
+		//if (remove(fileName.c_str()) != 0)
+		//{
+		//	cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+		//	return false;
+		//}
+		//else
+		//{
+		//	cout << "[deleteTemp]: Deleted " << fileName << endl;
+		//}
 
 		//---------------------------------------inventory------------------------------
 		// changes filename to inventory
-		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		string fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
 		if (remove(fileName.c_str()) != 0)
@@ -293,31 +293,31 @@ bool Game::deleteTemp()
 		{
 			cout << "[deleteTemp]: Deleted " << fileName << endl;
 		}
-		//-----------------------------------------doors-------------------------------------------------
-		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-			to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
-		if (remove(fileName.c_str()) != 0)
-		{
-			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
-			return false;
-		}
-		else
-		{
-			cout << "[deleteTemp]: Deleted " << fileName << endl;
-		}
-		//--------------------------------------description----------------------------------------------
-		// changes filename to description
-		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-			to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
-		if (remove(fileName.c_str()) != 0)
-		{
-			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
-			return false;
-		}
-		else
-		{
-			cout << "[deleteTemp]: Deleted " << fileName << endl;
-		}
+		////-----------------------------------------doors-------------------------------------------------
+		//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+		//if (remove(fileName.c_str()) != 0)
+		//{
+		//	cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+		//	return false;
+		//}
+		//else
+		//{
+		//	cout << "[deleteTemp]: Deleted " << fileName << endl;
+		//}
+		////--------------------------------------description----------------------------------------------
+		//// changes filename to description
+		//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+		//if (remove(fileName.c_str()) != 0)
+		//{
+		//	cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+		//	return false;
+		//}
+		//else
+		//{
+		//	cout << "[deleteTemp]: Deleted " << fileName << endl;
+		//}
 	}
 	return true;
 }

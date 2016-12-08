@@ -38,10 +38,10 @@ private:
 	string description;
 
 	// reads from the original files created pre-compile
-	bool readOrigin();
+	bool readRoomProperties();
 
 	// creates temporary files to be read from and written to during gameplay
-	bool createTemp();
+	bool createTempInventory();
 
 // -----------------------------------PUBLIC--------------------------------------
 public:
@@ -55,7 +55,7 @@ public:
 	bool changeRoom(Coordinates coordinates);
 
 	// reads from the temporary files created by the constructor
-	bool readTemp();
+	bool readTempInventory();
 
 	// when the destructor is activated, this method is called to update the
 	// room file within a temporary folder. (Which will be read from upon game saving)
@@ -63,6 +63,9 @@ public:
 
 	// returns the description of the room
 	string getDescription();
+
+	// describes the room with a cout
+	bool describeRoom();
 
 	// returns the name of the room
 	string getName();
