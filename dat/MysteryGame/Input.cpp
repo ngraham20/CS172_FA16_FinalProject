@@ -83,6 +83,7 @@ string Input::checkAction()
 	return action;
 }
 
+// Calculates the correct action to return based on the verb and subject
 string Input::returnSubjectFromAction(string verb)
 {
 	if (verb == "go") 

@@ -338,7 +338,10 @@ string Game::getAction()
 void Game::displayInstructions()
 {
 	cout << "------------------------------------------------------------------------" << endl;
+	cout << "  Only type commands in two words phrases. Input is not case sensitive. " << endl;
+	cout << "        If an action requires two words, underscore the space           " << endl;
 	cout << "          To move, type a cardinal direction or up or down.             " << endl;
+	cout << "              Examples: go north , pick_up flashlight                   " << endl;
 	cout << "              If you would like to quit, type \"quit.\"                 " << endl;
 	cout << "------------------------------------------------------------------------" << endl;
 
