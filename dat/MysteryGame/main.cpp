@@ -22,6 +22,7 @@ int main()
 	cin >> input;
 	bool quit = false;
 
+	//Clears the cin for when the game classes uses getLine
 	cin.ignore();
 
 	if (input == "play")

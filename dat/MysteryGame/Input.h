@@ -17,7 +17,7 @@ public:
 	~Input();
 	string getVerb();
 	string getSubject();
-	void checkAction();
+	string checkAction();
 	string returnSubjectFromAction(string verb);
 
 private:

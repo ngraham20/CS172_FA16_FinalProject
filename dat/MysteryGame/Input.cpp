@@ -44,42 +44,57 @@ string Input::getSubject()
 	return subject;
 }
 
-void Input::checkAction()
+string Input::checkAction()
 {
+	string action;
 	// checking if the verb entered by user is a synonym for one of the three available actions
 	if (verb == "go" || verb == "travel" || verb == "move")
 	{
-		returnSubjectFromAction("go");
+		action = returnSubjectFromAction("go");
 	}
 	else if (verb == "take" || verb == "grab" || verb == "pick_up") 
 	{
-		returnSubjectFromAction("take");
+		action = returnSubjectFromAction("take");
 	}
 	else if (verb == "observe" || verb == "examine" || verb == "look_at" || verb == "inspect" || verb == "view")
 	{
-		returnSubjectFromAction("observe");
+		action = returnSubjectFromAction("observe");
+	}
+	else if (verb == "quit")
+	{
+		return "quit";
+	}
+	else if (verb == "help" || verb == "instructions")
+	{
+		return "help";
+	}
+	else if (action == "room" || action == "describe")
+	{
+		return "room";
 	}
 	else
 	{
-		returnSubjectFromAction("fail");
+		return "fail";
 	}
+	return action;
 }
 
 string Input::returnSubjectFromAction(string verb)
 {
 	if (verb == "go") 
 	{
-
+		if (subject == "north") { return "goNorth"; }
+		else if (subject == "south") { return "goSouth"; }
+		else if (subject == "east") { return "goEast"; }
+		else if (subject == "west") { return "goWest"; }
+		else if (subject == "up") { return "goUp"; }
+		else if (subject == "down") { return "goDown"; }
 	}
 	else if (verb == "take") 
 	{
 
 	}
 	else if (verb == "observe") 
-	{
-
-	}
-	else if (verb == "fail")
 	{
 
 	}

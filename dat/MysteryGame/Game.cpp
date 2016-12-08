@@ -223,11 +223,12 @@ string Game::getAction()
 	
 	Input userin(input);
 
+	string action = userin.checkAction();
 	// TODO change this code to work for words
 	// get a temporary fix on the current room's door situation
 	vector<bool> temp = currentRoom->getDoors();
 
-	if (userin.getSubject() == "north")
+	if (action == "goNorth")
 	{
 		// only go north if there's a north door
 		if (temp.at(0) == true)
@@ -238,10 +239,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-		//	getAction();
 		}
 	}
-	else if (userin.getSubject() == "south")
+	else if (action == "goSouth")
 	{
 		// only go south if there's a south door
 		if (temp.at(1) == true)
@@ -253,11 +253,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-			return input;
-		//	getAction();
 		}
 	}
-	else if (userin.getSubject() == "east")
+	else if (action == "goEast")
 	{
 		// only go east if there's an east door
 		if (temp.at(2) == true)
@@ -268,10 +266,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-	//		getAction();
 		}
 	}
-	else if (userin.getSubject() == "west")
+	else if (action == "goWest")
 	{
 		// only go west if there's a west door
 		if (temp.at(3) == true)
@@ -282,10 +279,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-		//	getAction();
 		}
 	}
-	else if (userin.getSubject() == "up")
+	else if (action == "goUp")
 	{
 		// only go up if there's an upper door
 		if (temp.at(4) == true)
@@ -296,10 +292,9 @@ string Game::getAction()
 		else 
 		{
 			cout << "You can't go that direction." << endl;
-			//	getAction();
 		}
 	}
-	else if (userin.getSubject() == "down")
+	else if (action == "goDown")
 	{
 		// only go down if there's a lower door
 		if (temp.at(5) == true)
@@ -310,10 +305,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-			//	getAction();
 		}
 	}
-	else if (userin.getVerb() == "quit")
+	else if (action == "quit")
 	{
 		cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
 		string answer;
@@ -333,11 +327,11 @@ string Game::getAction()
 			input = "continue";
 		}
 	}
-	else if (input == "instructions" || input == "help")
+	else if (action == "help")
 	{
 		displayInstructions();
 	}
-	else if (input == "room" || input == "describe")
+	else if (action == "room")
 	{
 		displayRoom();
 	}
@@ -345,7 +339,6 @@ string Game::getAction()
 	{
 		cout << "Invalid input. Please Try Again." << endl;
 		input.clear();
-	//	getAction();
 	}
 	return input;
 }
