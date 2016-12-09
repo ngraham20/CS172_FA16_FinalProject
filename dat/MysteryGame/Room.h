@@ -38,7 +38,7 @@ private:
 	string description;
 
 	// reads from the original files created pre-compile
-	bool readRoomProperties();
+	bool readDefaultInventory();
 
 	// creates temporary files to be read from and written to during gameplay
 	bool createTempInventory();

@@ -3,9 +3,9 @@
 
 class Weapon : public Item
 {
-public:
-	Weapon();
-	~Weapon();
+public: // TODO figure out why this isn't working.
+	Weapon(string name, string type, double lumosity);
 
+private:
 };
 

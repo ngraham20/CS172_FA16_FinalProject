@@ -14,9 +14,11 @@ Item::Item()
 }
 
 // creates an item with specific name (to be created when string is read from file)
-Item::Item(string name)
+Item::Item(string name, string type, double lumosity)
 {
 	this->name = name;
+	this->type = type;
+	this->lumosity = lumosity;
 }
 
 // destructs the Item
@@ -25,11 +27,11 @@ Item::~Item()
 }
 
 // Returns a pointer to a specific type of Item, based upon input from system
-Item* Item::createItemfromFile(string type) // TODO set this item's properties
+Item* Item::createItemfromFile(string name, string type, double lumosity) // TODO set this item's properties
 {
 	if (type == "weapon")
 	{
-		return new Weapon;
+		return new Weapon(name,type,lumosity);
 	}
 	else if (type == "tool")
 	{
@@ -46,6 +48,8 @@ Item* Item::createItemfromFile(string type) // TODO set this item's properties
 
 // returns the name of the item
 string Item::getName() { return name; }
+
+string Item::getType() { return type; }
 
 // returns the lumosity value of the item
 double Item::getLumosity() { return lumosity; }

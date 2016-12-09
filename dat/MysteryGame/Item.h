@@ -12,17 +12,19 @@ class Item
 {
 public:
 	Item();
-	Item(string name);
+	Item(string name, string type, double lumosity);
 	~Item();
 
-	static Item* createItemfromFile(string type);
+	static Item* createItemfromFile(string name, string type, double lumosity);
 
 	// returns the name
 	string getName();
 
+	string getType();
+
 	// getLumosity is a method that can be used inherantly by another class which ALWAYS returns
 	// the lumosity
-	virtual double getLumosity();
+	double getLumosity();
 
 	// setLumosity sets the lumosity for any item
 	virtual bool setLumosity(double lumosity);

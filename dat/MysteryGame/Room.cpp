@@ -39,16 +39,17 @@ Room::Room(Coordinates coordinates)
 		// cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
 		createTempInventory();
 
+		// reads the origin files (except the inventory if temp is read)
+		// to the room properties
+		readDefaultInventory();
+
 		// this adds the created room's coordinates to the vector.
 		createdTempFiles.push_back(this->coordinates);
 
-		// write to the temp files from rom properties
+		// write to the temp files from room properties
 		updateTemp();
 
 	}
-	// reads the origin files (except the inventory if temp is read)
-	// to the room properties
-	readRoomProperties();
 
 	describeRoom();
 }
@@ -119,14 +120,20 @@ bool Room::readTempInventory()
 		// set the inventory variables
 		while (!input.eof())
 		{
-			string temp;
-			input >> temp;
-			if (temp != "")
+			string itemName;
+			string itemType;
+			double itemLumosity;
+
+			input >> itemName;
+			input >> itemType;
+			input >> itemLumosity;
+
+			if (itemName != "")
 			{
 				//	cout << "[readTemp]: roomInventory: " << temp << endl; // TODO replace cout with inventory.push_back(item)
 
 				// creates an item with specific properties based on the item type
-				Item* item = Item::createItemfromFile(temp);
+				Item* item = Item::createItemfromFile(itemName, itemType, itemLumosity);
 				inventory.push_back(item);
 			}
 
@@ -224,9 +231,9 @@ bool Room::readTempInventory()
 	return true;
 }
 
-// this now only reads the inventory files to room variables
+// this reads inventory files to room variables
 // it does NOT actually describe anything with cout
-bool Room::readRoomProperties()
+bool Room::readDefaultInventory()
 {
 	ifstream input;
 	// --------------------------------------inventory--------------------------------
@@ -234,37 +241,45 @@ bool Room::readRoomProperties()
 	fileName = ".\\room\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
-	// get the name of the room from file
-	input.open(fileName.c_str());
+	//// get the name of the room from file
+	//input.open(fileName.c_str());
 	// if file opens
-	if (!input.fail())
-	{
+	/*if (!input.fail())
+	{*/
 		// cout << "[readOrigin]: Accessing inventory.txt" << endl; // TODO remove this to properly play game
 
-		// set the inventory variables
-		while (!input.eof())
-		{
-			string tempItem;
-			string type;
-			input >> tempItem;
-			input >> type;
-			if (type != "") // TODO make each Item look for Item type as well as name
-			{
-				// cout << "[origin]: roomInventory:" << temp << endl;
-				Item* item = Item::createItemfromFile(type);
-				inventory.push_back(item);
-			}
-		}
-		input.close();
-	}
-	//otherwise
-	else
+	input.open(fileName.c_str());
+	// set the inventory variables
+	while (!input.eof())
 	{
-		// call destructor
-		this->~Room();
-		return false;
+
+		// retrieve the name, type, and lumosity of each item
+		string itemName;
+		string itemType;
+		double itemLumosity;
+
+		input >> itemName;
+		input >> itemType;
+		input >> itemLumosity;
+
+		if (itemType != "")
+		{
+			// cout << "[origin]: roomInventory:" << temp << endl;
+			Item* item = Item::createItemfromFile(itemName, itemType, itemLumosity);
+			inventory.push_back(item);
+		}
 	}
-	
+		// input.close();
+	//}
+	//otherwise
+	//else
+	//{
+	//	cout << "[Origin]: Failed to retrieve default inventory." << endl;
+	//	// call destructor
+	//	this->~Room();
+	//	return false;
+	//}
+
 	return true;
 }
 
@@ -300,11 +315,16 @@ bool Room::updateTemp()
 		for (int i = 0; i < inventory.size(); i++)
 		{
 			Item* item = inventory.at(i);
-			string inventoryItem = item->getName();
-			if (inventoryItem != "")
+			string itemName = item->getName();
+			string itemType = item->getType();
+			double itemLumosity = item->getLumosity();
+
+			if (itemName != "")
 			{
-				cout << "[updateTemp]: " << inventoryItem << endl;
-				output << inventoryItem << endl;
+				cout << "[updateTemp]: " << itemName << endl;
+				output << itemName << endl;
+				output << itemType << endl;
+				output << to_string(itemLumosity);
 			}
 		}
 		output.close();

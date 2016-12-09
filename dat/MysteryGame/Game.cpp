@@ -160,14 +160,20 @@ bool Game::saveGame(int slotNumber)
 			// set the inventory variables
 			while (!input.eof())
 			{
-				string temp;
-				input >> temp;
-				if (temp != "")
+				string itemName;
+				string itemType;
+				double itemLumosity;
+
+				input >> itemName;
+				input >> itemType;
+				input >> itemLumosity;
+
+				if (itemName != "")
 				{
 					//	cout << "[readTemp]: roomInventory: " << temp << endl; // TODO replace cout with inventory.push_back(item)
 
 					// creates an item with specific properties based on the item type
-					Item* item = Item::createItemfromFile(temp);
+					Item* item = Item::createItemfromFile(itemName, itemType, itemLumosity);
 					tempInventory.push_back(item);
 				}
 
