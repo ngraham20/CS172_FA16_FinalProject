@@ -17,6 +17,7 @@ Game::Game()
 	playGame();
 }
 
+// this is for loading the game
 Game::Game(int slot)
 {
 	// sets the current room for begining of game
@@ -257,6 +258,7 @@ bool Game::loadGame(int slotNumber)
 
 			input.open(fileName.c_str());
 
+			//-----------------------------------------------READ INVENTORY TO VARIABLES--------------------------------------------------------
 			// write the inventory there
 			if (!input.fail())
 			{
@@ -267,11 +269,31 @@ bool Game::loadGame(int slotNumber)
 					input >> itemType;
 					input >> itemLumosity;
 
-					// create temporary pointer to a new item
-					Item* temp = Item::createItem(itemName, itemType, itemLumosity);
+					if (itemName != "")
+					{
+						// create temporary pointer to a new item
+						Item* temp1 = Item::createItem(itemName, itemType, itemLumosity);
 
-					// send that item to the temporary vector
-					temporaryInventory.push_back(temp);
+						// if there are multiple items in the vector
+						if (temporaryInventory.size() > 0)
+						{
+							// this is the last item in the vector
+							Item* temp2 = temporaryInventory.at(temporaryInventory.size() - 1);
+
+							// if the item-to-be-created is NOT the same as the temp2
+							if (temp1->getName() != temp2->getName())
+							{
+								// send that item to the temporary vector
+								temporaryInventory.push_back(temp1);
+							}
+						}
+						// else if this is the first item to be put in the inventory
+						else
+						{
+							// send that item to the temporary vector
+							temporaryInventory.push_back(temp1);
+						}
+					}
 				}
 			}
 			else
@@ -282,6 +304,7 @@ bool Game::loadGame(int slotNumber)
 			// close the file
 			input.close();
 
+			// --------------------------------------------------------WRITE TO TEMP---------------------------------
 			fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
 
 			output.open(fileName.c_str());
@@ -291,10 +314,7 @@ bool Game::loadGame(int slotNumber)
 				// create temporary item to send to inventory.txt
 				Item* temp = temporaryInventory.at(i);
 
-				output << temp->getName();
-				output << temp->getType();
-				output << temp->getLumosity();
-				output << endl;
+				output << temp->getName() << " " << temp->getType() << " " << temp->getLumosity() << endl;
 			
 			}
 			output.close();
@@ -309,10 +329,14 @@ bool Game::loadGame(int slotNumber)
 
 	if (!input.fail())
 	{
-		int room;
+		string room;
+		constexpr int asciiDecimal = 48;
 		input >> room;
 
-		//TODO FIX THIS NOW
+		// room[] returns the ascii value, subtracting 48 gives the actual 0-9 values
+		firstRoom.y = room[0] - asciiDecimal;
+		firstRoom.x = room[1] - asciiDecimal;
+		firstRoom.z = room[2] - asciiDecimal;
 
 		input.close();
 	}

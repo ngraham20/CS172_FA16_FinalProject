@@ -47,7 +47,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		createdTempFiles.push_back(this->coordinates);
 
 		// write to the temp files from room properties
-		updateTemp();
+		// updateTemp();
 
 	}
 	// write to the temp files from room properties
