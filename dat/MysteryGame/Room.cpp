@@ -468,7 +468,7 @@ Room::~Room()
 
 Item* Room::removeItemFromInventory(string itemName)
 {
-	// searches for a given item by name and then removes it from the inventory, using shrink_to_fit to make sure the vector contains no
+	// searches for a given item by name and then removes it from the room inventory, using shrink_to_fit to make sure the vector contains no
 	// empty indexes
 	for (int i = 0; i < inventory.size(); i++)
 	{

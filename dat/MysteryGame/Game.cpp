@@ -579,16 +579,7 @@ string Game::getAction()
 	}
 	else if (action == "takeItem")
 	{
-		Room temp = *currentRoom;
-		Item* tempitem = temp.removeItemFromInventory(userin.getSubject());
-		if (tempitem != NULL)
-		{
-			player->addItemToInventory(tempitem);
-		}
-		else
-		{
-			cout << "[TakeItem]: Error: NULL POINTER" << endl;
-		}
+		roomToPlayerItem(userin, action);
 	}
 	else
 	{
@@ -652,4 +643,32 @@ bool Game::checkRoomChangeValidity()
 	Room* tRoom = getCurrentRoom();
 	vector<bool> temp = tRoom->getDoors();
 	return false;
+}
+
+void Game::roomToPlayerItem(Input userin, string action)
+{
+	Item* tempItem = currentRoom->removeItemFromInventory(userin.getSubject());
+	if (tempItem != NULL)
+	{
+		player->addItemToInventory(tempItem);
+		cout << "You take the " << tempItem->getName() << "." << endl;
+	}
+	else
+	{
+		cout << "You do not see that item." << endl;
+	}
+}
+
+void Game::playerToRoomItem(Input userin, string action)
+{
+	Item* tempItem = player->removeItemFromInventory(userin.getSubject());
+	if (tempItem != NULL)
+	{
+		currentRoom->addItemToInventory(tempItem);
+		cout << "You drop the " << tempItem->getName() << "." << endl;
+	}
+	else
+	{
+		cout << "You do not have that item." << endl;
+	}
 }

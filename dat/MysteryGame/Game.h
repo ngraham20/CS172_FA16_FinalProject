@@ -89,5 +89,11 @@ private:
 	// the player can move the direction he wants to
 	bool checkRoomChangeValidity();
 
+	// this function controls the actions that take an item from a room and place it in player inventory
+	void roomToPlayerItem(Input userin, string action);
+
+	// this function controls the actions that take an item from the player and place it in room
+	void playerToRoomItem(Input userin, string action);
+
 };
 
