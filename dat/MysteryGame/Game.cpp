@@ -579,6 +579,16 @@ string Game::getAction()
 	}
 	else if (action == "takeItem")
 	{
+		Room temp = *currentRoom;
+		Item* tempitem = temp.removeItemFromInventory(userin.getSubject());
+		if (tempitem != NULL)
+		{
+			player->addItemToInventory(tempitem);
+		}
+		else
+		{
+			cout << "[TakeItem]: Error: NULL POINTER" << endl;
+		}
 	}
 	else
 	{

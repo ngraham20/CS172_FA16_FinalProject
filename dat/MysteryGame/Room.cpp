@@ -466,20 +466,25 @@ Room::~Room()
 	}
 }
 
-void Room::removeItemFromInventory(Item * item)
+Item* Room::removeItemFromInventory(string itemName)
 {
 	// searches for a given item by name and then removes it from the inventory, using shrink_to_fit to make sure the vector contains no
 	// empty indexes
 	for (int i = 0; i < inventory.size(); i++)
 	{
-		Item * temp = inventory[i];
-		if (temp->getName() == item->getName())
+		Item * temp = inventory.at(i);
+		if (temp != NULL)
 		{
-			inventory.erase(inventory.begin() + i);
-			inventory.shrink_to_fit();
-			break;
+			if (temp->getName() == itemName)
+			{
+				Item* temp = inventory.at(i);
+				inventory.erase(inventory.begin() + i);
+				inventory.shrink_to_fit();
+				return temp;
+			}
 		}
 	}
+	return NULL;
 }
 
 void Room::addItemToInventory(Item * item)

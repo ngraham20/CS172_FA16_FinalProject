@@ -82,7 +82,7 @@ public:
 	vector<bool> getDoors();
 
 	// finds the item from its name variable and then removes it from room inventory
-	void removeItemFromInventory(Item* item);
+	Item* removeItemFromInventory(string itemName);
 
 	// adds an item to the room's inventory
 	void addItemToInventory(Item* item);
