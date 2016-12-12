@@ -54,17 +54,17 @@ string Input::checkAction()
 	}
 	else if (verb == "take" || verb == "grab" || verb == "pick_up") 
 	{
-		action = returnSubjectFromAction("take");
+		return "takeItem";
 	}
 	else if (verb == "observe" || verb == "examine" || verb == "look_at" || verb == "inspect" || verb == "view")
 	{
-		action = returnSubjectFromAction("observe");
+		return "observeItem";
 	}
 	else if (verb == "drop" || verb == "leave" || verb == "throw" || verb == "give" || verb == "discard")
 	{
-		action = returnSubjectFromAction("drop");
+		return "dropItem";
 	}
-	else if (verb == "quit")
+	else if (verb == "quit" || verb == "exit")
 	{
 		return "quit";
 	}
@@ -86,7 +86,7 @@ string Input::checkAction()
 // Calculates the correct action to return based on the verb and subject
 string Input::returnSubjectFromAction(string verb)
 {
-	if (verb == "go") 
+	if (verb == "go")
 	{
 		if (subject == "north") { return "goNorth"; }
 		else if (subject == "south") { return "goSouth"; }
@@ -95,18 +95,6 @@ string Input::returnSubjectFromAction(string verb)
 		else if (subject == "up") { return "goUp"; }
 		else if (subject == "down") { return "goDown"; }
 		else { return "fail"; }
-	}
-	else if (verb == "take") 
-	{
-		return "takeItem";
-	}
-	else if (verb == "dropItem") 
-	{
-		return subject;
-	}
-	else if (verb == "observe")
-	{
-		return "observeItem";
 	}
 	return "";
 }

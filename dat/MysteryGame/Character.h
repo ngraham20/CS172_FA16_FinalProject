@@ -18,7 +18,7 @@ public:
 	Coordinates getLocation();
 	vector<Item*> getInventory();
 	void addItemToInventory(Item* item);
-	void removeItemFromInventory(Item* item);
+	Item* removeItemFromInventory(string itemName);
 	void setLocation(Coordinates roomLocation);
 
 private:
