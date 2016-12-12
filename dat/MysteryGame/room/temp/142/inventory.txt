@@ -1,0 +1,4 @@
+revolver weapon 0.000000
+knife weapon 0.000000
+rope weapon 0.000000
+candlestick weapon 0.000000

@@ -430,6 +430,23 @@ bool Room::describeRoom()
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << description << endl;
 		cout << "------------------------------------------------------------------------" << endl;
+
+		if (inventory.size() > 0)
+		{
+			// describe room inventory
+			int inventorySize = inventory.size();
+			cout << "On the floor, you can see a ";
+
+			for (int i = 0; i < inventorySize - 1; i++)
+			{
+				Item tempItem = *inventory.at(i);
+				cout << "a " << tempItem.getName() << ",\n";
+			}
+
+			Item tempItem = *inventory.at(inventorySize - 1);
+			cout << "and a " << tempItem.getName() << endl;
+		}
+
 		input.close();
 	}
 	//otherwise
@@ -480,6 +497,8 @@ Item* Room::removeItemFromInventory(string itemName)
 				Item* temp = inventory.at(i);
 				inventory.erase(inventory.begin() + i);
 				inventory.shrink_to_fit();
+
+				updateTemp();
 				return temp;
 			}
 		}

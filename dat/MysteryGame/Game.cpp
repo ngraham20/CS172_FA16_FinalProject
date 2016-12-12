@@ -506,7 +506,9 @@ string Game::getAction()
 	cout << ">>";
 
 	getline(cin, input);
-	
+
+	// cout << "[changeRoomsFromInput]: Your input was: " << input << endl;
+
 	Input userin(input);
 
 	string action = userin.checkAction();
@@ -579,15 +581,15 @@ string Game::getAction()
 	}
 	else if (action == "takeItem")
 	{
-		Room temp = *currentRoom;
-		Item* tempitem = temp.removeItemFromInventory(userin.getSubject());
+		Room* temp = currentRoom;
+		Item* tempitem = temp->removeItemFromInventory(userin.getSubject());
 		if (tempitem != NULL)
 		{
 			player->addItemToInventory(tempitem);
 		}
 		else
 		{
-			cout << "[TakeItem]: Error: NULL POINTER" << endl;
+			cout << "You do not see that item." << endl;
 		}
 	}
 	else
@@ -617,6 +619,21 @@ void Game::displayRoom()
 	cout << "------------------------------------------------------------------------" << endl;
 	cout << this->currentRoom->getDescription() << endl;
 	cout << "------------------------------------------------------------------------" << endl;
+
+	// describe room inventory
+	vector<Item*> tempInventory = currentRoom->getInventory();
+	int inventorySize = tempInventory.size();
+	cout << "On the floor, you can see a ";
+
+	for (int i = 0; i < inventorySize - 1; i++)
+	{
+		Item tempItem = *tempInventory.at(i);
+
+		cout << "a " << tempItem.getName() << ",\n";
+	}
+
+	Item tempItem = *tempInventory.at(inventorySize - 1);
+	cout << "and a " << tempItem.getName() << endl;
 }
 
 // this function makes sure that the doors exist
