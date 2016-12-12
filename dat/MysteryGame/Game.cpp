@@ -9,6 +9,7 @@ Game::Game()
 	// sets the current room for begining of game
 	Coordinates firstRoom = { 1,4,2 };
 	player = new Character();
+	setPlayerLocation(firstRoom);
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
 
@@ -35,6 +36,7 @@ bool Game::saveGame(int slotNumber)
 	ifstream input;
 	ofstream output;
 
+	//-----------------------------------------------------ROOMS--------------------------------------------------------
 	string fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\saved_rooms.txt";
 
 	input.open(fileName.c_str());
@@ -114,7 +116,7 @@ bool Game::saveGame(int slotNumber)
 		string tempDescription;
 
 
-		//----------------------------------------------INVENTORY-------------------------------------------
+		//----------------------------------------------ROOM_INVENTORY-------------------------------------------
 			// collect the inventory
 
 			// set the fileName variable
@@ -181,6 +183,19 @@ bool Game::saveGame(int slotNumber)
 		}
 		output.close();
 	}
+
+	//------------------------------------------PLAYER_INVENTORY---------------------------------------------------------
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_location.txt";
+	
+	Coordinates tempCoordinates = player->getLocation();
+
+	string playerLocation = to_string(tempCoordinates.y) + to_string(tempCoordinates.x) + to_string(tempCoordinates.z);
+
+	// create/overwright the playerlocation
+	output.open(fileName.c_str());
+
+	output << playerLocation;
+
 	return true;
 }
 
