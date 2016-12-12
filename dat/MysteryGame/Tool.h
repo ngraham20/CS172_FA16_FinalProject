@@ -4,7 +4,6 @@
 class Tool : public Item
 {
 public:
-	Tool();
-	~Tool();
+	using Item::Item;
 };
 

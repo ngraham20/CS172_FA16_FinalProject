@@ -4,7 +4,6 @@
 class Consumable : public Item
 {
 public:
-	Consumable();
-	~Consumable();
+	using Item::Item;
 };
 

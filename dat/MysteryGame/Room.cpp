@@ -54,8 +54,6 @@ Room::Room(Coordinates coordinates)
 	describeRoom();
 }
 
-// TODO create overloaded constructor to be called upon loadGame() to read from saves, NOT from Origin
-
 bool Room::createTempInventory()
 {
 	// createTemp is only called privately, and only by the constructor...
@@ -133,7 +131,7 @@ bool Room::readTempInventory()
 				//	cout << "[readTemp]: roomInventory: " << temp << endl; // TODO replace cout with inventory.push_back(item)
 
 				// creates an item with specific properties based on the item type
-				Item* item = Item::createItemfromFile(itemName, itemType, itemLumosity);
+				Item* item = Item::createItem(itemName, itemType, itemLumosity);
 				inventory.push_back(item);
 			}
 
@@ -265,7 +263,7 @@ bool Room::readDefaultInventory()
 		if (itemType != "")
 		{
 			// cout << "[origin]: roomInventory:" << temp << endl;
-			Item* item = Item::createItemfromFile(itemName, itemType, itemLumosity);
+			Item* item = Item::createItem(itemName, itemType, itemLumosity);
 			inventory.push_back(item);
 		}
 	}
@@ -322,9 +320,9 @@ bool Room::updateTemp()
 			if (itemName != "")
 			{
 				cout << "[updateTemp]: " << itemName << endl;
-				output << itemName << endl;
-				output << itemType << endl;
-				output << to_string(itemLumosity);
+				output << itemName + " ";
+				output << itemType + " ";
+				output << to_string(itemLumosity) << endl;
 			}
 		}
 		output.close();

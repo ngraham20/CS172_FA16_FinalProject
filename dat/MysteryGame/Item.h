@@ -15,7 +15,7 @@ public:
 	Item(string name, string type, double lumosity);
 	~Item();
 
-	static Item* createItemfromFile(string name, string type, double lumosity);
+	static Item* createItem(string name, string type, double lumosity);
 
 	// returns the name
 	string getName();

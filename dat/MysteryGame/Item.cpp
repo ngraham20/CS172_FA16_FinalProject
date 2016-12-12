@@ -19,6 +19,7 @@ Item::Item(string name, string type, double lumosity)
 	this->name = name;
 	this->type = type;
 	this->lumosity = lumosity;
+
 }
 
 // destructs the Item
@@ -27,7 +28,7 @@ Item::~Item()
 }
 
 // Returns a pointer to a specific type of Item, based upon input from system
-Item* Item::createItemfromFile(string name, string type, double lumosity) // TODO set this item's properties
+Item* Item::createItem(string name, string type, double lumosity)
 {
 	if (type == "weapon")
 	{
@@ -35,11 +36,11 @@ Item* Item::createItemfromFile(string name, string type, double lumosity) // TOD
 	}
 	else if (type == "tool")
 	{
-		return new Tool;
+		return new Tool(name,type,lumosity);
 	}
 	else if (type == "consumable")
 	{
-		return new Consumable;
+		return new Consumable(name,type,lumosity);
 	}
 
 	cout << "Item Type Not Properly Specified. Returning NULL Pointer." << endl;
