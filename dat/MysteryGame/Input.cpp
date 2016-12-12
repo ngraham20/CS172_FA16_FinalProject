@@ -100,9 +100,9 @@ string Input::returnSubjectFromAction(string verb)
 	{
 		return "takeItem";
 	}
-	else if (verb == "dropItem") 
+	else if (verb == "drop") 
 	{
-		return subject;
+		return "dropItem";
 	}
 	else if (verb == "observe")
 	{

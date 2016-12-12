@@ -581,6 +581,11 @@ string Game::getAction()
 	{
 		roomToPlayerItem(userin, action);
 	}
+	else if (action == "dropItem")
+	{
+
+		playerToRoomItem(userin, action);
+	}
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
