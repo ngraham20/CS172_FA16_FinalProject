@@ -7,6 +7,7 @@
 
 Character::Character()
 {
+	currentLocation = { 0, 0, 0 };
 }
 
 
@@ -20,23 +21,27 @@ vector<Item*> Character::getInventory() { return inventory; }
 
 void Character::addItemToInventory(Item * item)
 {
+	inventory.push_back(item);
 }
 
 void Character::removeItemFromInventory(Item * item)
 {
-	int index = -1;
-	auto it = std::find(inventory.begin(), inventory.end(), item);
-	if (it == inventory.end())
+	// searches for a given item by name and then removes it from the inventory, using shrink_to_fit to make sure the vector contains no
+	// empty indexes
+	for (int i = 0; i < inventory.size(); i++)
 	{
-		// name not in vector
+		Item * temp = inventory[i];
+		if (temp->getName() == item->getName())
+		{
+			inventory.erase(inventory.begin() + i);
+			inventory.shrink_to_fit();
+			break;
+		}
 	}
-	else
-	{
-		index = std::distance(inventory.begin(), it);
-	}
-	if (index != -1)
-	{
-		inventory.erase(inventory.begin() + index);
-	}
+}
+
+void Character::setLocation(Coordinates roomLocation)
+{
+	currentLocation = roomLocation;
 }
 

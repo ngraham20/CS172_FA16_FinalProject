@@ -9,6 +9,7 @@ Game::Game() // TODO allow for load/save option
 {
 	// sets the current room for begining of game
 	Coordinates firstRoom = { 1,4,2 };
+	player = new Character();
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
 
@@ -192,6 +193,8 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	coordinates.x += relativeX;
 	coordinates.z += relativeZ;
 
+	setPlayerLocation(coordinates);
+
 	// TODO this needs to delete all unneeded rooms
 
 	Room* temp = new Room(coordinates);
@@ -327,6 +330,9 @@ string Game::getAction()
 	{
 		displayRoom();
 	}
+	else if (action == "takeItem")
+	{
+	}
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
@@ -375,6 +381,11 @@ string Game::quitGame()
 		cout << "Invalid Input. Please Try again." << endl;
 		return "continue";
 	}
+}
+
+void Game::setPlayerLocation(Coordinates location)
+{
+	player->setLocation(location);
 }
 
 bool Game::checkRoomChangeValidity()

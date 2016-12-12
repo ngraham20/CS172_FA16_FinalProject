@@ -98,14 +98,15 @@ string Input::returnSubjectFromAction(string verb)
 	}
 	else if (verb == "take") 
 	{
-		return "";
+		return "takeItem";
 	}
-	else if (verb == "drop")
+	else if (verb == "dropItem") 
 	{
-		return "";
+		return subject;
 	}
-	else if (verb == "observe") 
+	else if (verb == "observe")
 	{
-		return "";
+		return "observeItem";
 	}
+	return "";
 }

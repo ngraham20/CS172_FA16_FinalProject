@@ -49,6 +49,9 @@ public:
 	// makes necessary calls to quit the game
 	string quitGame();
 
+	// updates the player's location
+	void setPlayerLocation(Coordinates location);
+
 private:
 	// the game has loaded rooms
 	// these rooms will be ordered as follows <n,s,e,w,u,d>
@@ -65,5 +68,6 @@ private:
 	// checks through the current room's doors to make sure that
 	// the player can move the direction he wants to
 	bool checkRoomChangeValidity();
+
 };
 
