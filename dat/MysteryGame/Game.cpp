@@ -581,21 +581,10 @@ string Game::getAction()
 	}
 	else if (action == "takeItem")
 	{
-		Room* temp = currentRoom;
-		Item* tempitem = temp->removeItemFromInventory(userin.getSubject());
-		if (tempitem != NULL)
-		{
-			player->addItemToInventory(tempitem);
-		}
-		else
-		{
-			cout << "You do not see that item." << endl;
-		}
 		roomToPlayerItem(userin, action);
 	}
 	else if (action == "dropItem")
 	{
-
 		playerToRoomItem(userin, action);
 	}
 	else
@@ -619,28 +608,7 @@ void Game::displayInstructions()
 	return;
 }
 
-void Game::displayRoom()
-{
-	cout << endl << "[" << this->currentRoom->getName() << "]:" << endl;
-	cout << "------------------------------------------------------------------------" << endl;
-	cout << this->currentRoom->getDescription() << endl;
-	cout << "------------------------------------------------------------------------" << endl;
-
-	// describe room inventory
-	vector<Item*> tempInventory = currentRoom->getInventory();
-	int inventorySize = tempInventory.size();
-	cout << "On the floor, you can see a ";
-
-	for (int i = 0; i < inventorySize - 1; i++)
-	{
-		Item tempItem = *tempInventory.at(i);
-
-		cout << "a " << tempItem.getName() << ",\n";
-	}
-
-	Item tempItem = *tempInventory.at(inventorySize - 1);
-	cout << "and a " << tempItem.getName() << endl;
-}
+void Game::displayRoom() { currentRoom->describeRoom(); }
 
 // this function makes sure that the doors exist
 // TODO maybe flush this out and replace some code in getAction() with this
@@ -683,6 +651,7 @@ void Game::roomToPlayerItem(Input userin, string action)
 	if (tempItem != NULL)
 	{
 		player->addItemToInventory(tempItem);
+		currentRoom->updateTemp();
 		cout << "You take the " << tempItem->getName() << "." << endl;
 	}
 	else
@@ -697,6 +666,7 @@ void Game::playerToRoomItem(Input userin, string action)
 	if (tempItem != NULL)
 	{
 		currentRoom->addItemToInventory(tempItem);
+		currentRoom->updateTemp();
 		cout << "You drop the " << tempItem->getName() << "." << endl;
 	}
 	else

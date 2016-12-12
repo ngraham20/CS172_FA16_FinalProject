@@ -319,7 +319,7 @@ bool Room::updateTemp()
 
 			if (itemName != "")
 			{
-				cout << "[updateTemp]: " << itemName << endl;
+			//	cout << "[updateTemp]: " << itemName << endl;
 				output << itemName + " ";
 				output << itemType + " ";
 				output << to_string(itemLumosity) << endl;
@@ -435,16 +435,24 @@ bool Room::describeRoom()
 		{
 			// describe room inventory
 			int inventorySize = inventory.size();
-			cout << "On the floor, you can see a ";
 
-			for (int i = 0; i < inventorySize - 1; i++)
+			Item tempItem = *inventory.at(0);
+			cout << "On the floor, you can see\na " << tempItem.getName() << endl;
+
+			if (inventory.size() > 1)
 			{
-				Item tempItem = *inventory.at(i);
-				cout << "a " << tempItem.getName() << ",\n";
-			}
+				if (inventory.size() > 2)
+				{
+					for (int i = 1; i < inventorySize - 1; i++)
+					{
+						tempItem = *inventory.at(i);
+						cout << "a " << tempItem.getName() << ",\n";
+					}
+				}
 
-			Item tempItem = *inventory.at(inventorySize - 1);
-			cout << "and a " << tempItem.getName() << endl;
+				tempItem = *inventory.at(inventorySize - 1);
+				cout << "and a " << tempItem.getName() << endl;
+			}
 		}
 
 		input.close();
@@ -497,8 +505,6 @@ Item* Room::removeItemFromInventory(string itemName)
 				Item* temp = inventory.at(i);
 				inventory.erase(inventory.begin() + i);
 				inventory.shrink_to_fit();
-
-				updateTemp();
 				return temp;
 			}
 		}
