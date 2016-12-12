@@ -3,7 +3,6 @@
 */
 #include "Game.h"
 
-
 // this constructor begins a new game and calls playGame()
 Game::Game()
 {
@@ -611,17 +610,7 @@ void Game::displayInstructions()
 	return;
 }
 
-<<<<<<< HEAD
 void Game::displayRoom() { currentRoom->describeRoom(); }
-=======
-void Game::displayRoom()
-{
-	cout << endl << "[" << this->currentRoom->getName() << "]:" << endl;
-	cout << "------------------------------------------------------------------------" << endl;
-	cout << this->currentRoom->getDescription() << endl;
-	cout << "------------------------------------------------------------------------" << endl;
-}
->>>>>>> 9ce2d97424e0446cd5692dd0eb2cf4f3930e0209
 
 // this function makes sure that the doors exist
 // TODO maybe flush this out and replace some code in getAction() with this
