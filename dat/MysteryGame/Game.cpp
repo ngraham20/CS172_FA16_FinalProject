@@ -536,11 +536,11 @@ string Game::getAction()
 		string answer;
 		cout << "Which save slot do you want to save to?" << endl;
 		cout << "--------" << endl;
-		cout << "|slot 1|" << endl;
+		cout << "|  G1  |" << endl;
 		cout << "--------" << endl;
-		cout << "|slot 2|" << endl;
+		cout << "|  G2  |" << endl;
 		cout << "--------" << endl;
-		cout << "|slot 3|" << endl;
+		cout << "|  G3  |" << endl;
 		cout << "--------" << endl;
 		cout << "| back |" << endl;
 		cout << "--------" << endl;
@@ -548,33 +548,38 @@ string Game::getAction()
 
 		cin >> answer;
 
-		if (answer == "1" || answer == "slot 1")
+		if (answer == "1" || answer == "G1" || answer == "g1")
 		{
 			cout << "Overwrighting Save Data. . ." << endl;
 			saveGame(1);
 			cout << "Game saved to slot 1." << endl;
+			cin.ignore();
 		}
-		else if (answer == "2" || answer == "slot 2")
+		else if (answer == "2" || answer == "G2" || answer == "g2")
 		{
 			cout << "Overwrighting Save Data. . ." << endl;
-			saveGame(1);
+			saveGame(2);
 			cout << "Game saved to slot 2." << endl;
+			cin.ignore();
 		}
-		else if (answer == "3" || answer == "slot 3")
+		else if (answer == "3" || answer == "G3" || answer == "g3")
 		{
 			cout << "Overwrighting Save Data. . ." << endl;
-			saveGame(1);
+			saveGame(3);
 			cout << "Game saved to slot 3." << endl;
+			cin.ignore();
 		}
 		else if (answer == "back")
 		{
 			cout << "Returning to game. . ." << endl;
 			input.clear();
+			cin.ignore();
 		}
 		else
 		{
 			cout << "Invalid Save Slot." << endl;
 			input.clear();
+			cin.ignore();
 		}
 	}
 	else if (action == "takeItem")
