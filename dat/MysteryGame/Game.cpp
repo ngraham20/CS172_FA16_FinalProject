@@ -506,9 +506,7 @@ string Game::getAction()
 	cout << ">>";
 
 	getline(cin, input);
-
-	// cout << "[changeRoomsFromInput]: Your input was: " << input << endl;
-
+	
 	Input userin(input);
 
 	string action = userin.checkAction();
@@ -581,16 +579,6 @@ string Game::getAction()
 	}
 	else if (action == "takeItem")
 	{
-		Room* temp = currentRoom;
-		Item* tempitem = temp->removeItemFromInventory(userin.getSubject());
-		if (tempitem != NULL)
-		{
-			player->addItemToInventory(tempitem);
-		}
-		else
-		{
-			cout << "You do not see that item." << endl;
-		}
 		roomToPlayerItem(userin, action);
 	}
 	else if (action == "dropItem")
@@ -625,21 +613,6 @@ void Game::displayRoom()
 	cout << "------------------------------------------------------------------------" << endl;
 	cout << this->currentRoom->getDescription() << endl;
 	cout << "------------------------------------------------------------------------" << endl;
-
-	// describe room inventory
-	vector<Item*> tempInventory = currentRoom->getInventory();
-	int inventorySize = tempInventory.size();
-	cout << "On the floor, you can see a ";
-
-	for (int i = 0; i < inventorySize - 1; i++)
-	{
-		Item tempItem = *tempInventory.at(i);
-
-		cout << "a " << tempItem.getName() << ",\n";
-	}
-
-	Item tempItem = *tempInventory.at(inventorySize - 1);
-	cout << "and a " << tempItem.getName() << endl;
 }
 
 // this function makes sure that the doors exist
@@ -655,11 +628,13 @@ string Game::quitGame()
 	}
 	else if (answer == "no")
 	{
+		cin.ignore();
 		cout << "Resuming game. . ." << endl;
 		return "continue";
 	}
 	else
 	{
+		cin.ignore();
 		cout << "Invalid Input. Please Try again." << endl;
 		return "continue";
 	}
@@ -683,6 +658,7 @@ void Game::roomToPlayerItem(Input userin, string action)
 	if (tempItem != NULL)
 	{
 		player->addItemToInventory(tempItem);
+		currentRoom->updateTemp();
 		cout << "You take the " << tempItem->getName() << "." << endl;
 	}
 	else
@@ -697,6 +673,7 @@ void Game::playerToRoomItem(Input userin, string action)
 	if (tempItem != NULL)
 	{
 		currentRoom->addItemToInventory(tempItem);
+		currentRoom->updateTemp();
 		cout << "You drop the " << tempItem->getName() << "." << endl;
 	}
 	else
