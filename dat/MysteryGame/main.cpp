@@ -51,21 +51,21 @@ int main()
 			cin >> input;
 			if (input == "slot 1" || input == "1")
 			{
-				Game game("slot 1");
+				Game game(1);
 
 				// exits the game
 				return 0;
 			}
 			else if (input == "slot 2" || input == "2")
 			{
-				Game game("slot 2");
+				Game game(2);
 
 				// exits the game
 				return 0;
 			}
 			else if (input == "slot 3" || input == "3")
 			{
-				Game game("slot 3");
+				Game game(3);
 
 				// exits the game
 				return 0;

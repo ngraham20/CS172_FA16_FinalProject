@@ -16,7 +16,7 @@ public:
 	Game();
 
 	// overloaded constructor loads a game with specific save slot
-	Game(string slot);
+	Game(int slot);
 
 	// destructor deletes the game and all temp files.
 	~Game();
@@ -79,6 +79,8 @@ private:
 
 	// the game has a player
 	Character* player;
+
+	Coordinates firstRoom;
 
 	// pointer to the current room
 	Room* currentRoom;

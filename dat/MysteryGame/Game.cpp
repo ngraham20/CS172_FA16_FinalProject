@@ -7,7 +7,7 @@
 Game::Game()
 {
 	// sets the current room for begining of game
-	Coordinates firstRoom = { 1,4,2 };
+	firstRoom = { 1,4,2 };
 	player = new Character();
 	setPlayerLocation(firstRoom);
 	Room* startingRoom = new Room(firstRoom);
@@ -17,8 +17,18 @@ Game::Game()
 	playGame();
 }
 
-Game::Game(string slot)
+Game::Game(int slot)
 {
+	// sets the current room for begining of game
+
+	loadGame(slot);
+	player = new Character();
+	setPlayerLocation(firstRoom);
+	Room* startingRoom = new Room(firstRoom);
+	currentRoom = startingRoom;
+
+	// begins the game.
+	playGame();
 }
 
 Game::~Game()
@@ -202,6 +212,8 @@ bool Game::saveGame(int slotNumber)
 // TODO finish loadGame()
 bool Game::loadGame(int slotNumber)
 {
+	cout << "Loading Game. . ." << endl;
+
 	ifstream input;
 	ofstream output;
 
@@ -220,33 +232,95 @@ bool Game::loadGame(int slotNumber)
 
 			// pushes the coordinates of each line to a vector to be read from later within this method
 			input >> coordinates;
-			roomsToLoad.push_back(coordinates);
+			if (coordinates != "")
+			{
+				roomsToLoad.push_back(coordinates);
+			}
 
 		}
 		input.close();
 
-		// TODO read the coordinate string from the vector
+		// for every room which needs to be loaded
 		for (int i = 0; i < roomsToLoad.size(); i++)
 		{
-			string temp = roomsToLoad.at(i);
+			string tempRoom = roomsToLoad.at(i);
 			
-			// open the file at that coordinate
-			fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" + temp + "\\inventory.txt";
+			// open the save slot inventory file
+			fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" + tempRoom + "\\inventory.txt";
+
+			string itemName;
+			string itemType;
+			double itemLumosity;
+
+			// a temporary inventory to use to transfer items between files
+			vector<Item*> temporaryInventory;
+
+			input.open(fileName.c_str());
+
+			// write the inventory there
+			if (!input.fail())
+			{
+				while (!input.eof()) 
+				{
+					// set name, type, and lumosity from file to local variables
+					input >> itemName;
+					input >> itemType;
+					input >> itemLumosity;
+
+					// create temporary pointer to a new item
+					Item* temp = Item::createItem(itemName, itemType, itemLumosity);
+
+					// send that item to the temporary vector
+					temporaryInventory.push_back(temp);
+				}
+			}
+			else
+			{
+				cout << "[Load]: failed to open save files." << endl;
+				return false;
+			}
+			// close the file
+			input.close();
+
+			fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
 
 			output.open(fileName.c_str());
 
-			// read its inventory to a variable
-			
-			// close the file
+			for (int i = 0; i < temporaryInventory.size(); i++)
+			{
+				// create temporary item to send to inventory.txt
+				Item* temp = temporaryInventory.at(i);
 
-			// open the temp file at the same coordinate
-			// write the inventory there
-			// close the file
+				output << temp->getName();
+				output << temp->getType();
+				output << temp->getLumosity();
+				output << endl;
+			
+			}
+			output.close();
 		}
 
 	}
-	// set name, type, and lumosity from file to local variables
-	// TODO transfer those variables to the temp files
+
+	//-------------------------PLAYER_LOCATION-------------------------------------------------
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_location.txt";
+
+	input.open(fileName.c_str());
+
+	if (!input.fail())
+	{
+		int room;
+		input >> room;
+
+		//TODO FIX THIS NOW
+
+		input.close();
+	}
+	else
+	{
+		cout << "[Load]: Failed to open player_location.txt" << endl;
+	}
+
 	return true;
 }
 

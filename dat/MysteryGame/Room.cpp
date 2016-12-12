@@ -15,7 +15,7 @@ Room::Room(Coordinates coordinates)
 	ifstream input;
 
 	// check to see if the temp inventory file exists
-	fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
+fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		to_string(this->coordinates.x) + to_string(this->coordinates.z) + "\\inventory.txt";
 
 	input.open(fileName.c_str());
@@ -50,6 +50,8 @@ Room::Room(Coordinates coordinates)
 		updateTemp();
 
 	}
+	// write to the temp files from room properties
+	updateTemp();
 
 	describeRoom();
 }
@@ -414,7 +416,7 @@ bool Room::describeRoom()
 	// if file opens
 	if (!input.fail())
 	{
-		// cout << "[readOrigin]: Accessing description.txt" << endl;
+		 cout << "[readOrigin]: Accessing description.txt" << endl;
 		// set the inventory variables
 		while (!input.eof())
 		{
