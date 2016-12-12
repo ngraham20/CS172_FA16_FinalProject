@@ -9,6 +9,7 @@ Game::Game()
 {
 	// sets the current room for begining of game
 	Coordinates firstRoom = { 1,4,2 };
+	player = new Character();
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
 
@@ -385,6 +386,10 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	coordinates.x += relativeX;
 	coordinates.z += relativeZ;
 
+	setPlayerLocation(coordinates);
+
+	// TODO this needs to delete all unneeded rooms
+
 	Room* temp = new Room(coordinates);
 	currentRoom = temp;
 	return true;
@@ -395,8 +400,11 @@ void Game::playGame()
 	// this method is run constantly and acts as the stateMachine for the game
 	// do while input is not quit
 	string playerInput;
+	//Clears the cin for when the game classes uses getLine
+	cin.ignore();
 	do
 	{
+		
 		// call getPlayerInput()
 		 playerInput = getAction();
 
@@ -405,18 +413,11 @@ void Game::playGame()
 	this->~Game();
 }
 
-// TODO this needs to be re-named to travel() once the fullly-implimented getAction function is created
-string Game::getAction()
+void Game::changeRoomsFromInput(string action)
 {
-	string input;
-	cout << ">>";
-	//getline(cin, input);
-	cin >> input;
-	// TODO change this code to work for words
-	// get a temporary fix on the current room's door situation
 	vector<bool> temp = currentRoom->getDoors();
 
-	if (input == "north")
+	if (action == "goNorth")
 	{
 		// only go north if there's a north door
 		if (temp.at(0) == true)
@@ -427,10 +428,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-		//	getAction();
 		}
 	}
-	else if (input == "south")
+	else if (action == "goSouth")
 	{
 		// only go south if there's a south door
 		if (temp.at(1) == true)
@@ -441,11 +441,11 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-			input.clear();
 		//	getAction();
+
 		}
 	}
-	else if (input == "east")
+	else if (action == "goEast")
 	{
 		// only go east if there's an east door
 		if (temp.at(2) == true)
@@ -456,10 +456,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-	//		getAction();
 		}
 	}
-	else if (input == "west")
+	else if (action == "goWest")
 	{
 		// only go west if there's a west door
 		if (temp.at(3) == true)
@@ -470,10 +469,9 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-		//	getAction();
 		}
 	}
-	else if (input == "up")
+	else if (action == "goUp")
 	{
 		// only go up if there's an upper door
 		if (temp.at(4) == true)
@@ -481,13 +479,12 @@ string Game::getAction()
 			// go up
 			changeRoom(1, 0, 0);
 		}
-		else 
+		else
 		{
 			cout << "You can't go that direction." << endl;
-			//	getAction();
 		}
 	}
-	else if (input == "down")
+	else if (action == "goDown")
 	{
 		// only go down if there's a lower door
 		if (temp.at(5) == true)
@@ -498,34 +495,37 @@ string Game::getAction()
 		else
 		{
 			cout << "You can't go that direction." << endl;
-			//	getAction();
 		}
 	}
-	else if (input == "quit")
+}
+
+// TODO this needs to be re-named to travel() once the fullly-implimented getAction function is created
+string Game::getAction()
+{
+	string input;
+	cout << ">>";
+
+	getline(cin, input);
+	
+	Input userin(input);
+
+	string action = userin.checkAction();
+	// TODO change this code to work for words
+	// get a temporary fix on the current room's door situation
+
+	if (action == "goNorth" || action == "goSouth" || action == "goEast" || action == "goWest" || action == "goUp" || action == "goDown")
 	{
-		cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
-		string answer;
-		cin >> answer;
-		if (answer == "yes")
-		{
-			return "quit";
-		}
-		else if (answer == "no")
-		{
-			cout << "Resuming game. . ." << endl;
-			input = "continue";
-		}
-		else
-		{
-			cout << "Invalid Input. Please Try again." << endl;
-			input = "continue";
-		}
+		changeRoomsFromInput(action);
 	}
-	else if (input == "instructions" || input == "help")
+	else if (action == "quit")
+	{
+		input = quitGame();
+	}
+	else if (action == "help")
 	{
 		displayInstructions();
 	}
-	else if (input == "room" || input == "describe")
+	else if (action == "room")
 	{
 		displayRoom();
 	}
@@ -577,11 +577,13 @@ string Game::getAction()
 			input.clear();
 		}
 	}
+	else if (action == "takeItem")
+	{
+	}
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
 		input.clear();
-	//	getAction();
 	}
 	return input;
 }
@@ -589,7 +591,10 @@ string Game::getAction()
 void Game::displayInstructions()
 {
 	cout << "------------------------------------------------------------------------" << endl;
+	cout << "  Only type commands in two words phrases. Input is not case sensitive. " << endl;
+	cout << "        If an action requires two words, underscore the space           " << endl;
 	cout << "          To move, type a cardinal direction or up or down.             " << endl;
+	cout << "              Examples: go north , pick_up flashlight                   " << endl;
 	cout << "              If you would like to quit, type \"quit.\"                 " << endl;
 	cout << "------------------------------------------------------------------------" << endl;
 
@@ -606,6 +611,32 @@ void Game::displayRoom()
 
 // this function makes sure that the doors exist
 // TODO maybe flush this out and replace some code in getAction() with this
+string Game::quitGame()
+{
+	cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";
+	string answer;
+	cin >> answer;
+	if (answer == "yes")
+	{
+		return "quit";
+	}
+	else if (answer == "no")
+	{
+		cout << "Resuming game. . ." << endl;
+		return "continue";
+	}
+	else
+	{
+		cout << "Invalid Input. Please Try again." << endl;
+		return "continue";
+	}
+}
+
+void Game::setPlayerLocation(Coordinates location)
+{
+	player->setLocation(location);
+}
+
 bool Game::checkRoomChangeValidity()
 {
 	Room* tRoom = getCurrentRoom();

@@ -4,10 +4,25 @@
 	includes, but is not limited to, the player, NPCs, and animals.
 */
 #pragma once
+#include "Coordinates.h"
+#include <vector>
+#include "Item.h"
+using namespace std; 
+
 class Character
 {
 public:
 	Character();
 	~Character();
+
+	Coordinates getLocation();
+	vector<Item*> getInventory();
+	void addItemToInventory(Item* item);
+	void removeItemFromInventory(Item* item);
+	void setLocation(Coordinates roomLocation);
+
+private:
+	Coordinates currentLocation;
+	vector<Item*> inventory;
 };
 

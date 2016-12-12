@@ -81,6 +81,12 @@ public:
 	// returns all possible doors, stating which are open, and which are closed.
 	vector<bool> getDoors();
 
+	// finds the item from its name variable and then removes it from room inventory
+	void removeItemFromInventory(Item* item);
+
+	// adds an item to the room's inventory
+	void addItemToInventory(Item* item);
+
 	~Room();
 };
 

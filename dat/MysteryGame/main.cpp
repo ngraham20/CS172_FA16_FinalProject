@@ -26,6 +26,7 @@ int main()
 		cout << ">>";
 
 		cin >> input;
+		
 		bool quit = false;
 
 		if (input == "play")
@@ -79,6 +80,11 @@ int main()
 		else if (input == "clear")
 			Game::fullTempClear();
 	} while (input != "quit");
+
+
+	if (input == "play")
+		
+		Game game;
 
 	return 0;
 }

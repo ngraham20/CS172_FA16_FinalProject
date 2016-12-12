@@ -4,10 +4,24 @@
 	and checked before being sent to the game.
 */
 #pragma once
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+
 class Input
 {
 public:
-	Input();
+	Input(string userin);
 	~Input();
+	string getVerb();
+	string getSubject();
+	string checkAction();
+	string returnSubjectFromAction(string verb);
+
+private:
+	string verb;
+	string subject;
 };
 

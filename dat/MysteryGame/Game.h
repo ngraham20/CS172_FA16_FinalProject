@@ -8,6 +8,7 @@
 #include <vector>
 #include "Character.h"
 #include "Room.h"
+#include "Input.h"
 class Game
 {
 public:
@@ -54,6 +55,9 @@ public:
 	// this acts as the state machine, running the game
 	void playGame();
 
+	// this will change the room according to the users input
+	void changeRoomsFromInput(string action);
+
 	// this receives player action and returns a string
 	string getAction();
 
@@ -61,6 +65,12 @@ public:
 
 	// re-displays the room for the player to read
 	void displayRoom();
+
+	// makes necessary calls to quit the game
+	string quitGame();
+
+	// updates the player's location
+	void setPlayerLocation(Coordinates location);
 
 private:
 	// the game has loaded rooms
@@ -73,8 +83,11 @@ private:
 	// pointer to the current room
 	Room* currentRoom;
 
+	Input* currentInput;
+
 	// checks through the current room's doors to make sure that
 	// the player can move the direction he wants to
 	bool checkRoomChangeValidity();
+
 };
 
