@@ -70,6 +70,8 @@ public:
 	// updates the player's location
 	void setPlayerLocation(Coordinates location);
 
+	//Character* getPlayer();
+
 private:
 	// the game has loaded rooms
 	// these rooms will be ordered as follows <n,s,e,w,u,d>
@@ -99,4 +101,3 @@ private:
 	void printPlayerInventory();
 
 };
-

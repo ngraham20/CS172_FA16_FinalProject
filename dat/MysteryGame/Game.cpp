@@ -72,11 +72,11 @@ bool Game::saveGame(int slotNumber)
 			// remove the files
 			if (remove(fileName.c_str()) != 0)
 			{
-				cout << "[overwrightSaves]: Could not delete " << fileName << ". . ." << endl;
+				//cout << "[overwrightSaves]: Could not delete " << fileName << ". . ." << endl;
 			}
 			else
 			{
-				cout << "[overwrightSaves]: Deleted " << fileName << endl;
+				//cout << "[overwrightSaves]: Deleted " << fileName << endl;
 			}
 
 		}
@@ -86,11 +86,11 @@ bool Game::saveGame(int slotNumber)
 		// delete saved_rooms.txt
 		if (remove(fileName.c_str()) != 0)
 		{
-			cout << "[overwrightSaves]: Could not delete " << fileName << ". . ." << endl;
+			//cout << "[overwrightSaves]: Could not delete " << fileName << ". . ." << endl;
 		}
 		else
 		{
-			cout << "[overwrightSaves]: Deleted " << fileName << endl;
+			//cout << "[overwrightSaves]: Deleted " << fileName << endl;
 		}
 
 		input.close();
@@ -423,38 +423,13 @@ bool Game::deleteTemp()
 
 		if (remove(fileName.c_str()) != 0)
 		{
-			cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
+			// cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
 			return false;
 		}
 		else
 		{
-			cout << "[deleteTemp]: Deleted " << fileName << endl;
+			// cout << "[deleteTemp]: Deleted " << fileName << endl;
 		}
-		////-----------------------------------------doors-------------------------------------------------
-		//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
-		//if (remove(fileName.c_str()) != 0)
-		//{
-		//	cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
-		//	return false;
-		//}
-		//else
-		//{
-		//	cout << "[deleteTemp]: Deleted " << fileName << endl;
-		//}
-		////--------------------------------------description----------------------------------------------
-		//// changes filename to description
-		//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-		//	to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
-		//if (remove(fileName.c_str()) != 0)
-		//{
-		//	cout << "[deleteTemp]: Could not delete " << fileName << ". . ." << endl;
-		//	return false;
-		//}
-		//else
-		//{
-		//	cout << "[deleteTemp]: Deleted " << fileName << endl;
-		//}
 	}
 	return true;
 }
@@ -696,19 +671,15 @@ string Game::getAction()
 	}
 	else if (input == "save")
 	{
-		cout << "Caution! This will overwrite any current save data." << endl;
+		cout << endl;
+		cout << "               <[Caution!]>               " << endl;
+		cout << "This will overwrite any current save data." << endl;
 
 		string answer;
 		cout << "Which save slot do you want to save to?" << endl;
-		cout << "--------" << endl;
-		cout << "|  G1  |" << endl;
-		cout << "--------" << endl;
-		cout << "|  G2  |" << endl;
-		cout << "--------" << endl;
-		cout << "|  G3  |" << endl;
-		cout << "--------" << endl;
-		cout << "| back |" << endl;
-		cout << "--------" << endl;
+		cout << "  -------- -------- -------- --------  " << endl;
+		cout << "  | back | |  G1  | |  G2  | |  G3  |  " << endl;
+		cout << "  -------- -------- -------- --------  " << endl;
 		cout << ">>";
 
 		cin >> answer;
@@ -780,7 +751,11 @@ void Game::displayInstructions()
 	return;
 }
 
-void Game::displayRoom() { currentRoom->describeRoom(); printPlayerInventory(); }
+
+void Game::displayRoom() 
+{
+	currentRoom->displayRoom(); 
+}
 
 // this function makes sure that the doors exist
 string Game::quitGame()
@@ -810,6 +785,8 @@ void Game::setPlayerLocation(Coordinates location)
 {
 	player->setLocation(location);
 }
+
+// Character * Game::getPlayer() { return player; }
 
 bool Game::checkRoomChangeValidity()
 {
@@ -853,17 +830,28 @@ void Game::printPlayerInventory()
 	vector<Item*> tempinventory = player->getInventory();
 	if (tempinventory.size() != 0)
 	{
-		cout << "Your inventory: ";
+		cout << endl;
+		cout << "-<[INVENTORY]>-" << endl;
+		cout << "---------------" << endl;
+
 		for (int i = 0; i < tempinventory.size(); i++)
 		{
-			if (i != tempinventory.size() - 1)
+			Item* tempItem = tempinventory.at(i);
+
+			cout << "| " << tempItem->getName() << " |" << endl;
+			/*if ((i+1) % 3 == 0)
 			{
-				cout << tempinventory.at(i)->getName() << ", ";
+				cout << "|" << tempItem->getName() << "|" << endl;
 			}
 			else
 			{
-				cout << tempinventory.at(i)->getName() << endl;
-			}
+				cout << "|" << tempItem->getName() << "|";
+
+				if (tempinventory.size() == 1)
+				{
+					cout << endl;
+				}
+			}*/
 		}
 	}
 	else

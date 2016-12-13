@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include <stdio.h>
+#include "Character.h"
 #include "Coordinates.h"
 #include "Item.h"
 using namespace std;
@@ -43,6 +44,11 @@ private:
 // -----------------------------------PUBLIC--------------------------------------
 public:
 
+	//static vector<Item*> playerInventory;
+
+	//// this sets the player
+	//static bool setPlayerInventory(vector<Item*> playerInventory);
+
 	// a static vector of all temp files created to be modified by Game class
 	static vector<Coordinates>createdTempFiles;
 
@@ -63,9 +69,12 @@ public:
 
 	// returns the description of the room
 	string getDescription();
+	
+	// displays room for the player to see
+	bool displayRoom();
 
 	// describes the room with a cout
-	bool describeRoom();
+	bool readOrigin();
 
 	// returns the name of the room
 	string getName();

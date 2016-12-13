@@ -50,10 +50,13 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		// updateTemp();
 
 	}
+	// this reads the original files to the room (except the inventory)
+	readOrigin();
+
 	// write to the temp files from room properties
 	updateTemp();
 
-	describeRoom();
+	displayRoom();
 }
 
 bool Room::createTempInventory()
@@ -73,6 +76,12 @@ bool Room::createTempInventory()
 
 	return true;
 }
+
+//bool Room::setPlayerInventory(vector<Item*> inputInventory)
+//{
+//	playerInventory = inputInventory;
+//	return true;
+//}
 
 // this now reads the temp file inventory to room variables, but does
 // NOT describe the room
@@ -339,7 +348,103 @@ bool Room::updateTemp()
 
 string Room::getDescription() { return description; }
 
-bool Room::describeRoom()
+bool Room::displayRoom()
+{
+	//// check inventory for light source
+	//// Character* tempCharacter = Game::getPlayer();
+	//
+	//double roomBrightness = 0.0;
+
+	//// used to sort by brightness
+	//double tempBrightness;
+
+	//for (int i = 0; i < playerInventory.size(); i++)
+	//{
+	//	Item* tempItem = playerInventory.at(i);
+	//	tempBrightness = tempItem->getLumosity();
+
+	//	if (tempBrightness > roomBrightness)
+	//	{
+	//		roomBrightness = tempBrightness;
+	//	}
+	//}
+	//// display room name
+	//cout << endl << "[" << name << "]:" << endl;
+
+	//if (roomBrightness == 0.0)
+	//{
+		while (description.at(description.size() - 1) == '\n')
+		{
+			description.pop_back();
+		}
+		cout << "------------------------------------------------------------------------" << endl;
+		cout << this->description << endl;
+		cout << "------------------------------------------------------------------------" << endl;
+
+		if (inventory.size() > 0)
+		{
+			// describe room inventory
+			int inventorySize = inventory.size();
+
+			Item tempItem = *inventory.at(0);
+			cout << "On the floor, you can see\na " << tempItem.getName() << endl;
+
+			if (inventory.size() > 1)
+			{
+				if (inventory.size() > 2)
+				{
+					for (int i = 1; i < inventorySize - 1; i++)
+					{
+						tempItem = *inventory.at(i);
+						cout << "a " << tempItem.getName() << ",\n";
+					}
+				}
+
+				tempItem = *inventory.at(inventorySize - 1);
+				cout << "and a " << tempItem.getName() << endl;
+			}
+		}
+	/*}
+	else if (roomBrightness == 0.5)
+	{
+		cout << "------------------------------------------------------------------------" << endl;
+		cout << "You can vaguely make out dark shapes, and you can slightly see pathways" << endl;
+		if (this->doors.at(0))
+		{
+			cout << "to the North" << endl;
+		}
+		if (this->doors.at(1))
+		{
+			cout << "to the South" << endl;
+		}
+		if (this->doors.at(2))
+		{
+			cout << "to the East" << endl;
+		}
+		if (this->doors.at(3))
+		{
+			cout << "to the West" << endl;
+		}
+		if (this->doors.at(4))
+		{
+			cout << "leading upward" << endl;
+		}
+		if (this->doors.at(5))
+		{
+			cout << "leading downward" << endl;
+		}
+		cout << "------------------------------------------------------------------------" << endl;
+	}
+	else if (roomBrightness == 0.0)
+	{
+		cout << "------------------------------------------------------------------------" << endl;
+		cout << "The darkness envelops you, and you can't see anything." << endl;
+		cout << "------------------------------------------------------------------------" << endl;
+	}*/
+	return false;
+}
+
+bool Room::readOrigin()
 {
 	ifstream input;
 
@@ -359,7 +464,7 @@ bool Room::describeRoom()
 
 		// print the room name
 		// cout << endl << "[Origin]: ";
-		cout << endl << "[" << name << "]:" << endl;
+		// cout << endl << "[" << name << "]:" << endl;
 		input.close();
 	}
 	// otherwise
@@ -416,8 +521,8 @@ bool Room::describeRoom()
 	// if file opens
 	if (!input.fail())
 	{
-		 // cout << "[readOrigin]: Accessing description.txt" << endl;
-		// set the inventory variables
+		// cout << "[readOrigin]: Accessing description.txt" << endl;
+	   // set the inventory variables
 		while (!input.eof())
 		{
 			string temp;
@@ -425,37 +530,6 @@ bool Room::describeRoom()
 			description = description + temp + "\n";
 		}
 		// gets rid of extra newline characters (always two of them for some reason)
-		while (description.at(description.size() - 1) == '\n')
-		{
-			description.pop_back();
-		}
-		cout << "------------------------------------------------------------------------" << endl;
-		cout << description << endl;
-		cout << "------------------------------------------------------------------------" << endl;
-
-		if (inventory.size() > 0)
-		{
-			// describe room inventory
-			int inventorySize = inventory.size();
-
-			Item tempItem = *inventory.at(0);
-			cout << "On the floor, you can see\na " << tempItem.getName() << endl;
-
-			if (inventory.size() > 1)
-			{
-				if (inventory.size() > 2)
-				{
-					for (int i = 1; i < inventorySize - 1; i++)
-					{
-						tempItem = *inventory.at(i);
-						cout << "a " << tempItem.getName() << ",\n";
-					}
-				}
-
-				tempItem = *inventory.at(inventorySize - 1);
-				cout << "and a " << tempItem.getName() << endl;
-			}
-		}
 
 		input.close();
 	}
