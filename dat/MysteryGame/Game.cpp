@@ -818,6 +818,10 @@ void Game::playerToRoomItem(Input userin, string action)
 		currentRoom->addItemToInventory(tempItem);
 		currentRoom->updateTemp();
 		cout << "You drop the " << tempItem->getName() << "." << endl;
+		if (tempItem->getName() == "base")
+		{
+			cout << "YOU WIN THE GAME!" << endl;
+		}
 	}
 	else
 	{
