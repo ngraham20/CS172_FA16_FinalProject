@@ -1,6 +1,5 @@
 revolver weapon 0
 knife weapon 0
-rope weapon 0
 candlestick weapon 0
 lead_pipe weapon 0
 wrench weapon 0

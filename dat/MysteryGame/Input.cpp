@@ -19,6 +19,10 @@ Input::Input(string userin)
 
 	//Lowercase subject from string stream
 	instream >> temp;
+	if (temp == "the")
+	{
+		instream >> temp;
+	}
 	transform(temp.begin(), temp.end(), temp.begin(), tolower);
 	subject = temp;
 
