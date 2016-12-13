@@ -40,6 +40,7 @@ Game::~Game()
 	}
 	delete player;
 	deleteTemp();
+	return;
 }
 
 bool Game::saveGame(int slotNumber)
@@ -552,7 +553,7 @@ void Game::playGame()
 
 	} while (playerInput != "quit");
 
-	this->~Game();
+	// this->~Game();
 }
 
 void Game::changeRoomsFromInput(string action)
