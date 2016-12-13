@@ -18,12 +18,15 @@ int main()
 	{
 		// basic game menu to play game
 		cout << "------------------------------------------------" << endl;
-		cout << "        WELCOME TO THE JACKSONBURG MANSION      " << endl;
-		cout << "------------------------------------------------" << endl;
-		cout << "|play|" << endl;
-		cout << "|load|" << endl;
-		cout << "|quit|" << endl;
-		cout << ">>";
+		cout << "|     --------------------------------------   |" << endl;
+		cout << "|     | WELCOME TO THE JACKSONBURG MANSION |   |" << endl;
+		cout << "|     --------------------------------------   |" << endl;
+		cout << "|           | Type commands to play |          |" << endl;
+		cout << "|                  | play |                    |" << endl;
+		cout << "|                  | load |                    |" << endl;
+		cout << "|                  | quit |                    |" << endl;
+		cout << "--                                            --" << endl;
+ 		cout << ">>";
 
 		cin >> input;
 		
@@ -66,8 +69,9 @@ int main()
 				cout << "Invalid Input. Please try again." << endl;
 		}
 		else if (input == "clear")
-
+		{
 			Game::fullTempClear();
+		}
 
 	} while (input != "quit");
 
