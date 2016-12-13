@@ -551,8 +551,6 @@ void Game::playGame()
 		 playerInput = getAction();
 
 	} while (playerInput != "quit");
-
-	this->~Game();
 }
 
 void Game::changeRoomsFromInput(string action)

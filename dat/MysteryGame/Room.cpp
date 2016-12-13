@@ -154,7 +154,7 @@ bool Room::readTempInventory()
 	{
 		// call destructor
 		cout << "[readTemp]: Failed to access " << fileName << endl;
-		this->~Room();
+		//this->~Room();
 		return false;
 	}
 
@@ -472,7 +472,7 @@ bool Room::readOrigin()
 	{
 		// call destructor
 		cout << "[readOrigin]: " << fileName << " does not exist. . ." << endl;
-		this->~Room();
+		//this->~Room();
 		return false;
 	}
 
@@ -538,7 +538,7 @@ bool Room::readOrigin()
 	{
 		// call destructor
 		cout << "[readOrigin]: Could not open file. . .\n";
-		this->~Room();
+		//this->~Room();
 		return false;
 	}
 	return true;
