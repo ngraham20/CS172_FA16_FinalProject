@@ -22,8 +22,8 @@ Game::Game(int slot)
 {
 	// sets the current room for begining of game
 
-	loadGame(slot);
 	player = new Character();
+	loadGame(slot);
 	setPlayerLocation(firstRoom);
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
@@ -195,7 +195,7 @@ bool Game::saveGame(int slotNumber)
 		output.close();
 	}
 
-	//------------------------------------------PLAYER_INVENTORY---------------------------------------------------------
+	//------------------------------------------PLAYER_LOCATION---------------------------------------------------------
 	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_location.txt";
 	
 	Coordinates tempCoordinates = player->getLocation();
@@ -207,10 +207,30 @@ bool Game::saveGame(int slotNumber)
 
 	output << playerLocation;
 
+	output.close();
+
+	//----------------------------------------------PLAYER_INVENTORY----------------------------------------------------
+
+	// save player inventory
+
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_inventory.txt";
+
+	output.open(fileName.c_str());
+
+	vector<Item*> tempInventory = player->getInventory();
+
+	for (int i = 0; i < tempInventory.size(); i++)
+	{
+		Item* tempItem = tempInventory.at(i);
+
+		output << tempItem->getName() << " " << tempItem->getType() << " " << tempItem->getLumosity() << endl;
+	}
+
+	output.close();
+
 	return true;
 }
 
-// TODO finish loadGame()
 bool Game::loadGame(int slotNumber)
 {
 	cout << "Loading Game. . ." << endl;
@@ -235,6 +255,16 @@ bool Game::loadGame(int slotNumber)
 			input >> coordinates;
 			if (coordinates != "")
 			{
+				constexpr int asciiInt = 48;
+
+				Coordinates temp = { 
+					coordinates[0] - asciiInt,
+					coordinates[1] - asciiInt,
+					coordinates[2] - asciiInt 
+				};
+
+				// pushes loaded temp rooms to the created temp files in room class
+				Room::createdTempFiles.push_back(temp);
 				roomsToLoad.push_back(coordinates);
 			}
 
@@ -343,6 +373,31 @@ bool Game::loadGame(int slotNumber)
 	else
 	{
 		cout << "[Load]: Failed to open player_location.txt" << endl;
+	}
+
+	//----------------------------------PLAYER_INVENTORY------------------------------------------------
+
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_inventory.txt";
+
+	input.open(fileName.c_str());
+
+	if (!input.fail())
+	{
+		while (!input.eof())
+		{
+			string itemName;
+			string itemType;
+			double itemLumosity;
+
+			input >> itemName >> itemType >> itemLumosity;
+
+			if (itemName != "")
+			{
+				Item* tempItem = Item::createItem(itemName, itemType, itemLumosity);
+
+				player->addItemToInventory(tempItem);
+			}
+		}
 	}
 
 	return true;
@@ -500,7 +555,7 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 
 	setPlayerLocation(coordinates);
 
-	// TODO this needs to delete all unneeded rooms
+	// TODO delete any unneeded rooms (pre-loading)
 
 	Room* temp = new Room(coordinates);
 	currentRoom = temp;
@@ -611,7 +666,6 @@ void Game::changeRoomsFromInput(string action)
 	}
 }
 
-// TODO this needs to be re-named to travel() once the fullly-implimented getAction function is created
 string Game::getAction()
 {
 	string input;
@@ -622,7 +676,6 @@ string Game::getAction()
 	Input userin(input);
 
 	string action = userin.checkAction();
-	// TODO change this code to work for words
 	// get a temporary fix on the current room's door situation
 
 	if (action == "goNorth" || action == "goSouth" || action == "goEast" || action == "goWest" || action == "goUp" || action == "goDown")
@@ -726,7 +779,6 @@ void Game::displayInstructions()
 void Game::displayRoom() { currentRoom->describeRoom(); }
 
 // this function makes sure that the doors exist
-// TODO maybe flush this out and replace some code in getAction() with this
 string Game::quitGame()
 {
 	cout << "Are you sure you want to quit? Any unsaved progress will be lost.\n>>";

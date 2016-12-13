@@ -416,7 +416,7 @@ bool Room::describeRoom()
 	// if file opens
 	if (!input.fail())
 	{
-		 cout << "[readOrigin]: Accessing description.txt" << endl;
+		 // cout << "[readOrigin]: Accessing description.txt" << endl;
 		// set the inventory variables
 		while (!input.eof())
 		{
