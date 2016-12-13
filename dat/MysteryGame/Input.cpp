@@ -19,7 +19,7 @@ Input::Input(string userin)
 
 	//Lowercase subject from string stream
 	instream >> temp;
-	if (temp == "the")
+	if (temp == "the" || temp == "a" || temp == "an")
 	{
 		instream >> temp;
 	}
