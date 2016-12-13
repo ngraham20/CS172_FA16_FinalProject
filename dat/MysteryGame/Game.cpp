@@ -40,6 +40,7 @@ Game::~Game()
 	}
 	delete player;
 	deleteTemp();
+	return;
 }
 
 bool Game::saveGame(int slotNumber)
