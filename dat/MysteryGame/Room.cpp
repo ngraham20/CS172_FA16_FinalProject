@@ -39,9 +39,6 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		// cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
 		createTempInventory();
 
-		// this reads the original files to the room (except the inventory)
-		readOrigin();
-
 		// reads the origin files (except the inventory if temp is read)
 		// to the room properties
 		readDefaultInventory();
@@ -53,6 +50,9 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		// updateTemp();
 
 	}
+	// this reads the original files to the room (except the inventory)
+	readOrigin();
+
 	// write to the temp files from room properties
 	updateTemp();
 

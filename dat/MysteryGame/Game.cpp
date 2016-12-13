@@ -755,6 +755,10 @@ string Game::getAction()
 	{
 		playerToRoomItem(userin, action);
 	}
+	else if (action == "inventory")
+	{
+		printPlayerInventory();
+	}
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
@@ -776,7 +780,11 @@ void Game::displayInstructions()
 	return;
 }
 
-void Game::displayRoom() { currentRoom->displayRoom(); }
+
+void Game::displayRoom() 
+{
+	currentRoom->displayRoom(); 
+}
 
 // this function makes sure that the doors exist
 string Game::quitGame()
@@ -841,5 +849,46 @@ void Game::playerToRoomItem(Input userin, string action)
 	else
 	{
 		cout << "You do not have that item." << endl;
+	}
+}
+
+void Game::printPlayerInventory()
+{
+	vector<Item*> tempinventory = player->getInventory();
+	if (tempinventory.size() != 0)
+	{
+		cout << endl;
+		cout << "             -<[INVENTORY]>-           " << endl;
+		cout << "---------------------------------------" << endl;
+
+		for (int i = 0; i < tempinventory.size(); i++)
+		{
+			Item* tempItem = tempinventory.at(i);
+
+			if ((i+1) % 3 == 0)
+			{
+				cout << "|" << tempItem->getName() << "|" << endl;
+			}
+			else
+			{
+				cout << "|" << tempItem->getName() << "|";
+			}
+		}
+		/*cout << "Your inventory: ";
+		for (int i = 0; i < tempinventory.size(); i++)
+		{
+			if (i < tempinventory.size() - 1)
+			{
+				cout << tempinventory.at(i)->getName() << ", ";
+			}
+			else
+			{
+				cout << tempinventory.at(i)->getName() << endl;
+			}
+		}*/
+	}
+	else
+	{
+		cout << "You are not carrying any items." << endl;
 	}
 }
