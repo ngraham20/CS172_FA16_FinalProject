@@ -48,9 +48,13 @@ string Input::checkAction()
 {
 	string action;
 	// checking if the verb entered by user is a synonym for one of the three available actions
-	if (verb == "go" || verb == "travel" || verb == "move")
+	if (verb == "go" || verb == "travel" || verb == "move" || verb == "proceed" || verb == "advance")
 	{
 		action = returnSubjectFromAction("go");
+	}
+	else if (verb == "inventory" || verb == "items")
+	{
+		return "inventory";
 	}
 	else if (verb == "take" || verb == "grab" || verb == "pick_up") 
 	{

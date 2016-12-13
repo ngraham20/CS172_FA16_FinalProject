@@ -387,7 +387,6 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	coordinates.z += relativeZ;
 
 	setPlayerLocation(coordinates);
-
 	// TODO this needs to delete all unneeded rooms
 
 	Room* temp = new Room(coordinates);
@@ -591,6 +590,10 @@ string Game::getAction()
 
 		playerToRoomItem(userin, action);
 	}
+	else if (action == "inventory")
+	{
+		printPlayerInventory();
+	}
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
@@ -618,6 +621,7 @@ void Game::displayRoom()
 	cout << "------------------------------------------------------------------------" << endl;
 	cout << this->currentRoom->getDescription() << endl;
 	cout << "------------------------------------------------------------------------" << endl;
+	printPlayerInventory();
 }
 
 // this function makes sure that the doors exist
@@ -684,5 +688,29 @@ void Game::playerToRoomItem(Input userin, string action)
 	else
 	{
 		cout << "You do not have that item." << endl;
+	}
+}
+
+void Game::printPlayerInventory()
+{
+	vector<Item*> tempinventory = player->getInventory();
+	if (tempinventory.size() != 0)
+	{
+		cout << "Your inventory: ";
+		for (int i = 0; i < tempinventory.size(); i++)
+		{
+			if (i != tempinventory.size() - 1)
+			{
+				cout << tempinventory.at(i)->getName() << ", ";
+			}
+			else
+			{
+				cout << tempinventory.at(i)->getName() << endl;
+			}
+		}
+	}
+	else
+	{
+		cout << "You are not carrying any items." << endl;
 	}
 }

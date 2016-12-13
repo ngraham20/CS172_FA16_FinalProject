@@ -95,5 +95,8 @@ private:
 	// this function controls the actions that take an item from the player and place it in room
 	void playerToRoomItem(Input userin, string action);
 
+	// this function prints the player's inventory and is called when a new room is loaded, or if the user types "inventory"
+	void printPlayerInventory();
+
 };
 
