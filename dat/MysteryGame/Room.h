@@ -63,9 +63,12 @@ public:
 
 	// returns the description of the room
 	string getDescription();
+	
+	// displays room for the player to see
+	bool displayRoom();
 
 	// describes the room with a cout
-	bool describeRoom();
+	bool readOrigin();
 
 	// returns the name of the room
 	string getName();

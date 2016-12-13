@@ -776,7 +776,7 @@ void Game::displayInstructions()
 	return;
 }
 
-void Game::displayRoom() { currentRoom->describeRoom(); }
+void Game::displayRoom() { currentRoom->displayRoom(); }
 
 // this function makes sure that the doors exist
 string Game::quitGame()

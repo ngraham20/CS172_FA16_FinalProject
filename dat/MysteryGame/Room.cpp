@@ -39,6 +39,9 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		// cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
 		createTempInventory();
 
+		// this reads the original files to the room (except the inventory)
+		readOrigin();
+
 		// reads the origin files (except the inventory if temp is read)
 		// to the room properties
 		readDefaultInventory();
@@ -53,7 +56,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 	// write to the temp files from room properties
 	updateTemp();
 
-	describeRoom();
+	displayRoom();
 }
 
 bool Room::createTempInventory()
@@ -339,7 +342,45 @@ bool Room::updateTemp()
 
 string Room::getDescription() { return description; }
 
-bool Room::describeRoom()
+bool Room::displayRoom()
+{
+	cout << endl << "[" << name << "]:" << endl;
+
+	while (description.at(description.size() - 1) == '\n')
+	{
+		description.pop_back();
+	}
+	cout << "------------------------------------------------------------------------" << endl;
+	cout << this->description << endl;
+	cout << "------------------------------------------------------------------------" << endl;
+
+	if (inventory.size() > 0)
+	{
+		// describe room inventory
+		int inventorySize = inventory.size();
+
+		Item tempItem = *inventory.at(0);
+		cout << "On the floor, you can see\na " << tempItem.getName() << endl;
+
+		if (inventory.size() > 1)
+		{
+			if (inventory.size() > 2)
+			{
+				for (int i = 1; i < inventorySize - 1; i++)
+				{
+					tempItem = *inventory.at(i);
+					cout << "a " << tempItem.getName() << ",\n";
+				}
+			}
+
+			tempItem = *inventory.at(inventorySize - 1);
+			cout << "and a " << tempItem.getName() << endl;
+		}
+	}
+	return false;
+}
+
+bool Room::readOrigin()
 {
 	ifstream input;
 
@@ -359,7 +400,7 @@ bool Room::describeRoom()
 
 		// print the room name
 		// cout << endl << "[Origin]: ";
-		cout << endl << "[" << name << "]:" << endl;
+		// cout << endl << "[" << name << "]:" << endl;
 		input.close();
 	}
 	// otherwise
@@ -416,8 +457,8 @@ bool Room::describeRoom()
 	// if file opens
 	if (!input.fail())
 	{
-		 // cout << "[readOrigin]: Accessing description.txt" << endl;
-		// set the inventory variables
+		// cout << "[readOrigin]: Accessing description.txt" << endl;
+	   // set the inventory variables
 		while (!input.eof())
 		{
 			string temp;
@@ -425,37 +466,6 @@ bool Room::describeRoom()
 			description = description + temp + "\n";
 		}
 		// gets rid of extra newline characters (always two of them for some reason)
-		while (description.at(description.size() - 1) == '\n')
-		{
-			description.pop_back();
-		}
-		cout << "------------------------------------------------------------------------" << endl;
-		cout << description << endl;
-		cout << "------------------------------------------------------------------------" << endl;
-
-		if (inventory.size() > 0)
-		{
-			// describe room inventory
-			int inventorySize = inventory.size();
-
-			Item tempItem = *inventory.at(0);
-			cout << "On the floor, you can see\na " << tempItem.getName() << endl;
-
-			if (inventory.size() > 1)
-			{
-				if (inventory.size() > 2)
-				{
-					for (int i = 1; i < inventorySize - 1; i++)
-					{
-						tempItem = *inventory.at(i);
-						cout << "a " << tempItem.getName() << ",\n";
-					}
-				}
-
-				tempItem = *inventory.at(inventorySize - 1);
-				cout << "and a " << tempItem.getName() << endl;
-			}
-		}
 
 		input.close();
 	}
