@@ -38,7 +38,7 @@ Game::~Game()
 	{
 		delete loadedRooms.at(i);
 	}
-
+	delete player;
 	deleteTemp();
 }
 
