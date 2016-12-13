@@ -16,7 +16,7 @@ public:
 	Game();
 
 	// overloaded constructor loads a game with specific save slot
-	Game(string slot);
+	Game(int slot);
 
 	// destructor deletes the game and all temp files.
 	~Game();
@@ -24,11 +24,9 @@ public:
 	// this function saves all created temp files to a save slot.
 	// because the room constructor checks for temp files, the save
 	// function needn't fill all rooms with original data.
-	// TODO save player current room as well
-	// TODO maybe change this to only save for current save slot?
 	bool saveGame(int slotNumber);
 
-	// TODO Impliment this
+	// TODO Impliment this later (it is pre-existing code in another method)
 	// This method will delete all files in a save slot. This
 	// should happen when a new game is created over a save slot.
 	// This way, file management won't have to be a problem.
@@ -79,6 +77,8 @@ private:
 
 	// the game has a player
 	Character* player;
+
+	Coordinates firstRoom;
 
 	// pointer to the current room
 	Room* currentRoom;

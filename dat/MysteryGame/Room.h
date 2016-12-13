@@ -19,9 +19,6 @@ private:
 	// this is the file string which will be used to open any files during gameplay
 	string fileName;
 
-	// a static vector of all temp files created to be modified by Game class
-	static vector<Coordinates>createdTempFiles;
-
 	// doors are always n,s,e,w,u,d
 	vector<bool> doors;
 
@@ -45,6 +42,9 @@ private:
 
 // -----------------------------------PUBLIC--------------------------------------
 public:
+
+	// a static vector of all temp files created to be modified by Game class
+	static vector<Coordinates>createdTempFiles;
 
 	// creates a room based only on location struct. The rest is read from file.
 	Room(Coordinates coordinates);

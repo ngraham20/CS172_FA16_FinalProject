@@ -10,7 +10,6 @@ Character::Character()
 	currentLocation = { 0, 0, 0 };
 }
 
-
 Character::~Character()
 {
 }

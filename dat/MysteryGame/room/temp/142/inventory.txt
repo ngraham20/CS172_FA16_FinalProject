@@ -1,2 +1,0 @@
-revolver weapon 0.000000
-lead_pipe weapon 0.000000
