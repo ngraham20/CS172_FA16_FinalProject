@@ -369,7 +369,7 @@ bool Room::displayRoom()
 	//	}
 	//}
 	//// display room name
-	//cout << endl << "[" << name << "]:" << endl;
+	cout << endl << "[" << name << "]:" << endl;
 
 	//if (roomBrightness == 0.0)
 	//{
