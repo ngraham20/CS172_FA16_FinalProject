@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Character" Collapsed="true">
     <Position X="7.5" Y="0.5" Width="1.5" />
@@ -65,3 +66,6 @@
   </Struct>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
+=======
+<ClassDiagram /> 
+>>>>>>> 8909940473c950ac7ece2034b731e670036e9902
