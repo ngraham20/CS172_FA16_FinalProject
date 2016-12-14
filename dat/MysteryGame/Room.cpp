@@ -355,6 +355,8 @@ bool Room::displayRoom()
 	
 	vector<Item*> playerInventory = tempCharacter->getInventory();
 
+	Item* brightestItem;
+
 	double roomBrightness = 0.0;
 
 	// used to sort by brightness
@@ -368,6 +370,7 @@ bool Room::displayRoom()
 		if (tempBrightness > roomBrightness)
 		{
 			roomBrightness = tempBrightness;
+			brightestItem = tempItem;
 		}
 	}
 
@@ -379,17 +382,55 @@ bool Room::displayRoom()
 		if (tempBrightness > roomBrightness)
 		{
 			roomBrightness = tempBrightness;
+			brightestItem = tempItem;
 		}
 	}
 	// display room name
-	cout << endl << "[" << name << "]:" << endl;
+	// cout << endl << "[" << name << "]:" << endl;
 
-	if (roomBrightness == 1.0 || lightSource == true)
+	if (roomBrightness == 1.0)
 	{
 		while (description.at(description.size() - 1) == '\n')
 		{
 			description.pop_back();
 		}
+		cout << endl << "[" << name << "]:" << endl;
+		cout << "You can see by the light of a " << brightestItem->getName() << "." << endl;
+		cout << "------------------------------------------------------------------------" << endl;
+		cout << this->description << endl;
+		cout << "------------------------------------------------------------------------" << endl;
+
+		if (inventory.size() > 0)
+		{
+			// describe room inventory
+			int inventorySize = inventory.size();
+
+			Item tempItem = *inventory.at(0);
+			cout << "On the floor, you can see\na " << tempItem.getName() << endl;
+
+			if (inventory.size() > 1)
+			{
+				if (inventory.size() > 2)
+				{
+					for (int i = 1; i < inventorySize - 1; i++)
+					{
+						tempItem = *inventory.at(i);
+						cout << "a " << tempItem.getName() << ",\n";
+					}
+				}
+
+				tempItem = *inventory.at(inventorySize - 1);
+				cout << "and a " << tempItem.getName() << endl;
+			}
+		}
+	}
+	else if (lightSource == true)
+	{
+		while (description.at(description.size() - 1) == '\n')
+		{
+			description.pop_back();
+		}
+		cout << endl << "[" << name << "]:" << endl;
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << this->description << endl;
 		cout << "------------------------------------------------------------------------" << endl;
@@ -420,39 +461,42 @@ bool Room::displayRoom()
 	}
 	else if (roomBrightness == 0.5)
 	{
+		cout << endl << "[ ??? ]:" << endl;
 		cout << "------------------------------------------------------------------------" << endl;
-		cout << "You can vaguely make out dark shapes, and you can slightly see pathways" << endl;
+		cout << "By the light of your " << brightestItem->getName() << ", you can just " << endl;
+		cout << "make out the vague shapes of pathways leading " << endl;
 		if (this->doors.at(0))
 		{
-			cout << "to the North" << endl;
+			cout << "Northward" << endl;
 		}
 		if (this->doors.at(1))
 		{
-			cout << "to the South" << endl;
+			cout << "Southward" << endl;
 		}
 		if (this->doors.at(2))
 		{
-			cout << "to the East" << endl;
+			cout << "Eastward" << endl;
 		}
 		if (this->doors.at(3))
 		{
-			cout << "to the West" << endl;
+			cout << "Westward" << endl;
 		}
 		if (this->doors.at(4))
 		{
-			cout << "leading upward" << endl;
+			cout << "Upward" << endl;
 		}
 		if (this->doors.at(5))
 		{
-			cout << "leading downward" << endl;
+			cout << "Downward" << endl;
 		}
 		cout << "------------------------------------------------------------------------" << endl;
 	}
 	else if (roomBrightness == 0.0)
 	{
-		cout << "------------------------------------------------------------------------" << endl;
-		cout << "The darkness envelops you, and you can't see anything." << endl;
-		cout << "------------------------------------------------------------------------" << endl;
+		cout << endl << "[ ??? ]:" << endl;
+		cout << "--------------------------------------" << endl;
+		cout << "You can't see anything. It's too dark." << endl;
+		cout << "--------------------------------------" << endl;
 	}
 	return false;
 }
