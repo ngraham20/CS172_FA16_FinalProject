@@ -541,6 +541,31 @@ bool Room::readOrigin()
 		//this->~Room();
 		return false;
 	}
+
+	//-------------------------------------------Light_Source-------------------------------------------------
+
+	fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\light_source.txt";
+
+	input.open(fileName.c_str());
+
+	if (!input.fail())
+	{
+		string tempStr;
+		input >> tempStr;
+
+		if (tempStr == "true")
+			lightSource = true;
+		else
+			lightSource = false;
+	}
+	else
+	{
+		// call destructor
+		cout << "[readOrigin]: Could not open file. . .\n";
+		//this->~Room();
+		return false;
+	}
 	return true;
 }
 

@@ -35,6 +35,9 @@ private:
 	// describes the room in detail
 	string description;
 
+	// bool for whether the room has a default light source
+	bool lightSource;
+
 	// reads from the original files created pre-compile
 	bool readDefaultInventory();
 
