@@ -3,6 +3,9 @@
 */
 #include "Game.h"
 
+// initializes the player to be static
+Character* Game::player;
+
 // this constructor begins a new game and calls playGame()
 Game::Game()
 {
@@ -785,7 +788,7 @@ void Game::setPlayerLocation(Coordinates location)
 	player->setLocation(location);
 }
 
-// Character * Game::getPlayer() { return player; }
+Character * Game::getPlayer() { return player; }
 
 bool Game::checkRoomChangeValidity()
 {

@@ -350,29 +350,42 @@ string Room::getDescription() { return description; }
 
 bool Room::displayRoom()
 {
-	//// check inventory for light source
-	//// Character* tempCharacter = Game::getPlayer();
-	//
-	//double roomBrightness = 0.0;
+	// check inventory for light source
+	Character* tempCharacter = Game::getPlayer();
+	
+	vector<Item*> playerInventory = tempCharacter->getInventory();
 
-	//// used to sort by brightness
-	//double tempBrightness;
+	double roomBrightness = 0.0;
 
-	//for (int i = 0; i < playerInventory.size(); i++)
-	//{
-	//	Item* tempItem = playerInventory.at(i);
-	//	tempBrightness = tempItem->getLumosity();
+	// used to sort by brightness
+	double tempBrightness;
 
-	//	if (tempBrightness > roomBrightness)
-	//	{
-	//		roomBrightness = tempBrightness;
-	//	}
-	//}
-	//// display room name
+	for (int i = 0; i < playerInventory.size(); i++)
+	{
+		Item* tempItem = playerInventory.at(i);
+		tempBrightness = tempItem->getLumosity();
+
+		if (tempBrightness > roomBrightness)
+		{
+			roomBrightness = tempBrightness;
+		}
+	}
+
+	for (int i = 0; i < inventory.size(); i++)
+	{
+		Item* tempItem = inventory.at(i);
+		tempBrightness = tempItem->getLumosity();
+
+		if (tempBrightness > roomBrightness)
+		{
+			roomBrightness = tempBrightness;
+		}
+	}
+	// display room name
 	cout << endl << "[" << name << "]:" << endl;
 
-	//if (roomBrightness == 0.0)
-	//{
+	if (roomBrightness == 1.0 || lightSource == true)
+	{
 		while (description.at(description.size() - 1) == '\n')
 		{
 			description.pop_back();
@@ -404,7 +417,7 @@ bool Room::displayRoom()
 				cout << "and a " << tempItem.getName() << endl;
 			}
 		}
-	/*}
+	}
 	else if (roomBrightness == 0.5)
 	{
 		cout << "------------------------------------------------------------------------" << endl;
@@ -440,7 +453,7 @@ bool Room::displayRoom()
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << "The darkness envelops you, and you can't see anything." << endl;
 		cout << "------------------------------------------------------------------------" << endl;
-	}*/
+	}
 	return false;
 }
 

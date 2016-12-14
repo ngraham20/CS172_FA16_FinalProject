@@ -9,6 +9,9 @@
 #include "Character.h"
 #include "Room.h"
 #include "Input.h"
+
+class Room;
+
 class Game
 {
 public:
@@ -70,7 +73,7 @@ public:
 	// updates the player's location
 	void setPlayerLocation(Coordinates location);
 
-	//Character* getPlayer();
+	static Character* getPlayer();
 
 private:
 	// the game has loaded rooms
@@ -78,7 +81,7 @@ private:
 	vector<Room*>loadedRooms;
 
 	// the game has a player
-	Character* player;
+	static Character* player;
 
 	Coordinates firstRoom;
 

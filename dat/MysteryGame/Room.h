@@ -8,10 +8,13 @@
 #include <fstream>
 #include <vector>
 #include <stdio.h>
+#include "Game.h"
 #include "Character.h"
 #include "Coordinates.h"
 #include "Item.h"
 using namespace std;
+
+class Game;
 
 class Room
 {
