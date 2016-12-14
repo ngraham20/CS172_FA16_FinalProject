@@ -387,15 +387,13 @@ bool Room::displayRoom()
 	}
 	// display room name
 	// cout << endl << "[" << name << "]:" << endl;
-
-	if (roomBrightness == 1.0)
+	if (lightSource == true)
 	{
 		while (description.at(description.size() - 1) == '\n')
 		{
 			description.pop_back();
 		}
 		cout << endl << "[" << name << "]:" << endl;
-		cout << "You can see by the light of a " << brightestItem->getName() << "." << endl;
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << this->description << endl;
 		cout << "------------------------------------------------------------------------" << endl;
@@ -424,13 +422,15 @@ bool Room::displayRoom()
 			}
 		}
 	}
-	else if (lightSource == true)
+
+	else if (roomBrightness == 1.0)
 	{
 		while (description.at(description.size() - 1) == '\n')
 		{
 			description.pop_back();
 		}
 		cout << endl << "[" << name << "]:" << endl;
+		cout << "You can see by the light of a " << brightestItem->getName() << "." << endl;
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << this->description << endl;
 		cout << "------------------------------------------------------------------------" << endl;
