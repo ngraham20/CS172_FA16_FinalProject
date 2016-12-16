@@ -27,7 +27,7 @@ Game::Game()
 // this is for loading the game
 Game::Game(int slot)
 {
-	// sets the current room for begining of game
+	createAchievements();
 
 	player = new Character();
 	loadGame(slot);
@@ -444,7 +444,31 @@ bool Game::loadGame(int slotNumber)
 				player->addItemToInventory(tempItem);
 			}
 		}
+		input.close();
 	}
+
+	//--------------------------------------ACHIEVEMENTS------------------------------------------------------------
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\unlocked_achievements.txt";
+
+	input.open(fileName.c_str());
+
+	if (!input.fail())
+	{
+		while (!input.eof())
+		{
+			string achievementName;
+			input >> achievementName;
+
+			if (achievementName != "")
+			{
+				Achievement* tempAchievement = getAchievementWithName(achievementName);
+
+				// unlocks the achievement pre-game for load sequence
+				tempAchievement->unlock();
+			}
+		}
+	}
+
 
 	return true;
 }
