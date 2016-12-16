@@ -425,7 +425,7 @@ bool Room::displayRoom()
 
 	else if (roomBrightness == 1.0)
 	{
-		Game::tryUnlockAchievement(Game::getAchievementWithName("Lighting the Way"));
+		Game::tryUnlockAchievement(Game::getAchievementWithName("Lighting_the_Way"));
 
 		while (description.at(description.size() - 1) == '\n')
 		{
@@ -463,7 +463,7 @@ bool Room::displayRoom()
 	}
 	else if (roomBrightness == 0.5)
 	{
-		Game::tryUnlockAchievement(Game::getAchievementWithName("Poor Vision"));
+		Game::tryUnlockAchievement(Game::getAchievementWithName("Poor_Vision"));
 
 		cout << endl << "[ ??? ]:" << endl;
 		cout << "------------------------------------------------------------------------" << endl;

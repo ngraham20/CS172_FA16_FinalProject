@@ -1,3 +1,1 @@
-glow_stick tool 0.5
-lead_pipe weapon 0
-revolver weapon 0
+torch tool 1

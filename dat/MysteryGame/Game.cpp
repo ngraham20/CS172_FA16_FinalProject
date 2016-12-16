@@ -6,7 +6,7 @@
 // initializes the player to be static
 Character* Game::player;
 
-vector<Achievement*> Game::achievements;
+vector<Achievement*> Game::lockedAchievements;
 
 // this constructor begins a new game and calls playGame()
 Game::Game()
@@ -46,9 +46,9 @@ Game::~Game()
 		delete loadedRooms.at(i);
 	}
 
-	for (int i = 0; i < achievements.size(); i++)
+	for (int i = 0; i < lockedAchievements.size(); i++)
 	{
-		delete achievements.at(i);
+		delete lockedAchievements.at(i);
 
 	}
 	delete player;
@@ -60,13 +60,14 @@ Game::~Game()
 bool Game::createAchievements()
 {
 	// TODO edit saveGame and loadGame to work with these
+	// TODO pull these from file instead of from code
 
-	achievements = {
-	new Achievement("Lighting the Way"),
-	new Achievement("Drop the Base"),
-	new Achievement("Help me"),
-	new Achievement("Taking Inventory"),
-	new Achievement("Poor Vision")
+	lockedAchievements = {
+	new Achievement("Lighting_the_Way"),
+	new Achievement("Drop_the_Base"),
+	new Achievement("Help_me"),
+	new Achievement("Taking_Inventory"),
+	new Achievement("Poor_Vision")
 	};
 
 	return true;
@@ -257,6 +258,21 @@ bool Game::saveGame(int slotNumber)
 	}
 
 	output.close();
+
+	//------------------------------------------------------UNLOCKED_ACHIEVEMENTS---------------------------------
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\unlocked_achievements.txt";
+
+	output.open(fileName.c_str());
+
+	for (int i = 0; i < lockedAchievements.size(); i++)
+	{
+		Achievement* tempAchievement = lockedAchievements.at(i);
+
+		if (tempAchievement->isUnlocked() == true)
+		{
+			output << tempAchievement->getName() << endl;
+		}
+	}
 
 	return true;
 }
@@ -553,9 +569,9 @@ bool Game::fullTempClear()
 
 Achievement* Game::getAchievementWithName(string name)
 {
-	for (int i = 0; i < achievements.size(); i++)
+	for (int i = 0; i < lockedAchievements.size(); i++)
 	{
-		Achievement* tempAchievement = achievements.at(i);
+		Achievement* tempAchievement = lockedAchievements.at(i);
 
 		if (tempAchievement->getName() == name)
 		{
@@ -579,6 +595,16 @@ bool Game::tryUnlockAchievement(Achievement* achievement)
 			cout << "<<ACHIEVEMENT UNLOCKED!>>" << endl;
 			cout << "(" << achievement->getName() << ")" << endl;
 			cout << "------------------------" << endl;
+
+			/*for (int i = 0; i < lockedAchievements.size(); i++)
+			{
+				Achievement* tempAchievement = lockedAchievements.at(i);
+
+				if (tempAchievement = achievement)
+				{
+
+				}
+			}*/
 			return true;
 		}
 		else
@@ -800,7 +826,7 @@ string Game::getAction()
 	}
 	else if (action == "inventory")
 	{
-		tryUnlockAchievement(getAchievementWithName("Taking Inventory"));
+		tryUnlockAchievement(getAchievementWithName("Taking_Inventory"));
 		printPlayerInventory();
 	}
 	else
@@ -896,7 +922,7 @@ void Game::playerToRoomItem(Input userin, string action)
 
 		if (tempItem->getName() == "base")
 		{
-			tryUnlockAchievement(getAchievementWithName("Drop the Base"));
+			tryUnlockAchievement(getAchievementWithName("Drop_the_Base"));
 		}
 
 
