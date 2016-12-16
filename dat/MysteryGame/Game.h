@@ -51,11 +51,11 @@ public:
 	// by user)
 	static bool fullTempClear();
 
-	vector<Achievement*> achievements;
+	static vector<Achievement*> achievements;
 
-	Achievement* getAchievementWithName(string name);
+	static Achievement* getAchievementWithName(string name);
 
-	bool unlockAchievement(Achievement*);
+	static bool tryUnlockAchievement(Achievement*);
 
 	// this changes the coordinates of the current room and activates the new room
 	bool changeRoom(int relativeY, int relativeX, int relativeZ);

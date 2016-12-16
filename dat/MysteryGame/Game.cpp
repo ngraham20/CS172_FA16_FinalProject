@@ -6,6 +6,8 @@
 // initializes the player to be static
 Character* Game::player;
 
+vector<Achievement*> Game::achievements;
+
 // this constructor begins a new game and calls playGame()
 Game::Game()
 {
@@ -43,6 +45,12 @@ Game::~Game()
 	{
 		delete loadedRooms.at(i);
 	}
+
+	for (int i = 0; i < achievements.size(); i++)
+	{
+		delete achievements.at(i);
+
+	}
 	delete player;
 	deleteTemp();
 	return;
@@ -51,11 +59,14 @@ Game::~Game()
 
 bool Game::createAchievements()
 {
+	// TODO edit saveGame and loadGame to work with these
+
 	achievements = {
-	new Achievement("light_the_way"),
-	new Achievement("drop_the_base"),
-	new Achievement("help_me_im_lost"),
-	new Achievement("taking_inventory")
+	new Achievement("Lighting the Way"),
+	new Achievement("Drop the Base"),
+	new Achievement("Help me"),
+	new Achievement("Taking Inventory"),
+	new Achievement("Poor Vision")
 	};
 
 	return true;
@@ -555,7 +566,7 @@ Achievement* Game::getAchievementWithName(string name)
 	return nullptr;
 }
 
-bool Game::unlockAchievement(Achievement* achievement)
+bool Game::tryUnlockAchievement(Achievement* achievement)
 {
 	// first checks to see if the achievement exists
 	if (achievement != nullptr)
@@ -564,9 +575,10 @@ bool Game::unlockAchievement(Achievement* achievement)
 		if (!achievement->isUnlocked())
 		{
 			achievement->unlock();
-			cout << "--------------------------------------------" << endl;
-			cout << "<|Achievement Unlocked: " << achievement->getName() << "|>" << endl;
-			cout << "--------------------------------------------" << endl;
+			cout << "------------------------" << endl;
+			cout << "<<ACHIEVEMENT UNLOCKED!>>" << endl;
+			cout << "(" << achievement->getName() << ")" << endl;
+			cout << "------------------------" << endl;
 			return true;
 		}
 		else
@@ -788,7 +800,7 @@ string Game::getAction()
 	}
 	else if (action == "inventory")
 	{
-		unlockAchievement(getAchievementWithName("taking_inventory"));
+		tryUnlockAchievement(getAchievementWithName("Taking Inventory"));
 		printPlayerInventory();
 	}
 	else
@@ -801,6 +813,8 @@ string Game::getAction()
 
 void Game::displayInstructions()
 {
+	tryUnlockAchievement(getAchievementWithName("Help Me"));
+
 	cout << "------------------------------------------------------------------------" << endl;
 	cout << "  Only type commands in two words phrases. Input is not case sensitive. " << endl;
 	cout << "        If an action requires two words, underscore the space           " << endl;
@@ -811,7 +825,6 @@ void Game::displayInstructions()
 
 	return;
 }
-
 
 void Game::displayRoom() 
 {
@@ -879,10 +892,14 @@ void Game::playerToRoomItem(Input userin, string action)
 		currentRoom->addItemToInventory(tempItem);
 		currentRoom->updateTemp();
 		cout << "You drop the " << tempItem->getName() << "." << endl;
+
+
 		if (tempItem->getName() == "base")
 		{
-			cout << "YOU WIN THE GAME!" << endl;
+			tryUnlockAchievement(getAchievementWithName("Drop the Base"));
 		}
+
+
 	}
 	else
 	{

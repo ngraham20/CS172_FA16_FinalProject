@@ -425,6 +425,8 @@ bool Room::displayRoom()
 
 	else if (roomBrightness == 1.0)
 	{
+		Game::tryUnlockAchievement(Game::getAchievementWithName("Lighting the Way"));
+
 		while (description.at(description.size() - 1) == '\n')
 		{
 			description.pop_back();
@@ -461,6 +463,8 @@ bool Room::displayRoom()
 	}
 	else if (roomBrightness == 0.5)
 	{
+		Game::tryUnlockAchievement(Game::getAchievementWithName("Poor Vision"));
+
 		cout << endl << "[ ??? ]:" << endl;
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << "By the light of your " << brightestItem->getName() << ", you can just " << endl;
