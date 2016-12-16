@@ -51,7 +51,7 @@ public:
 	// by user)
 	static bool fullTempClear();
 
-	static vector<Achievement*> lockedAchievements;
+	static vector<Achievement*> achievements;
 
 	// static vector<Achievement*> unlockedAchievements;
 

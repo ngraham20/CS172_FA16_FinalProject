@@ -6,7 +6,7 @@
 // initializes the player to be static
 Character* Game::player;
 
-vector<Achievement*> Game::lockedAchievements;
+vector<Achievement*> Game::achievements;
 
 // this constructor begins a new game and calls playGame()
 Game::Game()
@@ -46,9 +46,9 @@ Game::~Game()
 		delete loadedRooms.at(i);
 	}
 
-	for (int i = 0; i < lockedAchievements.size(); i++)
+	for (int i = 0; i < achievements.size(); i++)
 	{
-		delete lockedAchievements.at(i);
+		delete achievements.at(i);
 
 	}
 	delete player;
@@ -62,7 +62,7 @@ bool Game::createAchievements()
 	// TODO edit saveGame and loadGame to work with these
 	// TODO pull these from file instead of from code
 
-	lockedAchievements = {
+	achievements = {
 	new Achievement("Lighting_the_Way"),
 	new Achievement("Drop_the_Base"),
 	new Achievement("Help_me"),
@@ -264,9 +264,9 @@ bool Game::saveGame(int slotNumber)
 
 	output.open(fileName.c_str());
 
-	for (int i = 0; i < lockedAchievements.size(); i++)
+	for (int i = 0; i < achievements.size(); i++)
 	{
-		Achievement* tempAchievement = lockedAchievements.at(i);
+		Achievement* tempAchievement = achievements.at(i);
 
 		if (tempAchievement->isUnlocked() == true)
 		{
@@ -593,9 +593,9 @@ bool Game::fullTempClear()
 
 Achievement* Game::getAchievementWithName(string name)
 {
-	for (int i = 0; i < lockedAchievements.size(); i++)
+	for (int i = 0; i < achievements.size(); i++)
 	{
-		Achievement* tempAchievement = lockedAchievements.at(i);
+		Achievement* tempAchievement = achievements.at(i);
 
 		if (tempAchievement->getName() == name)
 		{
