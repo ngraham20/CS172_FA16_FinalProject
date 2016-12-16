@@ -9,6 +9,8 @@ Character* Game::player;
 // this constructor begins a new game and calls playGame()
 Game::Game()
 {
+	createAchievements();
+
 	// sets the current room for begining of game
 	firstRoom = { 1,4,2 };
 	player = new Character();
@@ -44,6 +46,19 @@ Game::~Game()
 	delete player;
 	deleteTemp();
 	return;
+}
+
+
+bool Game::createAchievements()
+{
+	achievements = {
+	new Achievement("light_the_way"),
+	new Achievement("drop_the_base"),
+	new Achievement("help_me_im_lost"),
+	new Achievement("taking_inventory")
+	};
+
+	return true;
 }
 
 bool Game::saveGame(int slotNumber)
@@ -524,6 +539,49 @@ bool Game::fullTempClear()
 	return true;
 }
 
+
+Achievement* Game::getAchievementWithName(string name)
+{
+	for (int i = 0; i < achievements.size(); i++)
+	{
+		Achievement* tempAchievement = achievements.at(i);
+
+		if (tempAchievement->getName() == name)
+		{
+			return tempAchievement;
+		}
+	}
+
+	return nullptr;
+}
+
+bool Game::unlockAchievement(Achievement* achievement)
+{
+	// first checks to see if the achievement exists
+	if (achievement != nullptr)
+	{
+		// then checks if the achievement has happened already
+		if (!achievement->isUnlocked())
+		{
+			achievement->unlock();
+			cout << "--------------------------------------------" << endl;
+			cout << "<|Achievement Unlocked: " << achievement->getName() << "|>" << endl;
+			cout << "--------------------------------------------" << endl;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		cout << "Achievement unlock failed. Returned Nullpointer." << endl;
+	}
+
+	return false;
+}
+
 bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 {
 	// checks which direciton the player wants to move
@@ -730,6 +788,7 @@ string Game::getAction()
 	}
 	else if (action == "inventory")
 	{
+		unlockAchievement(getAchievementWithName("taking_inventory"));
 		printPlayerInventory();
 	}
 	else

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Achievement.h"
 #include "Character.h"
 #include "Room.h"
 #include "Input.h"
@@ -50,6 +51,12 @@ public:
 	// by user)
 	static bool fullTempClear();
 
+	vector<Achievement*> achievements;
+
+	Achievement* getAchievementWithName(string name);
+
+	bool unlockAchievement(Achievement*);
+
 	// this changes the coordinates of the current room and activates the new room
 	bool changeRoom(int relativeY, int relativeX, int relativeZ);
 
@@ -74,6 +81,8 @@ public:
 	void setPlayerLocation(Coordinates location);
 
 	static Character* getPlayer();
+
+	bool createAchievements();
 
 private:
 	// the game has loaded rooms

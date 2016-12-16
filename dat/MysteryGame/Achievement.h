@@ -10,6 +10,8 @@ public:
 
 	string getName();
 
+	bool isUnlocked();
+
 	bool unlock();
 
 	~Achievement();
