@@ -65,7 +65,7 @@ bool Game::createAchievements()
 	achievements = {
 	new Achievement("Lighting_the_Way"),
 	new Achievement("Drop_the_Base"),
-	new Achievement("Help_me"),
+	new Achievement("Help_Me"),
 	new Achievement("Taking_Inventory"),
 	new Achievement("Poor_Vision")
 	};
@@ -850,8 +850,9 @@ string Game::getAction()
 	}
 	else if (action == "inventory")
 	{
-		tryUnlockAchievement(getAchievementWithName("Taking_Inventory"));
 		printPlayerInventory();
+
+		tryUnlockAchievement(getAchievementWithName("Taking_Inventory"));
 	}
 	else
 	{
@@ -863,7 +864,6 @@ string Game::getAction()
 
 void Game::displayInstructions()
 {
-	tryUnlockAchievement(getAchievementWithName("Help Me"));
 
 	cout << "------------------------------------------------------------------------" << endl;
 	cout << "  Only type commands in two words phrases. Input is not case sensitive. " << endl;
@@ -872,6 +872,8 @@ void Game::displayInstructions()
 	cout << "              Examples: go north , pick_up flashlight                   " << endl;
 	cout << "              If you would like to quit, type \"quit.\"                 " << endl;
 	cout << "------------------------------------------------------------------------" << endl;
+
+	tryUnlockAchievement(getAchievementWithName("Help_Me"));
 
 	return;
 }

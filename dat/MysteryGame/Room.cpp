@@ -425,7 +425,6 @@ bool Room::displayRoom()
 
 	else if (roomBrightness == 1.0)
 	{
-		Game::tryUnlockAchievement(Game::getAchievementWithName("Lighting_the_Way"));
 
 		while (description.at(description.size() - 1) == '\n')
 		{
@@ -460,10 +459,11 @@ bool Room::displayRoom()
 				cout << "and a " << tempItem.getName() << endl;
 			}
 		}
+
+		Game::tryUnlockAchievement(Game::getAchievementWithName("Lighting_the_Way"));
 	}
 	else if (roomBrightness == 0.5)
 	{
-		Game::tryUnlockAchievement(Game::getAchievementWithName("Poor_Vision"));
 
 		cout << endl << "[ ??? ]:" << endl;
 		cout << "------------------------------------------------------------------------" << endl;
@@ -494,6 +494,8 @@ bool Room::displayRoom()
 			cout << "Downward" << endl;
 		}
 		cout << "------------------------------------------------------------------------" << endl;
+
+		Game::tryUnlockAchievement(Game::getAchievementWithName("Poor_Vision"));
 	}
 	else if (roomBrightness == 0.0)
 	{
