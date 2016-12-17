@@ -84,6 +84,10 @@ string Input::checkAction()
 	{
 		return "room";
 	}
+	else if (verb == "unlock")
+	{
+		return "unlock";
+	}
 	else
 	{
 		return "fail";

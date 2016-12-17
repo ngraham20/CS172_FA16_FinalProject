@@ -473,6 +473,77 @@ bool Game::loadGame(int slotNumber)
 	return true;
 }
 
+bool Game::unlockDoor(int doorValue)
+{
+	ifstream input;
+	ofstream output;
+
+	// allows access to doors
+	vector<string> tempDoors = currentRoom->getDoors();
+
+	// TODO make this work with temp instead later
+	string fileName = ".\\room\\" + to_string(currentRoom->getLocation().y) + to_string(currentRoom->getLocation().x) +
+		to_string(currentRoom->getLocation().z) + "\\doors.txt";
+
+
+	if (doorValue == 0)
+	{
+		if (tempDoors.at(0) == "locked")
+		{
+			input.open(fileName.c_str());
+
+			if (!input.fail())
+			{
+				vector<string> tempDoors;
+
+				// collect all door variables
+				// read to the door struct from file
+				string temp;
+				constexpr int doorCount = 6;
+				for (int i = 0; i < doorCount; i++)
+				{
+					input >> temp;
+					if (temp == "true" || temp == "false" || temp == "locked")
+					{
+						tempDoors.push_back(temp);
+					}
+					else
+					{
+						cout << "[readOrigin]: file input is not true or false." << endl;
+					}
+				}
+
+				input.close();
+
+				// change north variable to true (open)
+				tempDoors.at(0) = "true";
+
+				output.open(fileName.c_str());
+
+				// repeat six times
+				for (int i = 0; i < tempDoors.size(); i++ )
+				{
+
+					output << tempDoors.at(i) << endl;
+				}
+
+				currentRoom->updateTemp();
+
+				return true;
+			}
+			else
+			{
+				cout << "[UnlockDoor]: Could not open file. . ." << endl;
+			}
+		}
+		else
+		{
+			cout << "That door is already open." << endl;
+		}
+	}
+	return false;
+}
+
 Room * Game::getCurrentRoom() { return currentRoom; }
 
 bool Game::deleteTemp()
@@ -877,6 +948,10 @@ string Game::getAction()
 		printPlayerInventory();
 
 		tryUnlockAchievement(getAchievementWithName("Taking_Inventory"));
+	}
+	else if (action == "unlock")
+	{
+		unlockDoor(0);
 	}
 	else
 	{

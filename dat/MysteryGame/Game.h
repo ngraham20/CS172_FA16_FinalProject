@@ -40,6 +40,9 @@ public:
 	// the player in the saved current room
 	bool loadGame(int slotNumber);
 
+	// unlocks the door at the specified value
+	bool unlockDoor(int doorValue);
+
 	// the room the player is currently in
 	Room* getCurrentRoom();
 
