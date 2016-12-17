@@ -24,7 +24,7 @@ private:
 	string fileName;
 
 	// doors are always n,s,e,w,u,d
-	vector<bool> doors;
+	vector<string> doors;
 
 	Coordinates coordinates = {};
 
@@ -94,7 +94,7 @@ public:
 	static vector<Coordinates> getcreatedTempFiles();
 
 	// returns all possible doors, stating which are open, and which are closed.
-	vector<bool> getDoors();
+	vector<string> getDoors();
 
 	// finds the item from its name variable and then removes it from room inventory
 	Item* removeItemFromInventory(string itemName);

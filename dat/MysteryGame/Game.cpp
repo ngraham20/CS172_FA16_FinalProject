@@ -679,15 +679,19 @@ void Game::playGame()
 
 void Game::changeRoomsFromInput(string action)
 {
-	vector<bool> temp = currentRoom->getDoors();
+	vector<string> temp = currentRoom->getDoors();
 
 	if (action == "goNorth")
 	{
 		// only go north if there's a north door
-		if (temp.at(0) == true)
+		if (temp.at(0) == "true")
 		{
 			// go north
 			changeRoom(0, -1, 0);
+		}
+		else if (temp.at(0) == "locked")
+		{
+			cout << "That door is locked. . ." << endl;
 		}
 		else
 		{
@@ -697,10 +701,14 @@ void Game::changeRoomsFromInput(string action)
 	else if (action == "goSouth")
 	{
 		// only go south if there's a south door
-		if (temp.at(1) == true)
+		if (temp.at(1) == "true")
 		{
 			// go south
 			changeRoom(0, 1, 0);
+		}
+		else if (temp.at(1) == "locked")
+		{
+			cout << "That door is locked. . ." << endl;
 		}
 		else
 		{
@@ -712,10 +720,14 @@ void Game::changeRoomsFromInput(string action)
 	else if (action == "goEast")
 	{
 		// only go east if there's an east door
-		if (temp.at(2) == true)
+		if (temp.at(2) == "true")
 		{
 			// go east
 			changeRoom(0, 0, 1);
+		}
+		else if (temp.at(2) == "locked")
+		{
+			cout << "That door is locked. . ." << endl;
 		}
 		else
 		{
@@ -725,10 +737,14 @@ void Game::changeRoomsFromInput(string action)
 	else if (action == "goWest")
 	{
 		// only go west if there's a west door
-		if (temp.at(3) == true)
+		if (temp.at(3) == "true")
 		{
 			// go west
 			changeRoom(0, 0, -1);
+		}
+		else if (temp.at(3) == "locked")
+		{
+			cout << "That door is locked. . ." << endl;
 		}
 		else
 		{
@@ -738,10 +754,14 @@ void Game::changeRoomsFromInput(string action)
 	else if (action == "goUp")
 	{
 		// only go up if there's an upper door
-		if (temp.at(4) == true)
+		if (temp.at(4) == "true")
 		{
 			// go up
 			changeRoom(1, 0, 0);
+		}
+		else if (temp.at(4) == "locked")
+		{
+			cout << "That door is locked. . ." << endl;
 		}
 		else
 		{
@@ -751,10 +771,14 @@ void Game::changeRoomsFromInput(string action)
 	else if (action == "goDown")
 	{
 		// only go down if there's a lower door
-		if (temp.at(5) == true)
+		if (temp.at(5) == "true")
 		{
 			// go down
 			changeRoom(-1, 0, 0);
+		}
+		else if (temp.at(5) == "locked")
+		{
+			cout << "That door is locked. . ." << endl;
 		}
 		else
 		{
@@ -917,7 +941,7 @@ Character * Game::getPlayer() { return player; }
 bool Game::checkRoomChangeValidity()
 {
 	Room* tRoom = getCurrentRoom();
-	vector<bool> temp = tRoom->getDoors();
+	vector<string> temp = tRoom->getDoors();
 	return false;
 }
 

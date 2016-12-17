@@ -469,27 +469,27 @@ bool Room::displayRoom()
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << "By the light of your " << brightestItem->getName() << ", you can just " << endl;
 		cout << "make out the vague shapes of pathways leading " << endl;
-		if (this->doors.at(0))
+		if (this->doors.at(0) == "true")
 		{
 			cout << "Northward" << endl;
 		}
-		if (this->doors.at(1))
+		if (this->doors.at(1) == "true")
 		{
 			cout << "Southward" << endl;
 		}
-		if (this->doors.at(2))
+		if (this->doors.at(2) == "true")
 		{
 			cout << "Eastward" << endl;
 		}
-		if (this->doors.at(3))
+		if (this->doors.at(3) == "true")
 		{
 			cout << "Westward" << endl;
 		}
-		if (this->doors.at(4))
+		if (this->doors.at(4) == "true")
 		{
 			cout << "Upward" << endl;
 		}
-		if (this->doors.at(5))
+		if (this->doors.at(5) == "true")
 		{
 			cout << "Downward" << endl;
 		}
@@ -556,19 +556,13 @@ bool Room::readOrigin()
 		for (int i = 0; i < doorCount; i++)
 		{
 			input >> temp;
-			if (temp == "true")
+			if (temp == "true" || temp == "false" || temp == "locked")
 			{
-				doors.push_back(true);
-				// cout << "[readOrigin]: door " << i << ": true" << endl;
-			}
-			else if (temp == "false")
-			{
-				doors.push_back(false);
-				// cout << "[readOrigin]: door " << i << ": false" << endl;
+				doors.push_back(temp);
 			}
 			else
 			{
-				// cout << "[readOrigin]: file input is not true or false." << endl;
+				cout << "[readOrigin]: file input is not true or false." << endl;
 			}
 		}
 		input.close();
@@ -640,7 +634,7 @@ Coordinates Room::getLocation() { return coordinates; }
 
 vector<Coordinates> Room::getcreatedTempFiles() { return createdTempFiles; }
 
-vector<bool> Room::getDoors() { return doors; }
+vector<string> Room::getDoors() { return doors; }
 
 Room::~Room()
 {
