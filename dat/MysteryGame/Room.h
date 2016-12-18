@@ -42,10 +42,10 @@ private:
 	bool lightSource;
 
 	// reads from the original files created pre-compile
-	bool readDefaultInventory();
+	bool readFromOrigin();
 
 	// creates temporary files to be read from and written to during gameplay
-	bool createTempInventory();
+	bool createTempFiles();
 
 // -----------------------------------PUBLIC--------------------------------------
 public:
@@ -67,7 +67,7 @@ public:
 	bool changeRoom(Coordinates coordinates);
 
 	// reads from the temporary files created by the constructor
-	bool readTempInventory();
+	bool readFromTemp();
 
 	// when the destructor is activated, this method is called to update the
 	// room file within a temporary folder. (Which will be read from upon game saving)
@@ -101,6 +101,9 @@ public:
 
 	// adds an item to the room's inventory
 	void addItemToInventory(Item* item);
+
+	// unlocks a given door in a room
+	bool unlockDoor(int doorValue);
 
 	~Room();
 };

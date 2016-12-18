@@ -2,6 +2,12 @@
 	This file impliments the methods as initialized in Room.h
 */
 #include "Room.h"
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+#define UP 4
+#define DOWN 5
 using namespace std;
 
 vector<Coordinates> Room::createdTempFiles;
@@ -26,7 +32,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		input.close();
 
 		// read the temp files into the room properties
-		readTempInventory();
+		readFromTemp();
 	}
 	// else if the temp files do not exist
 	else
@@ -37,11 +43,11 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 
 		// create blank temp files
 		// cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
-		createTempInventory();
+		createTempFiles();
 
 		// reads the origin files (except the inventory if temp is read)
 		// to the room properties
-		readDefaultInventory();
+		readFromOrigin();
 
 		// this adds the created room's coordinates to the vector.
 		createdTempFiles.push_back(this->coordinates);
@@ -50,7 +56,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		// updateTemp();
 
 	}
-	// this reads the original files to the room (except the inventory)
+	// this reads the original files to the room (except the inventory and doors)
 	readOrigin();
 
 	// write to the temp files from room properties
@@ -59,7 +65,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 	displayRoom();
 }
 
-bool Room::createTempInventory()
+bool Room::createTempFiles()
 {
 	// createTemp is only called privately, and only by the constructor...
 	// it is also only to CREATE blank files. They will always open.
@@ -74,6 +80,13 @@ bool Room::createTempInventory()
 	output.close();
 	// cout << "[createTemp]: Created invnentory.txt" << endl;
 
+	filename = ".\\room\\temp\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+
+	output.open(filename.c_str());
+	if (output.fail()) { return false; }
+	output.close();
+
 	return true;
 }
 
@@ -85,7 +98,7 @@ bool Room::createTempInventory()
 
 // this now reads the temp file inventory to room variables, but does
 // NOT describe the room
-bool Room::readTempInventory()
+bool Room::readFromTemp()
 {
 	ifstream input;
 //	//------------------------------------------name-------------------------------------------
@@ -158,44 +171,33 @@ bool Room::readTempInventory()
 		return false;
 	}
 
-	//// -----------------------------------------doors---------------------------------------------------
-	//// set the filename variable
-	//fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
-	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+	//-----------------------------------------DOORS-----------------------------------------
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
 
-	//// open the file
-	//input.open(fileName.c_str());
+	input.open(fileName.c_str());
 
-	//// if the file opens
-	//if (!input.fail())
-	//{
-	//	// read to the door struct from file
-	//	string temp;
-	//	constexpr int doorCount = 6;
-	//	for (int i = 0; i < doorCount; i++)
-	//	{
-	//		input >> temp;
-	//		if (temp == "true")
-	//		{
-	//			doors.push_back(true);
-	//			//	cout << "[readTemp]: door " << i << ": true" << endl;
-	//		}
-	//		else if (temp == "false")
-	//		{
-	//			doors.push_back(false);
-	//			//	cout << "[readTemp]: door " << i << ": false" << endl;
-	//		}
-	//		else
-	//		{
-	//			cout << "[readTemp]: file input is not true or false." << endl;
-	//		}
-	//	}
-	//	input.close();
-	//}
-	//else
-	//{
-	//	cout << "[readTemp]: Could not open Door temp files" << endl;
-	//}
+	// open doors.txt
+	if (!input.fail())
+	{
+		constexpr int doorCount = 6;
+		for (int i = 0; i < doorCount; i++)
+		{
+			string tempDoor;
+
+			input >> tempDoor;
+
+			if (tempDoor != "")
+			{
+				doors.push_back(tempDoor);
+			}
+		}
+		input.close();
+	}
+	else
+	{
+		cout << "[Origin]: Could not open doors.txt" << endl;
+	}
 
 	////-----------------------------------------------description-----------------------------------------
 	//// set the fileName variable
@@ -242,9 +244,45 @@ bool Room::readTempInventory()
 
 // this reads inventory files to room variables
 // it does NOT actually describe anything with cout
-bool Room::readDefaultInventory()
+bool Room::readFromOrigin()
 {
 	ifstream input;
+
+	//-----------------------------------------DOORS-----------------------------------------
+	fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+
+	input.open(fileName.c_str());
+
+	// open doors.txt
+	if (!input.fail())
+	{
+		constexpr int doorCount = 6;
+		for (int i = 0; i < doorCount; i++)
+		{
+			string tempDoor;
+
+			input >> tempDoor;
+
+			if (tempDoor != "")
+			{
+				if (tempDoor == "true" || tempDoor == "false" || tempDoor == "locked")
+				{
+					doors.push_back(tempDoor);
+				}
+				else
+				{
+					cout << "[Origin]: File contains a non-exceptable term" << endl;
+				}
+			}
+		}
+		input.close();
+	}
+	else
+	{
+		cout << "[Origin]: Could not open door.txt" << endl;
+	}
+
 	// --------------------------------------inventory--------------------------------
 	// set the fileName variable
 	fileName = ".\\room\\" + to_string(coordinates.y) +
@@ -307,6 +345,18 @@ bool Room::updateTemp()
 	ofstream output;
 	ifstream input;
 
+	//-----------------------------------------DOORS---------------------------------------------------
+	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+
+	output.open(fileName.c_str());
+
+	for (int i = 0; i < doors.size(); i++)
+	{
+		output << doors.at(i) << endl;
+	}
+
+	//------------------------------------inventory----------------------------------------------
 	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
@@ -316,7 +366,6 @@ bool Room::updateTemp()
 	{
 		input.close();
 
-		//------------------------------------inventory----------------------------------------------
 		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 			to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
@@ -539,34 +588,34 @@ bool Room::readOrigin()
 		return false;
 	}
 
-	// -----------------------------------------doors---------------------------------------------------
-	// set the filename variable
-	fileName = ".\\room\\" + to_string(coordinates.y) +
-		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
+	//// -----------------------------------------doors---------------------------------------------------
+	//// set the filename variable
+	//fileName = ".\\room\\" + to_string(coordinates.y) +
+	//	to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
 
-	// open the file
-	input.open(fileName.c_str());
+	//// open the file
+	//input.open(fileName.c_str());
 
-	// if the file opens
-	if (!input.fail())
-	{
-		// read to the door struct from file
-		string temp;
-		constexpr int doorCount = 6;
-		for (int i = 0; i < doorCount; i++)
-		{
-			input >> temp;
-			if (temp == "true" || temp == "false" || temp == "locked")
-			{
-				doors.push_back(temp);
-			}
-			else
-			{
-				cout << "[readOrigin]: file input is not true or false." << endl;
-			}
-		}
-		input.close();
-	}
+	//// if the file opens
+	//if (!input.fail())
+	//{
+	//	// read to the door struct from file
+	//	string temp;
+	//	constexpr int doorCount = 6;
+	//	for (int i = 0; i < doorCount; i++)
+	//	{
+	//		input >> temp;
+	//		if (temp == "true" || temp == "false" || temp == "locked")
+	//		{
+	//			doors.push_back(temp);
+	//		}
+	//		else
+	//		{
+	//			cout << "[readOrigin]: file input is not true or false." << endl;
+	//		}
+	//	}
+	//	input.close();
+	//}
 
 	// -----------------------------------------description--------------------------------------------
 	// set the fileName variable
@@ -635,6 +684,48 @@ Coordinates Room::getLocation() { return coordinates; }
 vector<Coordinates> Room::getcreatedTempFiles() { return createdTempFiles; }
 
 vector<string> Room::getDoors() { return doors; }
+
+bool Room::unlockDoor(int doorValue)
+{
+	ifstream input;
+	ofstream output;
+
+	// allows access to doors
+	// vector<string> tempDoors = currentRoom->getDoors();
+
+	// TODO make this work with temp instead later
+	//string fileName = ".\\room\\temp\\" + to_string(currentRoom->getLocation().y) + to_string(currentRoom->getLocation().x) +
+	//	to_string(currentRoom->getLocation().z) + "\\doors.txt";
+
+
+	if (doorValue == 0)
+	{
+		if (doors.at(NORTH) == "locked")
+		{
+
+			// change north variable to true (open)
+			doors.at(NORTH) = "true";
+
+			updateTemp();
+
+			return true;
+		}
+		else if (doors.at(SOUTH) == "locked")
+		{
+			// change north variable to true (open)
+			doors.at(SOUTH) = "true";
+
+			updateTemp();
+
+			return true;
+		}
+		else
+		{
+			cout << "That door is already open." << endl;
+		}
+	}
+	return false;
+}
 
 Room::~Room()
 {
