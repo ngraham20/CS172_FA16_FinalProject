@@ -518,27 +518,27 @@ bool Room::displayRoom()
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << "By the light of your " << brightestItem->getName() << ", you can just " << endl;
 		cout << "make out the vague shapes of pathways leading " << endl;
-		if (this->doors.at(0) == "true")
+		if (this->doors.at(NORTH) == "true")
 		{
 			cout << "Northward" << endl;
 		}
-		if (this->doors.at(1) == "true")
+		if (this->doors.at(SOUTH) == "true")
 		{
 			cout << "Southward" << endl;
 		}
-		if (this->doors.at(2) == "true")
+		if (this->doors.at(EAST) == "true")
 		{
 			cout << "Eastward" << endl;
 		}
-		if (this->doors.at(3) == "true")
+		if (this->doors.at(WEST) == "true")
 		{
 			cout << "Westward" << endl;
 		}
-		if (this->doors.at(4) == "true")
+		if (this->doors.at(UP) == "true")
 		{
 			cout << "Upward" << endl;
 		}
-		if (this->doors.at(5) == "true")
+		if (this->doors.at(DOWN) == "true")
 		{
 			cout << "Downward" << endl;
 		}
@@ -690,39 +690,21 @@ bool Room::unlockDoor(int doorValue)
 	ifstream input;
 	ofstream output;
 
-	// allows access to doors
-	// vector<string> tempDoors = currentRoom->getDoors();
-
-	// TODO make this work with temp instead later
-	//string fileName = ".\\room\\temp\\" + to_string(currentRoom->getLocation().y) + to_string(currentRoom->getLocation().x) +
-	//	to_string(currentRoom->getLocation().z) + "\\doors.txt";
-
-
-	if (doorValue == 0)
+	if (doors.at(doorValue) == "locked")
 	{
-		if (doors.at(NORTH) == "locked")
-		{
 
-			// change north variable to true (open)
-			doors.at(NORTH) = "true";
+		// change variable to true (open)
+		doors.at(doorValue) = "true";
 
-			updateTemp();
+		updateTemp();
 
-			return true;
-		}
-		else if (doors.at(SOUTH) == "locked")
-		{
-			// change north variable to true (open)
-			doors.at(SOUTH) = "true";
+		cout << "*CLICK*" << endl;
 
-			updateTemp();
-
-			return true;
-		}
-		else
-		{
-			cout << "That door is already open." << endl;
-		}
+		return true;
+	}
+	else
+	{
+		cout << "That door is already open." << endl;
 	}
 	return false;
 }
