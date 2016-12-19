@@ -356,6 +356,8 @@ bool Room::updateTemp()
 		output << doors.at(i) << endl;
 	}
 
+	output.close();
+
 	//------------------------------------inventory----------------------------------------------
 	fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
@@ -379,7 +381,7 @@ bool Room::updateTemp()
 
 			if (itemName != "")
 			{
-			//	cout << "[updateTemp]: " << itemName << endl;
+				cout << "[updateTemp]: " << itemName << endl;
 				output << itemName + " ";
 				output << itemType + " ";
 				output << to_string(itemLumosity) << endl;
@@ -707,6 +709,18 @@ bool Room::unlockDoor(int doorValue)
 		cout << "That door is already open." << endl;
 	}
 	return false;
+}
+
+bool Room::setInventory(vector<Item*> inventory)
+{
+	this->inventory = inventory;
+	return true;
+}
+
+bool Room::setDoors(vector<string> doors)
+{
+	this->doors = doors;
+	return true;
 }
 
 Room::~Room()

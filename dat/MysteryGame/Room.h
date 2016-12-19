@@ -105,6 +105,11 @@ public:
 	// unlocks a given door in a room
 	bool unlockDoor(int doorValue);
 
+	// the following set functions are to be used by the Game's Load() function
+	bool setInventory(vector<Item*> inventory);
+
+	bool setDoors(vector<string> doors);
+
 	~Room();
 };
 

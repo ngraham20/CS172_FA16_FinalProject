@@ -153,11 +153,53 @@ bool Game::saveGame(int slotNumber)
 		Coordinates coordinates = temp.at(i);
 
 		string tempName;
-		vector<bool> tempDoors;
+		vector<string> tempDoors;
 		vector<Item*> tempInventory;
 		string tempDescription;
 
+		//-------------------------------------------------DOORS---------------------------------------------------------
+	
+		// read the doors to variables
+		fileName = ".\\room\\temp\\" + to_string(coordinates.y) +
+			to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
 
+		input.open(fileName.c_str());
+		if (!input.fail())
+		{
+			constexpr int doorCount = 6;
+			for (int i = 0; i < doorCount; i++)
+			{
+				string tempString;
+				input >> tempString;
+
+				if (tempString == "true" || tempString == "false" || tempString == "locked")
+				{
+					tempDoors.push_back(tempString);
+				}
+				else
+				{
+					cout << "[save]: door text is not true, false, or locked" << endl;
+				}
+			}
+
+			input.close();
+		}
+		
+		// save the doors
+		fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" +
+			to_string(coordinates.y) + to_string(coordinates.x) +
+			to_string(coordinates.z) + "\\doors.txt";
+
+		output.open(fileName.c_str());
+
+		constexpr int doorCount = 6;
+
+		for (int i = 0; i < doorCount; i++)
+		{
+			output << tempDoors.at(i) << endl;
+		}
+
+		output.close();
 		//----------------------------------------------ROOM_INVENTORY-------------------------------------------
 			// collect the inventory
 
@@ -284,6 +326,7 @@ bool Game::loadGame(int slotNumber)
 	ifstream input;
 	ofstream output;
 
+	//-------------------------------------------------------GET SAVED ROOMS-------------------------------------------------------------
 	// use a for loop to loop through a vector of location variables
 	string fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\saved_rooms.txt";
 
@@ -322,6 +365,8 @@ bool Game::loadGame(int slotNumber)
 		{
 			string tempRoom = roomsToLoad.at(i);
 			
+			//-----------------------------------------------READ INVENTORY TO VARIABLES--------------------------------------------------------
+
 			// open the save slot inventory file
 			fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" + tempRoom + "\\inventory.txt";
 
@@ -333,8 +378,6 @@ bool Game::loadGame(int slotNumber)
 			vector<Item*> temporaryInventory;
 
 			input.open(fileName.c_str());
-
-			//-----------------------------------------------READ INVENTORY TO VARIABLES--------------------------------------------------------
 			// write the inventory there
 			if (!input.fail())
 			{
@@ -370,6 +413,10 @@ bool Game::loadGame(int slotNumber)
 							temporaryInventory.push_back(temp1);
 						}
 					}
+
+					// send the saveGame-read inventory to the current room
+					// currentRoom->setInventory(temporaryInventory);
+
 				}
 			}
 			else
@@ -379,21 +426,55 @@ bool Game::loadGame(int slotNumber)
 			}
 			// close the file
 			input.close();
-
-			// --------------------------------------------------------WRITE TO TEMP---------------------------------
-			fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
-
-			output.open(fileName.c_str());
-
-			for (int i = 0; i < temporaryInventory.size(); i++)
-			{
-				// create temporary item to send to inventory.txt
-				Item* temp = temporaryInventory.at(i);
-
-				output << temp->getName() << " " << temp->getType() << " " << temp->getLumosity() << endl;
 			
+			//--------------------------------------------------READ DOORS TO VARIABLES---------------------------------------------------
+
+			fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" + tempRoom + "\\inventory.txt";
+
+			vector<string> tempDoors;
+
+			input.open(fileName.c_str());
+
+			if (!input.fail())
+			{
+				constexpr int doorCount = 6;
+				for (int i = 0; i < doorCount; i++)
+				{
+					string tempString;
+					input >> tempString;
+
+					if (tempString == "true" || tempString == "false" || tempString == "locked")
+					{
+						tempDoors.push_back(tempString);
+					}
+					else
+					{
+						cout << "[Load]: door string is not true, false, or locked. . ." << endl;
+					}
+				}
+				input.close();
 			}
-			output.close();
+
+		//	currentRoom->setDoors(tempDoors);
+
+		//	currentRoom->updateTemp();
+
+
+
+			//// -------------------------------------------WRITE INVENTORY TO TEMP---------------------------------
+			//fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
+
+			//output.open(fileName.c_str());
+
+			//for (int i = 0; i < temporaryInventory.size(); i++)
+			//{
+			//	// create temporary item to send to inventory.txt
+			//	Item* temp = temporaryInventory.at(i);
+
+			//	output << temp->getName() << " " << temp->getType() << " " << temp->getLumosity() << endl;
+			//
+			//}
+			//output.close();
 		}
 
 	}
