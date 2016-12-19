@@ -68,10 +68,16 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		else
 		{
 			// to be called if the room is created, but the files can't be read from
-			cout << "This room does not exist." << endl;
+			// cout << "This room does not exist." << endl;
 		}
 
 	}
+}
+
+// GHOST CODE
+Room * Room::loadRoom(Coordinates coordinates)
+{
+	return nullptr;
 }
 
 bool Room::createTempFiles()

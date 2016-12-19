@@ -67,6 +67,10 @@ public:
 	// creates a room based only on location struct. The rest is read from file.
 	Room(Coordinates coordinates);
 
+	// this acts as the medium between the constructor and the Game, returning NULL if the room doesn't exist.
+	// this is currently GHOST CODE
+	Room* loadRoom(Coordinates coordinates);
+
 	// changes the current room. It does this by
 	// creating four new rooms in the direction of travel, entering the new room,
 	// and destructing the three rooms surrounding the previous one.
