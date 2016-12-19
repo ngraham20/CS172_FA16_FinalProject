@@ -15,7 +15,9 @@ int main()
 {
 	string language;
 	cout << "english/spanish\n>>";
-	cin >> language;
+	// cin >> language;
+	cout << "Default language selected: English." << endl;
+	language = "english";
 
 	if (language == "english")
 	{

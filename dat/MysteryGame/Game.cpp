@@ -579,69 +579,90 @@ bool Game::loadGame(int slotNumber)
 
 bool Game::unlockDoor(int doorValue)
 {
-	if (doorValue == NORTH)
+	bool hasKey = false;
+
+	for (int i = 0; i < player->getInventory().size(); i++)
 	{
-		// unlock the current room's north door
-		currentRoom->unlockDoor(NORTH);
+		Item* tempItem = player->getInventory().at(i);
 
-		// unlock the northern room's southern door (the same door)
-		loadedRooms.at(NORTH)->unlockDoor(SOUTH);
-
-		cout << "*CLICK*" << endl;
+		if (tempItem->getName() == "key")
+		{
+			hasKey = true;
+			break;
+		}
 	}
-	else if (doorValue == SOUTH)
+
+	if (hasKey)
 	{
-		// unlock the current room's south door
-		currentRoom->unlockDoor(SOUTH);
+		if (doorValue == NORTH)
+		{
+			// unlock the current room's north door
+			currentRoom->unlockDoor(NORTH);
 
-		// unlock the northern room's nothern door (the same door)
-		loadedRooms.at(SOUTH)->unlockDoor(NORTH);
+			// unlock the northern room's southern door (the same door)
+			loadedRooms.at(NORTH)->unlockDoor(SOUTH);
 
-		cout << "*CLICK*" << endl;
-	}
-	else if (doorValue == EAST)
-	{
-		// unlock the current room's east door
-		currentRoom->unlockDoor(EAST);
+			cout << "*CLICK*" << endl;
+		}
+		else if (doorValue == SOUTH)
+		{
+			// unlock the current room's south door
+			currentRoom->unlockDoor(SOUTH);
 
-		// unlock the northern room's west door (the same door)
-		loadedRooms.at(EAST)->unlockDoor(WEST);
+			// unlock the northern room's nothern door (the same door)
+			loadedRooms.at(SOUTH)->unlockDoor(NORTH);
 
-		cout << "*CLICK*" << endl;
-	}
-	else if (doorValue == WEST)
-	{
-		// unlock the current room's west door
-		currentRoom->unlockDoor(WEST);
+			cout << "*CLICK*" << endl;
+		}
+		else if (doorValue == EAST)
+		{
+			// unlock the current room's east door
+			currentRoom->unlockDoor(EAST);
 
-		// unlock the northern room's east door (the same door)
-		loadedRooms.at(WEST)->unlockDoor(EAST);
+			// unlock the northern room's west door (the same door)
+			loadedRooms.at(EAST)->unlockDoor(WEST);
 
-		cout << "*CLICK*" << endl;
-	}
-	else if (doorValue == UP)
-	{
-		// unlock the current room's upper door
-		currentRoom->unlockDoor(UP);
+			cout << "*CLICK*" << endl;
+		}
+		else if (doorValue == WEST)
+		{
+			// unlock the current room's west door
+			currentRoom->unlockDoor(WEST);
 
-		// unlock the northern room's lower door (the same door)
-		loadedRooms.at(UP)->unlockDoor(DOWN);
+			// unlock the northern room's east door (the same door)
+			loadedRooms.at(WEST)->unlockDoor(EAST);
 
-		cout << "*CLICK*" << endl;
-	}
-	else if (doorValue == DOWN)
-	{
-		// unlock the current room's north door
-		currentRoom->unlockDoor(DOWN);
+			cout << "*CLICK*" << endl;
+		}
+		else if (doorValue == UP)
+		{
+			// unlock the current room's upper door
+			currentRoom->unlockDoor(UP);
 
-		// unlock the northern room's southern door (the same door)
-		loadedRooms.at(DOWN)->unlockDoor(UP);
+			// unlock the northern room's lower door (the same door)
+			loadedRooms.at(UP)->unlockDoor(DOWN);
 
-		cout << "*CLICK*" << endl;
+			cout << "*CLICK*" << endl;
+		}
+		else if (doorValue == DOWN)
+		{
+			// unlock the current room's north door
+			currentRoom->unlockDoor(DOWN);
+
+			// unlock the northern room's southern door (the same door)
+			loadedRooms.at(DOWN)->unlockDoor(UP);
+
+			cout << "*CLICK*" << endl;
+		}
+		else
+		{
+			cout << "[unlockDoor]: Invalid room vector value. . ." << endl;
+			return false;
+		}
 	}
 	else
 	{
-		cout << "[unlockDoor]: Invalid room vector value. . ." << endl;
+		cout << "You need a key to unlock that door." << endl;
 		return false;
 	}
 	return true;
