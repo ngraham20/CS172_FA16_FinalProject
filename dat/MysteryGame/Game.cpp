@@ -800,7 +800,7 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	lowerRoom = { coordinates.y - 1, coordinates.x, coordinates.z };
 
 	// load all new rooms
-	loadedRooms =
+	/*loadedRooms =
 	{
 		new Room(northernRoom),
 		new Room(southernRoom),
@@ -809,6 +809,17 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 		new Room(upperRoom),
 		new Room(lowerRoom),
 		new Room(coordinates)
+	};*/
+
+	loadedRooms =
+	{
+		Room::loadRoom(northernRoom),
+		Room::loadRoom(southernRoom),
+		Room::loadRoom(easternRoom),
+		Room::loadRoom(westernRoom),
+		Room::loadRoom(upperRoom),
+		Room::loadRoom(lowerRoom),
+		Room::loadRoom(coordinates)
 	};
 
 	// move the player to the new coordinates

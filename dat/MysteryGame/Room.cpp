@@ -74,10 +74,31 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 	}
 }
 
-// GHOST CODE
+
 Room * Room::loadRoom(Coordinates coordinates)
 {
-	return nullptr;
+	ifstream input;
+
+	// check to see if the room exists first
+	string fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+
+	input.open(fileName.c_str());
+
+	// if the room DOES exist
+	if (!input.fail())
+	{
+		input.close();
+
+		// construct the room
+		return new Room(coordinates);
+	}
+	else
+	{
+		// room does not exist. Return null pointer
+		// cout << "That room does not exist." << endl;
+		return nullptr;
+	}
 }
 
 bool Room::createTempFiles()
@@ -460,6 +481,7 @@ bool Room::displayRoom()
 			description.pop_back();
 		}
 		cout << endl << "[" << name << "]:" << endl;
+		cout << to_string(coordinates.y) << to_string(coordinates.x) << to_string(coordinates.z) << endl;
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << this->description << endl;
 		cout << "------------------------------------------------------------------------" << endl;
