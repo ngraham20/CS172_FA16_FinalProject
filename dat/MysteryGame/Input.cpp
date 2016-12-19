@@ -86,7 +86,7 @@ string Input::checkAction()
 	}
 	else if (verb == "unlock")
 	{
-		return "unlock";
+		return returnSubjectFromAction("unlock");
 	}
 	else
 	{
@@ -107,6 +107,16 @@ string Input::returnSubjectFromAction(string verb)
 		else if (subject == "up") { return "goUp"; }
 		else if (subject == "down") { return "goDown"; }
 		else { return "fail"; }
+	}
+	else if (verb == "unlock")
+	{
+		if (subject == "north") { return "unlockNorth"; }
+		else if (subject == "south") { return "unlockSouth"; }
+		else if (subject == "east") { return "unlockEast"; }
+		else if (subject == "west") { return "unlockWest"; }
+		else if (subject == "up") { return "unlockUp"; }
+		else if (subject == "down") { return "unlockDown"; }
+		else { return "fail";  }
 	}
 	return "";
 }

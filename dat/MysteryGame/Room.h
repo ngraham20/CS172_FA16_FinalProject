@@ -56,6 +56,7 @@ private:
 // -----------------------------------PUBLIC--------------------------------------
 public:
 
+
 	//static vector<Item*> playerInventory;
 
 	//// this sets the player

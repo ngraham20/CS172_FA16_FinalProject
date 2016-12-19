@@ -1,0 +1,8 @@
+revolver weapon 0.0
+knife weapon 0.0
+rope weapon 0.0
+candlestick weapon 0.0
+lead_pipe weapon 0.0
+wrench weapon 0.0
+torch tool 1.0
+glow_stick tool 0.5

@@ -24,10 +24,10 @@ class Game
 {
 public:
 	// constructor creates the game
-	Game();
+	Game(string language);
 
 	// overloaded constructor loads a game with specific save slot
-	Game(int slot);
+	Game(string language, int slot);
 
 	// destructor deletes the game and all temp files.
 	~Game();
@@ -78,6 +78,9 @@ public:
 	// this will change the room according to the users input
 	void changeRoomsFromInput(string action);
 
+	// this will unlock the door according to the user input "action"
+	bool unlockDoorFromInput(string action);
+
 	// this receives player action and returns a string
 	string getAction();
 
@@ -95,6 +98,8 @@ public:
 	static Character* getPlayer();
 
 	bool createAchievements();
+
+	static string language;
 
 private:
 	// the game has loaded rooms

@@ -1,0 +1,4 @@
+You are standing in a simple bathroom. Besides a mirror, sink, toilet,
+and bathtub, you can't see anything interesting. A square window looks
+out onto the front lawn, one story below. There are two doors in this
+bathroom. One leading north, and the other, east.

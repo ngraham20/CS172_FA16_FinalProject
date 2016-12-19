@@ -6,11 +6,15 @@
 // initializes the player to be static
 Character* Game::player;
 
+string Game::language;
+
 vector<Achievement*> Game::achievements;
 
 // this constructor begins a new game and calls playGame()
-Game::Game()
+Game::Game(string language)
 {
+	Game::language = language;
+
 	loadedRooms = { NULL,NULL,NULL,NULL,NULL,NULL,NULL };
 
 	createAchievements();
@@ -31,8 +35,10 @@ Game::Game()
 }
 
 // this is for loading the game
-Game::Game(int slot)
+Game::Game(string language, int slot)
 {
+	Game::language = language;
+
 	loadedRooms = { NULL,NULL,NULL,NULL,NULL,NULL,NULL };
 
 	createAchievements();
@@ -68,7 +74,6 @@ Game::~Game()
 
 bool Game::createAchievements()
 {
-	// TODO edit saveGame and loadGame to work with these
 	// TODO pull these from file instead of from code
 
 	achievements = {
@@ -581,6 +586,8 @@ bool Game::unlockDoor(int doorValue)
 
 		// unlock the northern room's southern door (the same door)
 		loadedRooms.at(NORTH)->unlockDoor(SOUTH);
+
+		cout << "*CLICK*" << endl;
 	}
 	else if (doorValue == SOUTH)
 	{
@@ -589,6 +596,8 @@ bool Game::unlockDoor(int doorValue)
 
 		// unlock the northern room's nothern door (the same door)
 		loadedRooms.at(SOUTH)->unlockDoor(NORTH);
+
+		cout << "*CLICK*" << endl;
 	}
 	else if (doorValue == EAST)
 	{
@@ -597,6 +606,8 @@ bool Game::unlockDoor(int doorValue)
 
 		// unlock the northern room's west door (the same door)
 		loadedRooms.at(EAST)->unlockDoor(WEST);
+
+		cout << "*CLICK*" << endl;
 	}
 	else if (doorValue == WEST)
 	{
@@ -605,6 +616,8 @@ bool Game::unlockDoor(int doorValue)
 
 		// unlock the northern room's east door (the same door)
 		loadedRooms.at(WEST)->unlockDoor(EAST);
+
+		cout << "*CLICK*" << endl;
 	}
 	else if (doorValue == UP)
 	{
@@ -613,6 +626,8 @@ bool Game::unlockDoor(int doorValue)
 
 		// unlock the northern room's lower door (the same door)
 		loadedRooms.at(UP)->unlockDoor(DOWN);
+
+		cout << "*CLICK*" << endl;
 	}
 	else if (doorValue == DOWN)
 	{
@@ -621,6 +636,8 @@ bool Game::unlockDoor(int doorValue)
 
 		// unlock the northern room's southern door (the same door)
 		loadedRooms.at(DOWN)->unlockDoor(UP);
+
+		cout << "*CLICK*" << endl;
 	}
 	else
 	{
@@ -1026,6 +1043,36 @@ void Game::changeRoomsFromInput(string action)
 	}
 }
 
+bool Game::unlockDoorFromInput(string action)
+{
+	if (action == "unlockNorth")
+	{
+		unlockDoor(NORTH);
+	}
+	else if (action == "unlockSouth")
+	{
+		unlockDoor(SOUTH);
+	}
+	else if (action == "unlockEast")
+	{
+		unlockDoor(EAST);
+	}
+	else if (action == "unlockWest")
+	{
+		unlockDoor(WEST);
+	}
+	else if (action == "unlockUp")
+	{
+		unlockDoor(UP);
+	}
+	else if (action == "unlockDown")
+	{
+		unlockDoor(DOWN);
+	}
+	else { return false; }
+	return true;
+}
+
 string Game::getAction()
 {
 	string input;
@@ -1117,10 +1164,13 @@ string Game::getAction()
 
 		tryUnlockAchievement(getAchievementWithName("Taking_Inventory"));
 	}
-	else if (action == "unlock")
+	// THE FOLLOWING IS TEST CODE TO TEST UNLOCK DOOR METHOD >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	else if (action == "unlockNorth" || action == "unlockSouth" || action == "unlockEast" ||
+		action == "unlockWest" || action == "unlockUp" || action == "unlockDown")
 	{
-		unlockDoor(0);
+		unlockDoorFromInput(action);
 	}
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	else
 	{
 		cout << "Invalid input. Please Try Again." << endl;
