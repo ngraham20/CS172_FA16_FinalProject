@@ -20,6 +20,10 @@ Game::Game()
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
 
+	// create the only other available room
+	Coordinates secondRoom = { 1,3,2 };
+	Room* nextRoom = new Room(secondRoom);
+
 	// begins the game.
 	playGame();
 }
@@ -768,6 +772,10 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 
 	Room* temp = new Room(coordinates);
 	currentRoom = temp;
+
+	// display the room after changing it
+	currentRoom->displayRoom();
+
 	return true;
 }
 
@@ -777,10 +785,13 @@ void Game::playGame()
 	// do while input is not quit
 	string playerInput;
 	//Clears the cin for when the game classes uses getLine
+
+	// display the current room
+	displayRoom();
+
 	cin.ignore();
 	do
 	{
-		
 		// call getPlayerInput()
 		 playerInput = getAction();
 
@@ -789,6 +800,7 @@ void Game::playGame()
 
 void Game::changeRoomsFromInput(string action)
 {
+
 	vector<string> temp = currentRoom->getDoors();
 
 	if (action == "goNorth")

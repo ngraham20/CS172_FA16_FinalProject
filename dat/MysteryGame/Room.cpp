@@ -32,7 +32,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 		input.close();
 
 		// read the temp files into the room properties
-		readFromTemp();
+		readVariableFilesFromTemp();
 	}
 	// else if the temp files do not exist
 	else
@@ -47,7 +47,7 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 
 		// reads the origin files (except the inventory if temp is read)
 		// to the room properties
-		readFromOrigin();
+		readVariableFilesFromOrigin();
 
 		// this adds the created room's coordinates to the vector.
 		createdTempFiles.push_back(this->coordinates);
@@ -57,12 +57,12 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 
 	}
 	// this reads the original files to the room (except the inventory and doors)
-	readOrigin();
+	readConstantFromOrigin();
 
 	// write to the temp files from room properties
 	updateTemp();
 
-	displayRoom();
+	// displayRoom();
 }
 
 bool Room::createTempFiles()
@@ -98,7 +98,7 @@ bool Room::createTempFiles()
 
 // this now reads the temp file inventory to room variables, but does
 // NOT describe the room
-bool Room::readFromTemp()
+bool Room::readVariableFilesFromTemp()
 {
 	ifstream input;
 //	//------------------------------------------name-------------------------------------------
@@ -244,7 +244,7 @@ bool Room::readFromTemp()
 
 // this reads inventory files to room variables
 // it does NOT actually describe anything with cout
-bool Room::readFromOrigin()
+bool Room::readVariableFilesFromOrigin()
 {
 	ifstream input;
 
@@ -381,7 +381,7 @@ bool Room::updateTemp()
 
 			if (itemName != "")
 			{
-				cout << "[updateTemp]: " << itemName << endl;
+				// cout << "[updateTemp]: " << itemName << endl;
 				output << itemName + " ";
 				output << itemType + " ";
 				output << to_string(itemLumosity) << endl;
@@ -558,7 +558,7 @@ bool Room::displayRoom()
 	return false;
 }
 
-bool Room::readOrigin()
+bool Room::readConstantFromOrigin()
 {
 	ifstream input;
 

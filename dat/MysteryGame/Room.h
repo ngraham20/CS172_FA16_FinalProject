@@ -42,7 +42,7 @@ private:
 	bool lightSource;
 
 	// reads from the original files created pre-compile
-	bool readFromOrigin();
+	bool readVariableFilesFromOrigin();
 
 	// creates temporary files to be read from and written to during gameplay
 	bool createTempFiles();
@@ -67,7 +67,7 @@ public:
 	bool changeRoom(Coordinates coordinates);
 
 	// reads from the temporary files created by the constructor
-	bool readFromTemp();
+	bool readVariableFilesFromTemp();
 
 	// when the destructor is activated, this method is called to update the
 	// room file within a temporary folder. (Which will be read from upon game saving)
@@ -80,7 +80,7 @@ public:
 	bool displayRoom();
 
 	// describes the room with a cout
-	bool readOrigin();
+	bool readConstantFromOrigin();
 
 	// returns the name of the room
 	string getName();
