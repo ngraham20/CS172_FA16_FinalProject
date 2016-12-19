@@ -33,6 +33,8 @@ Game::Game()
 // this is for loading the game
 Game::Game(int slot)
 {
+	loadedRooms = { NULL,NULL,NULL,NULL,NULL,NULL,NULL };
+
 	createAchievements();
 
 	player = new Character();
@@ -40,6 +42,7 @@ Game::Game(int slot)
 	setPlayerLocation(firstRoom);
 	Room* startingRoom = new Room(firstRoom);
 	currentRoom = startingRoom;
+	changeRoom(0, 0, 0);
 
 	// begins the game.
 	playGame();
@@ -571,7 +574,59 @@ bool Game::loadGame(int slotNumber)
 
 bool Game::unlockDoor(int doorValue)
 {
-	currentRoom->unlockDoor(doorValue);
+	if (doorValue == NORTH)
+	{
+		// unlock the current room's north door
+		currentRoom->unlockDoor(NORTH);
+
+		// unlock the northern room's southern door (the same door)
+		loadedRooms.at(NORTH)->unlockDoor(SOUTH);
+	}
+	else if (doorValue == SOUTH)
+	{
+		// unlock the current room's south door
+		currentRoom->unlockDoor(SOUTH);
+
+		// unlock the northern room's nothern door (the same door)
+		loadedRooms.at(SOUTH)->unlockDoor(NORTH);
+	}
+	else if (doorValue == EAST)
+	{
+		// unlock the current room's east door
+		currentRoom->unlockDoor(EAST);
+
+		// unlock the northern room's west door (the same door)
+		loadedRooms.at(EAST)->unlockDoor(WEST);
+	}
+	else if (doorValue == WEST)
+	{
+		// unlock the current room's west door
+		currentRoom->unlockDoor(WEST);
+
+		// unlock the northern room's east door (the same door)
+		loadedRooms.at(WEST)->unlockDoor(EAST);
+	}
+	else if (doorValue == UP)
+	{
+		// unlock the current room's upper door
+		currentRoom->unlockDoor(UP);
+
+		// unlock the northern room's lower door (the same door)
+		loadedRooms.at(UP)->unlockDoor(DOWN);
+	}
+	else if (doorValue == DOWN)
+	{
+		// unlock the current room's north door
+		currentRoom->unlockDoor(DOWN);
+
+		// unlock the northern room's southern door (the same door)
+		loadedRooms.at(DOWN)->unlockDoor(UP);
+	}
+	else
+	{
+		cout << "[unlockDoor]: Invalid room vector value. . ." << endl;
+		return false;
+	}
 	return true;
 }
 
@@ -771,11 +826,14 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 
 	for (int i = 0; i < maxLoadedRooms; i++)
 	{
-		// delete iterated room
-		delete loadedRooms.at(i);
+		if (loadedRooms.at(i) != NULL)
+		{
+			// delete iterated room
+			delete loadedRooms.at(i);
 
-		// fill the empty space with NULL
-		loadedRooms.at(i) = NULL;
+			// fill the empty space with NULL
+			loadedRooms.at(i) = NULL;
+		}
 	}
 
 	// create coordinates for surrounding rooms
@@ -828,8 +886,12 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	// sets the current room
 	currentRoom = loadedRooms.at(CURRENT_ROOM);
 
-	// display the room after changing it
-	currentRoom->displayRoom();
+	// display the room only if the room actually changed (not a loaded game)
+	if (relativeX != 0 || relativeY != 0 || relativeZ != 0)
+	{
+		// display the room after changing it
+		currentRoom->displayRoom();
+	}
 
 	return true;
 }

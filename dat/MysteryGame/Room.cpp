@@ -481,7 +481,7 @@ bool Room::displayRoom()
 			description.pop_back();
 		}
 		cout << endl << "[" << name << "]:" << endl;
-		cout << to_string(coordinates.y) << to_string(coordinates.x) << to_string(coordinates.z) << endl;
+		// cout << to_string(coordinates.y) << to_string(coordinates.x) << to_string(coordinates.z) << endl;
 		cout << "------------------------------------------------------------------------" << endl;
 		cout << this->description << endl;
 		cout << "------------------------------------------------------------------------" << endl;
