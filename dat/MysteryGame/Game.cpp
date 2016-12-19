@@ -429,7 +429,7 @@ bool Game::loadGame(int slotNumber)
 			
 			//--------------------------------------------------READ DOORS TO VARIABLES---------------------------------------------------
 
-			fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" + tempRoom + "\\inventory.txt";
+			fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\" + tempRoom + "\\doors.txt";
 
 			vector<string> tempDoors;
 
@@ -455,11 +455,20 @@ bool Game::loadGame(int slotNumber)
 				input.close();
 			}
 
-		//	currentRoom->setDoors(tempDoors);
+			//------------------------------------------WRITE DOORS TO TEMP FILES--------------------------------------------
+			fileName = ".\\room\\temp\\" + tempRoom + "\\doors.txt";
 
-		//	currentRoom->updateTemp();
+			output.open(fileName.c_str());
 
+			constexpr int doorCount = 6;
 
+			for (int i = 0; i < doorCount; i++)
+			{
+				//
+				output << tempDoors.at(i) << endl;
+			}
+
+			output.close();
 
 			// -------------------------------------------WRITE INVENTORY TO TEMP---------------------------------
 			fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
