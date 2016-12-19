@@ -11,18 +11,20 @@ vector<Achievement*> Game::achievements;
 // this constructor begins a new game and calls playGame()
 Game::Game()
 {
+	loadedRooms = { NULL,NULL,NULL,NULL,NULL,NULL,NULL };
+
 	createAchievements();
 
 	// sets the current room for begining of game
 	firstRoom = { 1,4,2 };
 	player = new Character();
 	setPlayerLocation(firstRoom);
-	Room* startingRoom = new Room(firstRoom);
-	currentRoom = startingRoom;
+	loadedRooms.at(CURRENT_ROOM) = new Room(firstRoom);
+	currentRoom = loadedRooms.at(CURRENT_ROOM);
 
 	// create the only other available room
 	Coordinates secondRoom = { 1,3,2 };
-	Room* nextRoom = new Room(secondRoom);
+	loadedRooms.at(NORTH) = new Room(secondRoom);
 
 	// begins the game.
 	playGame();
@@ -762,16 +764,58 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 {
 	// checks which direciton the player wants to move
 	Coordinates coordinates = currentRoom->getLocation();
+
+	// TODO delete any unneeded rooms (for pre-loading)
+
+	constexpr int maxLoadedRooms = 7;
+
+	for (int i = 0; i < maxLoadedRooms; i++)
+	{
+		// delete iterated room
+		delete loadedRooms.at(i);
+
+		// fill the empty space with NULL
+		loadedRooms.at(i) = NULL;
+	}
+
+	// create coordinates for surrounding rooms
+	Coordinates northernRoom;
+	Coordinates southernRoom;
+	Coordinates easternRoom;
+	Coordinates westernRoom;
+	Coordinates upperRoom;
+	Coordinates lowerRoom;
+
+	// new coordinates
 	coordinates.y += relativeY;
 	coordinates.x += relativeX;
 	coordinates.z += relativeZ;
 
+	// assign surrounding room coordinates based off new room
+	northernRoom = { coordinates.y, coordinates.x + 1, coordinates.z };
+	southernRoom = { coordinates.y, coordinates.x - 1, coordinates.z };
+	easternRoom = { coordinates.y, coordinates.x, coordinates.z + 1 };
+	westernRoom = { coordinates.y, coordinates.x, coordinates.z - 1 };
+	upperRoom = { coordinates.y + 1, coordinates.x, coordinates.z };
+	lowerRoom = { coordinates.y - 1, coordinates.x, coordinates.z };
+
+	// load all new rooms
+	loadedRooms =
+	{
+		new Room(northernRoom),
+		new Room(southernRoom),
+		new Room(easternRoom),
+		new Room(westernRoom),
+		new Room(upperRoom),
+		new Room(lowerRoom),
+		new Room(coordinates)
+	};
+
+	// move the player to the new coordinates
 	setPlayerLocation(coordinates);
 
-	// TODO delete any unneeded rooms (pre-loading)
-
-	Room* temp = new Room(coordinates);
-	currentRoom = temp;
+	// sets the current room
+	currentRoom = loadedRooms.at(CURRENT_ROOM);
 
 	// display the room after changing it
 	currentRoom->displayRoom();

@@ -12,6 +12,12 @@
 #include "Character.h"
 #include "Coordinates.h"
 #include "Item.h"
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+#define UP 4
+#define DOWN 5
 using namespace std;
 
 class Game;

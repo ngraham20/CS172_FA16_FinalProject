@@ -2,12 +2,6 @@
 	This file impliments the methods as initialized in Room.h
 */
 #include "Room.h"
-#define NORTH 0
-#define SOUTH 1
-#define EAST 2
-#define WEST 3
-#define UP 4
-#define DOWN 5
 using namespace std;
 
 vector<Coordinates> Room::createdTempFiles;
@@ -33,36 +27,51 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 
 		// read the temp files into the room properties
 		readVariableFilesFromTemp();
+
+		// this reads the original files to the room (except the inventory and doors)
+		readConstantFromOrigin();
+
+		// write to the temp files from room properties
+		updateTemp();
 	}
 	// else if the temp files do not exist
 	else
 	{
+		fileName = ".\\room\\" + to_string(this->coordinates.y) +
+			to_string(this->coordinates.x) + to_string(this->coordinates.z) + "\\name.txt";
 
-		// read the origin file into the room properties
-		// readOrigin();
+		input.open(fileName.c_str());
 
-		// create blank temp files
-		// cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
-		createTempFiles();
+		if (!input.fail())
+		{
+			input.close();
+			// read the origin file into the room properties
+			// readOrigin();
 
-		// reads the origin files (except the inventory if temp is read)
-		// to the room properties
-		readVariableFilesFromOrigin();
+			// create blank temp files
+			// cout << "[constructor]: Creating temp files." << endl; // TODO delete before release
+			createTempFiles();
 
-		// this adds the created room's coordinates to the vector.
-		createdTempFiles.push_back(this->coordinates);
+			// reads the origin files (except the inventory if temp is read)
+			// to the room properties
+			readVariableFilesFromOrigin();
 
-		// write to the temp files from room properties
-		// updateTemp();
+			// this adds the created room's coordinates to the vector.
+			createdTempFiles.push_back(this->coordinates);
+
+			// this reads the original files to the room (except the inventory and doors)
+			readConstantFromOrigin();
+
+			// write to the temp files from room properties
+			updateTemp();
+		}
+		else
+		{
+			// to be called if the room is created, but the files can't be read from
+			cout << "This room does not exist." << endl;
+		}
 
 	}
-	// this reads the original files to the room (except the inventory and doors)
-	readConstantFromOrigin();
-
-	// write to the temp files from room properties
-	updateTemp();
-
-	// displayRoom();
 }
 
 bool Room::createTempFiles()
@@ -727,7 +736,8 @@ Room::~Room()
 {
 	// cout << "[Room Destructor]: " << endl;
 	// calls the updateTemp() function to update the temp files with all variable information
-	updateTemp();
+	// updateTemp();
+
 
 	// deletes the allocated memory for the items within inventory
 	for (int i = 0; i < inventory.size(); i++)

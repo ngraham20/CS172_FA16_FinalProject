@@ -10,6 +10,13 @@
 #include "Character.h"
 #include "Room.h"
 #include "Input.h"
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+#define UP 4
+#define DOWN 5
+#define CURRENT_ROOM 6
 
 class Room;
 
