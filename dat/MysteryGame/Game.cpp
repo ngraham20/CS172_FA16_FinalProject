@@ -461,20 +461,20 @@ bool Game::loadGame(int slotNumber)
 
 
 
-			//// -------------------------------------------WRITE INVENTORY TO TEMP---------------------------------
-			//fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
+			// -------------------------------------------WRITE INVENTORY TO TEMP---------------------------------
+			fileName = ".\\room\\temp\\" + tempRoom + "\\inventory.txt";
 
-			//output.open(fileName.c_str());
+			output.open(fileName.c_str());
 
-			//for (int i = 0; i < temporaryInventory.size(); i++)
-			//{
-			//	// create temporary item to send to inventory.txt
-			//	Item* temp = temporaryInventory.at(i);
+			for (int i = 0; i < temporaryInventory.size(); i++)
+			{
+				// create temporary item to send to inventory.txt
+				Item* temp = temporaryInventory.at(i);
 
-			//	output << temp->getName() << " " << temp->getType() << " " << temp->getLumosity() << endl;
-			//
-			//}
-			//output.close();
+				output << temp->getName() << " " << temp->getType() << " " << temp->getLumosity() << endl;
+			
+			}
+			output.close();
 		}
 
 	}
