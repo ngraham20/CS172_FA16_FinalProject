@@ -1,5 +1,0 @@
-You are standing on the second floor of an enormous library. Shelves of old
-books spread in every direction from the square interrior balcony, which 
-overlooks the lower floor from all sides. Hanging from the inner edge of the
-balcony is a ladder, by which you could decend to the lower floor. Old, wooden
-doors lead north, east, and west.

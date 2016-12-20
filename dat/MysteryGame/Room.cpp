@@ -37,8 +37,8 @@ fileName = ".\\room\\temp\\" + to_string(this->coordinates.y) +
 	// else if the temp files do not exist
 	else
 	{
-		fileName = ".\\room\\" + Game::language + "\\" + to_string(this->coordinates.y) +
-			to_string(this->coordinates.x) + to_string(this->coordinates.z) + "\\name.txt";
+		fileName = ".\\room\\" + to_string(this->coordinates.y) +
+			to_string(this->coordinates.x) + to_string(this->coordinates.z) + "\\" + Game::language + "\\name.txt";
 
 		input.open(fileName.c_str());
 
@@ -80,8 +80,8 @@ Room * Room::loadRoom(Coordinates coordinates)
 	ifstream input;
 
 	// check to see if the room exists first
-	string fileName = ".\\room\\" + Game::language + "\\" + to_string(coordinates.y) +
-		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+	string fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\" + Game::language + "\\name.txt";
 
 	input.open(fileName.c_str());
 
@@ -285,7 +285,7 @@ bool Room::readVariableFilesFromOrigin()
 	ifstream input;
 
 	//-----------------------------------------DOORS-----------------------------------------
-	fileName = ".\\room\\" + Game::language + "\\" + to_string(coordinates.y) +
+	fileName = ".\\room\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\doors.txt";
 
 	input.open(fileName.c_str());
@@ -321,7 +321,7 @@ bool Room::readVariableFilesFromOrigin()
 
 	// --------------------------------------inventory--------------------------------
 	// set the fileName variable
-	fileName = ".\\room\\" + Game::language + "\\" + to_string(coordinates.y) +
+	fileName = ".\\room\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\inventory.txt";
 
 	//// get the name of the room from file
@@ -601,8 +601,8 @@ bool Room::readConstantFromOrigin()
 
 	// ------------------------------------name-----------------------------------------------
 	// set the fileName variable
-	fileName = ".\\room\\" + Game::language +"\\" + to_string(coordinates.y) +
-		to_string(coordinates.x) + to_string(coordinates.z) + "\\name.txt";
+	fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\" + Game::language + "\\name.txt";
 
 	// get the name of the room from file
 	input.open(fileName.c_str());
@@ -658,8 +658,8 @@ bool Room::readConstantFromOrigin()
 
 	// -----------------------------------------description--------------------------------------------
 	// set the fileName variable
-	fileName = ".\\room\\" + Game::language + "\\" + to_string(coordinates.y) +
-		to_string(coordinates.x) + to_string(coordinates.z) + "\\description.txt";
+	fileName = ".\\room\\" + to_string(coordinates.y) +
+		to_string(coordinates.x) + to_string(coordinates.z) + "\\" + Game::language + "\\description.txt";
 
 	// get the name of the room from file
 	input.open(fileName.c_str());
@@ -689,7 +689,7 @@ bool Room::readConstantFromOrigin()
 
 	//-------------------------------------------Light_Source-------------------------------------------------
 
-	fileName = ".\\room\\" + Game::language + "\\" + to_string(coordinates.y) +
+	fileName = ".\\room\\" + to_string(coordinates.y) +
 		to_string(coordinates.x) + to_string(coordinates.z) + "\\light_source.txt";
 
 	input.open(fileName.c_str());
