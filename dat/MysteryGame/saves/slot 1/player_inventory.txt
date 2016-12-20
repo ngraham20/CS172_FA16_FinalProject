@@ -1,1 +1,1 @@
-key tool 0
+candle open_flame 1

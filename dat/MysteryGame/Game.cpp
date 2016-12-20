@@ -1304,6 +1304,7 @@ bool Game::lightItemFromAction(string directObject)
 		if (playerHasUnlit)
 		{
 			// redirect pointer to have this new item in the box
+			//if (directObject)
 			string newName = "flaming_" + unlitItem->getName();
 			Item* newItem = Item::createItem(newName, "open_flame", BRIGHT);
 
