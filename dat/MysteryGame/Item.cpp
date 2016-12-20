@@ -5,7 +5,9 @@
 #include "Item.h"
 #include "Weapon.h"
 #include "Consumable.h"
+#include "OpenFlame.h"
 #include "Tool.h"
+#include "Unlit.h"
 
 
 // default constructor does nothing.
@@ -41,6 +43,14 @@ Item* Item::createItem(string name, string type, double lumosity)
 	else if (type == "consumable")
 	{
 		return new Consumable(name,type,lumosity);
+	}
+	else if (type == "open_flame")
+	{
+		return new OpenFlame(name, type, lumosity);
+	}
+	else if (type == "unlit")
+	{
+		return new Unlit(name, type, lumosity);
 	}
 
 	cout << "Item Type Not Properly Specified. Returning NULL Pointer." << endl;

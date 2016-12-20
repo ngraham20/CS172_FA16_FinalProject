@@ -17,19 +17,19 @@ Input::Input(string userin)
 	transform(temp.begin(), temp.end(), temp.begin(), tolower);
 	verb = temp;
 
-	//Lowercase subject from string stream
+	//Lowercase directObject from string stream
 	instream >> temp;
 	if (temp == "the" || temp == "a" || temp == "an")
 	{
 		instream >> temp;
 	}
 	transform(temp.begin(), temp.end(), temp.begin(), tolower);
-	subject = temp;
+	directObject = temp;
 
-	//Above code sets verb and subject to the same input if the user only enters one word. This sets subject to a blank string to counteract
-	if (subject == verb)
+	//Above code sets verb and directObject to the same input if the user only enters one word. This sets directObject to a blank string to counteract
+	if (directObject == verb)
 	{
-		subject = "";
+		directObject = "";
 	}
 }
 
@@ -43,9 +43,9 @@ string Input::getVerb()
 	return verb;
 }
 
-string Input::getSubject()
+string Input::getDirectObject()
 {
-	return subject;
+	return directObject;
 }
 
 string Input::checkAction()
@@ -54,7 +54,7 @@ string Input::checkAction()
 	// checking if the verb entered by user is a synonym for one of the three available actions
 	if (verb == "go" || verb == "travel" || verb == "move" || verb == "proceed" || verb == "advance" || verb == "walk")
 	{
-		action = returnSubjectFromAction("go");
+		action = returnActionPhraseFromDirectObject("go");
 	}
 	else if (verb == "inventory" || verb == "items")
 	{
@@ -86,7 +86,12 @@ string Input::checkAction()
 	}
 	else if (verb == "unlock")
 	{
-		return returnSubjectFromAction("unlock");
+		return returnActionPhraseFromDirectObject("unlock");
+	}
+	else if (verb == "light")
+	{
+		// Game class must handle the lighting of the item
+		return "light";
 	}
 	else
 	{
@@ -95,27 +100,27 @@ string Input::checkAction()
 	return action;
 }
 
-// Calculates the correct action to return based on the verb and subject
-string Input::returnSubjectFromAction(string verb)
+// Calculates the correct action to return based on the verb and directObject
+string Input::returnActionPhraseFromDirectObject(string verb)
 {
 	if (verb == "go")
 	{
-		if (subject == "north") { return "goNorth"; }
-		else if (subject == "south") { return "goSouth"; }
-		else if (subject == "east") { return "goEast"; }
-		else if (subject == "west") { return "goWest"; }
-		else if (subject == "up") { return "goUp"; }
-		else if (subject == "down") { return "goDown"; }
+		if (directObject == "north") { return "goNorth"; }
+		else if (directObject == "south") { return "goSouth"; }
+		else if (directObject == "east") { return "goEast"; }
+		else if (directObject == "west") { return "goWest"; }
+		else if (directObject == "up") { return "goUp"; }
+		else if (directObject == "down") { return "goDown"; }
 		else { return "fail"; }
 	}
 	else if (verb == "unlock")
 	{
-		if (subject == "north") { return "unlockNorth"; }
-		else if (subject == "south") { return "unlockSouth"; }
-		else if (subject == "east") { return "unlockEast"; }
-		else if (subject == "west") { return "unlockWest"; }
-		else if (subject == "up") { return "unlockUp"; }
-		else if (subject == "down") { return "unlockDown"; }
+		if (directObject == "north") { return "unlockNorth"; }
+		else if (directObject == "south") { return "unlockSouth"; }
+		else if (directObject == "east") { return "unlockEast"; }
+		else if (directObject == "west") { return "unlockWest"; }
+		else if (directObject == "up") { return "unlockUp"; }
+		else if (directObject == "down") { return "unlockDown"; }
 		else { return "fail";  }
 	}
 	return "";

@@ -1185,11 +1185,15 @@ string Game::getAction()
 
 		tryUnlockAchievement(getAchievementWithName("Taking_Inventory"));
 	}
-	// THE FOLLOWING IS TEST CODE TO TEST UNLOCK DOOR METHOD >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// THE FOLLOWING IS TEST CODE: NATHANIEL >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	else if (action == "unlockNorth" || action == "unlockSouth" || action == "unlockEast" ||
 		action == "unlockWest" || action == "unlockUp" || action == "unlockDown")
 	{
 		unlockDoorFromInput(action);
+	}
+	else if (action == "light")
+	{
+		lightItemFromAction(userin.getDirectObject());
 	}
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	else
@@ -1259,9 +1263,79 @@ bool Game::checkRoomChangeValidity()
 	return false;
 }
 
+bool Game::lightItemFromAction(string directObject)
+{
+	bool playerHasFlame = false;
+	bool playerHasUnlit = false;
+
+	Item* tempItem;
+	Item* unlitItem;
+	Item* openFlameItem;
+
+	// see if open_flame item is in player inventory
+	for (int i = 0; i < player->getInventory().size(); i++)
+	{
+		// creates a pointer to the same item as in the inventory
+		tempItem = player->getInventory().at(i);
+
+		if (tempItem->getType() == "open_flame")
+		{
+			// creates a pointer to the same item as temp (as in the inventory)
+			openFlameItem = tempItem;
+			playerHasFlame = true;
+		}
+		if (tempItem->getName() == directObject)
+		{
+			if (tempItem->getType() == "unlit")
+			{
+				// creates a pointer to the same item as temp (as in the inventory)
+				unlitItem = tempItem;
+				playerHasUnlit = true;
+			}
+			else
+			{
+				cout << "You cannot light that item on fire." << endl;
+			}
+		}
+	}
+	if (playerHasFlame)
+	{
+		// use it to try to light another item in the player inventory of the specified name (directObject)
+		if (playerHasUnlit)
+		{
+			// redirect pointer to have this new item in the box
+			string newName = "flaming_" + unlitItem->getName();
+			Item* newItem = Item::createItem(newName, "open_flame", BRIGHT);
+
+			for (int i = 0; i < player->getInventory().size(); i++)
+			{
+				// if the name of the item in the player's inventory is the same as the direct object
+				if (player->getInventory().at(i)->getName() == directObject)
+				{
+					// change that inventory item to the new one we created above
+					// points the playerInventory item to the new item
+					player->addItemToInventory(newItem);
+					player->removeItemFromInventory(directObject);
+
+					cout << "You lit the " << directObject << " with the " << openFlameItem->getName() << "." << endl;
+				}
+			}
+		}
+		else if (!playerHasUnlit)
+		{
+		}
+	}
+	else if (!playerHasFlame)
+	{
+		cout << "You do not have any open flames in your inventory." << endl;
+		return false;
+	}
+	return true;
+}
+
 void Game::roomToPlayerItem(Input userin, string action)
 {
-	Item* tempItem = currentRoom->removeItemFromInventory(userin.getSubject());
+	Item* tempItem = currentRoom->removeItemFromInventory(userin.getDirectObject());
 	if (tempItem != NULL)
 	{
 		player->addItemToInventory(tempItem);
@@ -1276,7 +1350,7 @@ void Game::roomToPlayerItem(Input userin, string action)
 
 void Game::playerToRoomItem(Input userin, string action)
 {
-	Item* tempItem = player->removeItemFromInventory(userin.getSubject());
+	Item* tempItem = player->removeItemFromInventory(userin.getDirectObject());
 	if (tempItem != NULL)
 	{
 		currentRoom->addItemToInventory(tempItem);

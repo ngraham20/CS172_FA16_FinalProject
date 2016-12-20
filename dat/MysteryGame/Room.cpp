@@ -511,7 +511,7 @@ bool Room::displayRoom()
 		}
 	}
 
-	else if (roomBrightness == 1.0)
+	else if (roomBrightness == BRIGHT)
 	{
 
 		while (description.at(description.size() - 1) == '\n')

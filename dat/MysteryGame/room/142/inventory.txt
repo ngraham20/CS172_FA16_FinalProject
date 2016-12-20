@@ -1,3 +1,4 @@
-torch tool 1.0
+candle open_flame 1.0
 glow_stick tool 0.5
+stick unlit 0.0
 key tool 0.0

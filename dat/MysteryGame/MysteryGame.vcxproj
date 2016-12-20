@@ -149,8 +149,10 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OpenFlame.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Tool.cpp" />
+    <ClCompile Include="Unlit.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,8 +163,10 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="OpenFlame.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Tool.h" />
+    <ClInclude Include="Unlit.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>

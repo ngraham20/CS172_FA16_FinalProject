@@ -16,12 +16,12 @@ public:
 	Input(string userin);
 	~Input();
 	string getVerb();
-	string getSubject();
+	string getDirectObject();
 	string checkAction();
-	string returnSubjectFromAction(string verb);
+	string returnActionPhraseFromDirectObject(string verb);
 
 private:
 	string verb;
-	string subject;
+	string directObject;
 };
 

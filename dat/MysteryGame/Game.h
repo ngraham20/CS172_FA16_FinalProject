@@ -10,6 +10,10 @@
 #include "Character.h"
 #include "Room.h"
 #include "Input.h"
+#include "Item.h"
+#include "OpenFlame.h"
+#include "Unlit.h"
+
 #define NORTH 0
 #define SOUTH 1
 #define EAST 2
@@ -17,6 +21,11 @@
 #define UP 4
 #define DOWN 5
 #define CURRENT_ROOM 6
+
+#define BRIGHT 1.0
+#define DIM 0.5
+#define DARK 0.0
+
 
 class Room;
 
@@ -119,6 +128,8 @@ private:
 	// checks through the current room's doors to make sure that
 	// the player can move the direction he wants to
 	bool checkRoomChangeValidity();
+
+	bool lightItemFromAction(string directObject);
 
 	// this function controls the actions that take an item from a room and place it in player inventory
 	void roomToPlayerItem(Input userin, string action);
