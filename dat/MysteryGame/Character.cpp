@@ -85,19 +85,31 @@ Item* Character::getInventoryItemFromName(string name)
 
 bool Character::equip(Item* item)
 {
-	if (equipped.at(0) == NULL)
+	// if the item is already equipped
+	if (item == equipped.at(0) || item == equipped.at(1))
 	{
-		equipped.at(0) = item;
+		cout << "You already have that item in your hand." << endl;
+		return false;
 	}
-	else if (equipped.at(1) == NULL)
-	{
-		equipped.at(1) = item;
-	}
+	// else if the item is a new one
 	else
 	{
-		return false;
-		cout << "You cannot equip more than two items at once." << endl;
+		if (equipped.at(0) == NULL)
+		{
+			equipped.at(0) = item;
+		}
+		else if (equipped.at(1) == NULL)
+		{
+			equipped.at(1) = item;
+		}
+		else
+		{
+			cout << "You cannot equip more than two items at once." << endl;
+			return false;
+		}
 	}
+
+	cout << "You take the " << item->getName() << " in your hand." << endl;
 	return true;
 }
 

@@ -97,6 +97,10 @@ string Input::checkAction()
 	{
 		return "equip";
 	}
+	else if (verb == "unequip")
+	{
+		return "unequip";
+	}
 	else
 	{
 		return "fail";

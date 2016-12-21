@@ -1208,9 +1208,12 @@ string Game::getAction()
 
 			// equip that item
 			player->equip(tempItem);
-
-			cout << "You take the " << tempItem->getName() << " in your hand." << endl;
 		}
+	}
+	else if (action == "unequip")
+	{
+		// unequip the item specified
+		player->unequip(userin.getDirectObject());
 	}
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	else
