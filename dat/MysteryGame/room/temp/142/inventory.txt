@@ -1,0 +1,4 @@
+glow_stick tool 0.500000
+stick unlit 0.000000
+candle open_flame 1.000000
+key tool 0.000000

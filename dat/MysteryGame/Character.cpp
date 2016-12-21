@@ -85,11 +85,11 @@ Item* Character::getInventoryItemFromName(string name)
 
 bool Character::equip(Item* item)
 {
-	if (equipped.at(0) != NULL)
+	if (equipped.at(0) == NULL)
 	{
 		equipped.at(0) = item;
 	}
-	else if (equipped.at(1) != NULL)
+	else if (equipped.at(1) == NULL)
 	{
 		equipped.at(1) = item;
 	}
@@ -103,19 +103,21 @@ bool Character::equip(Item* item)
 
 bool Character::unequip(string name)
 {
-	if (equipped.at(0)->getName() == name)
+	if (equipped.at(0) != NULL && equipped.at(0)->getName() == name)
 	{
-		equipped.at(0) = NULL;
+		equipped.at(0) = nullptr;
 	}
-	else if (equipped.at(1)->getName() == name)
+	else if (equipped.at(1) != NULL && equipped.at(1)->getName() == name)
 	{
-		equipped.at(1) = NULL;
+		equipped.at(1) = nullptr;
 	}
 	else
 	{
 		cout << "You do not have that item equipped." << endl;
 		return false;
 	}
+
+	cout << "You unequipped the " << name << "." << endl;
 	return true;
 }
 

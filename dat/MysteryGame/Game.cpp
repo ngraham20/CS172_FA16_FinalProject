@@ -1177,6 +1177,9 @@ string Game::getAction()
 	}
 	else if (action == "dropItem")
 	{
+		// removes the dropped item from the player's equip slots
+		player->unequip(userin.getDirectObject());
+
 		playerToRoomItem(userin, action);
 	}
 	else if (action == "inventory")

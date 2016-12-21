@@ -19,25 +19,31 @@ int main()
 	cout << "Default language selected: English." << endl;
 	language = "english";
 
+	bool displayMenu = true;
+
 	if (language == "english")
 	{
-		// basic game menu to play game
-		cout << "------------------------------------------------" << endl;
-		cout << "|     --------------------------------------   |" << endl;
-		cout << "|     | WELCOME TO THE JACKSONBURG MANSION |   |" << endl;
-		cout << "|     --------------------------------------   |" << endl;
-		cout << "|           | Type commands to play |          |" << endl;
-		cout << "|              | instructions |                |" << endl;
-		cout << "|                  | play |                    |" << endl;
-		cout << "|                  | load |                    |" << endl;
-		cout << "|                  | quit |                    |" << endl;
-		cout << "--                                            --" << endl;
-
 		string input;
 		do
 		{
-			cout << ">>";
+			if (displayMenu)
+			{
+				// basic game menu to play game
+				cout << "------------------------------------------------" << endl;
+				cout << "|     --------------------------------------   |" << endl;
+				cout << "|     | WELCOME TO THE JACKSONBURG MANSION |   |" << endl;
+				cout << "|     --------------------------------------   |" << endl;
+				cout << "|           | Type commands to play |          |" << endl;
+				cout << "|              | instructions |                |" << endl;
+				cout << "|                  | play |                    |" << endl;
+				cout << "|                  | load |                    |" << endl;
+				cout << "|                  | quit |                    |" << endl;
+				cout << "--                                            --" << endl;
+				
+				displayMenu = false;
+			}
 
+			cout << ">>";
 			cin >> input;
 
 			bool quit = false;
@@ -45,6 +51,7 @@ int main()
 			if (input == "play")
 			{
 				Game game(language);
+				displayMenu = true;
 			}
 			else if (input == "load")
 			{
@@ -61,18 +68,21 @@ int main()
 				if (input == "slot 1" || input == "1")
 				{
 					Game game(language, 1);
+					displayMenu = true;
 				}
 				else if (input == "slot 2" || input == "2")
 				{
 					Game game(language, 2);
+					displayMenu = true;
 				}
 				else if (input == "slot 3" || input == "3")
 				{
 					Game game(language, 3);
+					displayMenu = true;
 				}
 				else if (input == "back")
 				{
-
+					displayMenu = true;
 				}
 				else
 					cout << "Invalid Input. Please try again." << endl;
@@ -80,6 +90,7 @@ int main()
 			else if (input == "clear")
 			{
 				Game::fullTempClear();
+				displayMenu = true;
 			}
 			else if (input == "instructions")
 			{
