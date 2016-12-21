@@ -21,19 +21,21 @@ int main()
 
 	if (language == "english")
 	{
+		// basic game menu to play game
+		cout << "------------------------------------------------" << endl;
+		cout << "|     --------------------------------------   |" << endl;
+		cout << "|     | WELCOME TO THE JACKSONBURG MANSION |   |" << endl;
+		cout << "|     --------------------------------------   |" << endl;
+		cout << "|           | Type commands to play |          |" << endl;
+		cout << "|              | instructions |                |" << endl;
+		cout << "|                  | play |                    |" << endl;
+		cout << "|                  | load |                    |" << endl;
+		cout << "|                  | quit |                    |" << endl;
+		cout << "--                                            --" << endl;
+
 		string input;
 		do
 		{
-			// basic game menu to play game
-			cout << "------------------------------------------------" << endl;
-			cout << "|     --------------------------------------   |" << endl;
-			cout << "|     | WELCOME TO THE JACKSONBURG MANSION |   |" << endl;
-			cout << "|     --------------------------------------   |" << endl;
-			cout << "|           | Type commands to play |          |" << endl;
-			cout << "|                  | play |                    |" << endl;
-			cout << "|                  | load |                    |" << endl;
-			cout << "|                  | quit |                    |" << endl;
-			cout << "--                                            --" << endl;
 			cout << ">>";
 
 			cin >> input;
@@ -78,6 +80,22 @@ int main()
 			else if (input == "clear")
 			{
 				Game::fullTempClear();
+			}
+			else if (input == "instructions")
+			{
+				cout << "------------------------------------------------------------------------" << endl;
+				cout << "  -> All commands should be phrased with verbs and direct objects only. " << endl;
+				cout << "  -> For verbs that require more than one word, such as 'pick up,'      " << endl;
+				cout << "     combine the two words together: 'pick_up.'                          " << endl;
+				cout << "  -> To move, type a command, then a cardinal direction or up or down.  " << endl;
+				cout << "  -> This game is designed to be interactive and exploratory. Thus,     " << endl;
+				cout << "     try different verb/direct object combinations to create commands!  " << endl;
+				cout << "                                                                        " << endl;
+				cout << "  -> Example commands: walk north, pick_up torch                        " << endl;
+				cout << "  -> If at any time, you would like to quit, type \"quit\"              " << endl;
+				cout << "  -> You may save your progress by typing \"save,\" then following the  " << endl;
+				cout << "     prompted instructions.                                             " << endl;
+				cout << "------------------------------------------------------------------------" << endl;
 			}
 
 		} while (input != "quit");

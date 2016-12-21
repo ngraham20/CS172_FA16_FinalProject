@@ -1195,6 +1195,20 @@ string Game::getAction()
 	{
 		lightItemFromAction(userin.getDirectObject());
 	}
+	else if (action == "equip")
+	{
+		// if the player has the specified item
+		if (player->hasItem(userin.getDirectObject()))
+		{
+			// return that item
+			Item* tempItem = player->getInventoryItemFromName(userin.getDirectObject());
+
+			// equip that item
+			player->equip(tempItem);
+
+			cout << "You take the " << tempItem->getName() << " in your hand." << endl;
+		}
+	}
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	else
 	{
@@ -1207,12 +1221,27 @@ string Game::getAction()
 void Game::displayInstructions()
 {
 
-	cout << "------------------------------------------------------------------------" << endl;
+	/*cout << "------------------------------------------------------------------------" << endl;
 	cout << "  Only type commands in two words phrases. Input is not case sensitive. " << endl;
 	cout << "        If an action requires two words, underscore the space           " << endl;
 	cout << "          To move, type a cardinal direction or up or down.             " << endl;
 	cout << "              Examples: go north , pick_up flashlight                   " << endl;
 	cout << "              If you would like to quit, type \"quit.\"                 " << endl;
+	cout << "------------------------------------------------------------------------" << endl;*/
+
+
+	cout << "------------------------------------------------------------------------" << endl;
+	cout << "  -> All commands should be phrased with verbs and direct objects only. " << endl;
+	cout << "  -> For verbs that require more than one word, such as 'pick up,'      " << endl;
+	cout << "     combine the two words together: 'pick_up.'                          " << endl;
+	cout << "  -> To move, type a command, then a cardinal direction or up or down.  " << endl;
+	cout << "  -> This game is designed to be interactive and exploratory. Thus,     " << endl;
+	cout << "     try different verb/direct object combinations to create commands!  " << endl;
+	cout << "                                                                        " << endl;
+	cout << "  -> Example commands: walk north, pick_up torch                        " << endl;
+	cout << "  -> If at any time, you would like to quit, type \"quit\"              " << endl;
+	cout << "  -> You may save your progress by typing \"save,\" then following the  " << endl;
+	cout << "     prompted instructions.                                             " << endl;
 	cout << "------------------------------------------------------------------------" << endl;
 
 	tryUnlockAchievement(getAchievementWithName("Help_Me"));
@@ -1341,7 +1370,7 @@ void Game::roomToPlayerItem(Input userin, string action)
 	{
 		player->addItemToInventory(tempItem);
 		currentRoom->updateTemp();
-		cout << "You take the " << tempItem->getName() << "." << endl;
+		cout << "You put the " << tempItem->getName() << " in your bag." << endl;
 	}
 	else
 	{

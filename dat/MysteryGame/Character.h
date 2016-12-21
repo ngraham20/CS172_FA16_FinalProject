@@ -6,6 +6,7 @@
 #pragma once
 #include "Coordinates.h"
 #include <vector>
+#include <iostream>
 #include "Item.h"
 using namespace std; 
 
@@ -21,8 +22,20 @@ public:
 	Item* removeItemFromInventory(string itemName);
 	void setLocation(Coordinates roomLocation);
 
+	// checks for an item in the player's inventory
+	bool hasItem(string name);
+
+	Item* getInventoryItemFromName(string name);
+
+	// equips an item from inventory to equipped vector
+	bool equip(Item* item);
+
+	// moves the item back into player inventory, and sets the equipped vector location to NULL
+	bool unequip(string name);
+
 private:
 	Coordinates currentLocation;
 	vector<Item*> inventory;
+	vector<Item*> equipped;
 };
 

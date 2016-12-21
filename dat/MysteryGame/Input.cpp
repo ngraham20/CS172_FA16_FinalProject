@@ -93,6 +93,10 @@ string Input::checkAction()
 		// Game class must handle the lighting of the item
 		return "light";
 	}
+	else if (verb == "equip")
+	{
+		return "equip";
+	}
 	else
 	{
 		return "fail";
