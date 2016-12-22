@@ -1,3 +1,1 @@
 glow_stick tool 0.5
-stick unlit 0
-key tool 0

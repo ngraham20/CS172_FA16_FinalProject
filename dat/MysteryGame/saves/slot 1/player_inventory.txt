@@ -1,1 +1,3 @@
+stick unlit 0
 candle open_flame 1
+key tool 0

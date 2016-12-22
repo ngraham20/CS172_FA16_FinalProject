@@ -1,2 +1,2 @@
 candle open_flame 1
-NULL
+stick unlit 0

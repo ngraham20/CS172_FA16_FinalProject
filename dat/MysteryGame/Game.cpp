@@ -605,10 +605,6 @@ bool Game::loadGame(int slotNumber)
 				// equip the specified item
 				player->equip(tempItem);
 			}
-			else
-			{
-				cout << "[Load]: ERROR: INVALID TEXT FILE INPUT." << endl;
-			}
 		}
 
 	}
@@ -1246,8 +1242,12 @@ string Game::getAction()
 			// return that item
 			Item* tempItem = player->getInventoryItemFromName(userin.getDirectObject());
 
-			// unequip the item specified
-			player->unequip(tempItem);
+			// if the player has this item equipped, drop it
+			if (player->getEquipped().at(0) == tempItem || player->getEquipped().at(1) == tempItem)
+			{
+				// unequip the item specified
+				player->unequip(tempItem);
+			}
 
 			cout << "You drop the " << tempItem->getName() << "." << endl;
 		}
@@ -1280,9 +1280,8 @@ string Game::getAction()
 			Item* tempItem = player->getInventoryItemFromName(userin.getDirectObject());
 
 			// equip that item
-			player->equip(tempItem);
-
-			cout << "You take the " << tempItem->getName() << " in your hand." << endl;
+			if (player->equip(tempItem))
+				cout << "You take the " << tempItem->getName() << " in your hand." << endl;
 		}
 	}
 	else if (action == "unequip")
@@ -1305,9 +1304,8 @@ string Game::getAction()
 			else
 			{
 				// unequip the item specified
-				player->unequip(tempItem);
-
-				cout << "You put the " << tempItem->getName() << " back into your bag." << endl;
+				if(player->unequip(tempItem))
+					cout << "You put the " << tempItem->getName() << " back into your bag." << endl;
 			}
 		}
 	}
@@ -1526,35 +1524,62 @@ void Game::playerToRoomItem(Input userin, string action)
 
 void Game::printPlayerInventory()
 {
+	vector<Item*> tempHands = player->getEquipped();
+
+		cout << endl;
+		cout << "-<[HAND ITEMS]>-" << endl;
+		cout << "----------------" << endl;
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (tempHands.at(i) == NULL)
+			{
+				cout << "| EMPTY HAND |" << endl;
+			}
+			else
+			{
+				Item* tempItem = tempHands.at(i);
+
+				string newString = "";
+				cout << "| ";
+
+				for (int i = 0; i < tempItem->getName().length(); i++)
+				{
+					string tempString = tempItem->getName();
+					newString += toupper(tempString[i]);
+				}
+				cout << newString;
+				cout << " |" << endl;
+			}
+		}
+		cout << "----------------" << endl;
+
 	vector<Item*> tempinventory = player->getInventory();
+
+	cout << "-<[INVENTORY]>-" << endl;
+	cout << "---------------" << endl;
+
 	if (tempinventory.size() != 0)
 	{
-		cout << endl;
-		cout << "-<[INVENTORY]>-" << endl;
-		cout << "---------------" << endl;
-
 		for (int i = 0; i < tempinventory.size(); i++)
 		{
 			Item* tempItem = tempinventory.at(i);
 
-			cout << "| " << tempItem->getName() << " |" << endl;
-			/*if ((i+1) % 3 == 0)
-			{
-				cout << "|" << tempItem->getName() << "|" << endl;
-			}
-			else
-			{
-				cout << "|" << tempItem->getName() << "|";
+			string newString = "";
+			cout << "| ";
 
-				if (tempinventory.size() == 1)
-				{
-					cout << endl;
-				}
-			}*/
+			for (int i = 0; i < tempItem->getName().length(); i++)
+			{
+				string tempString = tempItem->getName();
+				newString += toupper(tempString[i]);
+			}
+			cout << newString;
+			cout << " |" << endl;
 		}
 	}
 	else
 	{
-		cout << "You are not carrying any items." << endl;
+		cout << "| EMPTY |" << endl;
 	}
+	cout << "---------------" << endl;
 }
