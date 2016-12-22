@@ -1526,37 +1526,37 @@ void Game::printPlayerInventory()
 {
 	vector<Item*> tempHands = player->getEquipped();
 
-		cout << endl;
-		cout << "-<[HAND ITEMS]>-" << endl;
-		cout << "----------------" << endl;
+	cout << endl;
+	cout << "[HAND ITEMS]:" << endl;
+	cout << "----------------" << endl;
 
-		for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
+	{
+		if (tempHands.at(i) == NULL)
 		{
-			if (tempHands.at(i) == NULL)
-			{
-				cout << "| EMPTY HAND |" << endl;
-			}
-			else
-			{
-				Item* tempItem = tempHands.at(i);
-
-				string newString = "";
-				cout << "| ";
-
-				for (int i = 0; i < tempItem->getName().length(); i++)
-				{
-					string tempString = tempItem->getName();
-					newString += toupper(tempString[i]);
-				}
-				cout << newString;
-				cout << " |" << endl;
-			}
+			cout << "| EMPTY HAND |" << endl;
 		}
-		cout << "----------------" << endl;
+		else
+		{
+			Item* tempItem = tempHands.at(i);
+
+			string newString = "";
+			cout << "| ";
+
+			for (int i = 0; i < tempItem->getName().length(); i++)
+			{
+				string tempString = tempItem->getName();
+				newString += toupper(tempString[i]);
+			}
+			cout << newString;
+			cout << " |" << endl;
+		}
+	}
+	cout << "----------------" << endl;
 
 	vector<Item*> tempinventory = player->getInventory();
 
-	cout << "-<[INVENTORY]>-" << endl;
+	cout << "[BAG ITEMS]:" << endl;
 	cout << "---------------" << endl;
 
 	if (tempinventory.size() != 0)
