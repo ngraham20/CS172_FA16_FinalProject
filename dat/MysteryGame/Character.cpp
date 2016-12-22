@@ -21,6 +21,8 @@ Coordinates Character::getLocation() { return currentLocation; }
 
 vector<Item*> Character::getInventory() { return inventory; }
 
+vector<Item*> Character::getEquipped() { return equipped; }
+
 void Character::addItemToInventory(Item * item)
 {
 	inventory.push_back(item);
@@ -108,18 +110,16 @@ bool Character::equip(Item* item)
 			return false;
 		}
 	}
-
-	cout << "You take the " << item->getName() << " in your hand." << endl;
 	return true;
 }
 
-bool Character::unequip(string name)
+bool Character::unequip(Item* item)
 {
-	if (equipped.at(0) != NULL && equipped.at(0)->getName() == name)
+	if (equipped.at(0) != NULL && equipped.at(0)->getName() == item->getName())
 	{
 		equipped.at(0) = nullptr;
 	}
-	else if (equipped.at(1) != NULL && equipped.at(1)->getName() == name)
+	else if (equipped.at(1) != NULL && equipped.at(1)->getName() == item->getName())
 	{
 		equipped.at(1) = nullptr;
 	}
@@ -128,8 +128,6 @@ bool Character::unequip(string name)
 		cout << "You do not have that item equipped." << endl;
 		return false;
 	}
-
-	cout << "You unequipped the " << name << "." << endl;
 	return true;
 }
 

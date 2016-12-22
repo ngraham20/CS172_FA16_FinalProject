@@ -315,6 +315,30 @@ bool Game::saveGame(int slotNumber)
 
 	output.close();
 
+	//------------------------------------------PLAYER_HANDS-------------------------------------------------------------
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_equipped_items.txt";
+
+	output.open(fileName.c_str());
+
+	vector<Item*> tempEquip = player->getEquipped();
+
+	for (int i = 0; i < tempEquip.size(); i++)
+	{
+		if (tempEquip.at(i) != NULL)
+		{
+			Item* tempItem = tempEquip.at(i);
+
+			output << tempItem->getName() << " " << tempItem->getType() << " " << tempItem->getLumosity() << endl;
+		}
+		else
+		{
+			output << "NULL" << endl;
+		}
+	}
+
+	output.close();
+
+
 	//------------------------------------------------------UNLOCKED_ACHIEVEMENTS---------------------------------
 	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\unlocked_achievements.txt";
 
@@ -551,6 +575,44 @@ bool Game::loadGame(int slotNumber)
 		input.close();
 	}
 
+	//------------------------------PLAYER_EQUIPPED_ITEMS-----------------------------------------------
+
+	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\player_equipped_items.txt";
+
+	input.open(fileName.c_str());
+
+	if (!input.fail())
+	{
+		constexpr int hands = 2;
+
+		for (int i = 0; i < hands; i++)
+		{
+			string first;
+			string second;
+			double third;
+
+			input >> first;
+
+			// first make sure the hand wasn't empty
+			if (first != "NULL")
+			{
+				// then get the rest of the information
+				input >> second;
+				input >> third;
+
+				Item* tempItem = Item::createItem(first, second, third);
+
+				// equip the specified item
+				player->equip(tempItem);
+			}
+			else
+			{
+				cout << "[Load]: ERROR: INVALID TEXT FILE INPUT." << endl;
+			}
+		}
+
+	}
+
 	//--------------------------------------ACHIEVEMENTS------------------------------------------------------------
 	fileName = ".\\saves\\slot " + to_string(slotNumber) + "\\unlocked_achievements.txt";
 
@@ -581,14 +643,17 @@ bool Game::unlockDoor(int doorValue)
 {
 	bool hasKey = false;
 
-	for (int i = 0; i < player->getInventory().size(); i++)
+	for (int i = 0; i < player->getEquipped().size(); i++)
 	{
-		Item* tempItem = player->getInventory().at(i);
-
-		if (tempItem->getName() == "key")
+		if (player->getEquipped().at(i) != NULL)
 		{
-			hasKey = true;
-			break;
+			Item* tempItem = player->getEquipped().at(i);
+
+			if (tempItem->getName() == "key")
+			{
+				hasKey = true;
+				break;
+			}
 		}
 	}
 
@@ -662,7 +727,7 @@ bool Game::unlockDoor(int doorValue)
 	}
 	else
 	{
-		cout << "You need a key to unlock that door." << endl;
+		cout << "You need to have a key in your hand to unlock that door." << endl;
 		return false;
 	}
 	return true;
@@ -1178,7 +1243,16 @@ string Game::getAction()
 	else if (action == "dropItem")
 	{
 		// removes the dropped item from the player's equip slots
-		player->unequip(userin.getDirectObject());
+		if (player->hasItem(userin.getDirectObject()))
+		{
+			// return that item
+			Item* tempItem = player->getInventoryItemFromName(userin.getDirectObject());
+
+			// unequip the item specified
+			player->unequip(tempItem);
+
+			cout << "You drop the " << tempItem->getName() << "." << endl;
+		}
 
 		playerToRoomItem(userin, action);
 	}
@@ -1198,6 +1272,7 @@ string Game::getAction()
 	{
 		lightItemFromAction(userin.getDirectObject());
 	}
+	// TODO add "put_out" action here
 	else if (action == "equip")
 	{
 		// if the player has the specified item
@@ -1208,12 +1283,35 @@ string Game::getAction()
 
 			// equip that item
 			player->equip(tempItem);
+
+			cout << "You take the " << tempItem->getName() << " in your hand." << endl;
 		}
 	}
 	else if (action == "unequip")
 	{
-		// unequip the item specified
-		player->unequip(userin.getDirectObject());
+		if (player->hasItem(userin.getDirectObject()))
+		{
+			// return that item
+			Item* tempItem = player->getInventoryItemFromName(userin.getDirectObject());
+
+			if (tempItem->getType() == "open_flame")
+			{
+				// unequip the item specified
+				player->unequip(tempItem);
+
+				// and, since it's an open flame, drop it too
+				playerToRoomItem(userin, action);
+
+				cout << "You drop the " << tempItem->getName() << " on the ground." << endl;
+			}
+			else
+			{
+				// unequip the item specified
+				player->unequip(tempItem);
+
+				cout << "You put the " << tempItem->getName() << " back into your bag." << endl;
+			}
+		}
 	}
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	else
@@ -1308,28 +1406,31 @@ bool Game::lightItemFromAction(string directObject)
 	Item* openFlameItem;
 
 	// see if open_flame item is in player inventory
-	for (int i = 0; i < player->getInventory().size(); i++)
+	for (int i = 0; i < player->getEquipped().size(); i++)
 	{
-		// creates a pointer to the same item as in the inventory
-		tempItem = player->getInventory().at(i);
+		if (player->getEquipped().at(i) != NULL)
+		{
+			// creates a pointer to the same item as in the inventory
+			tempItem = player->getEquipped().at(i);
 
-		if (tempItem->getType() == "open_flame")
-		{
-			// creates a pointer to the same item as temp (as in the inventory)
-			openFlameItem = tempItem;
-			playerHasFlame = true;
-		}
-		if (tempItem->getName() == directObject)
-		{
-			if (tempItem->getType() == "unlit")
+			if (tempItem->getType() == "open_flame")
 			{
 				// creates a pointer to the same item as temp (as in the inventory)
-				unlitItem = tempItem;
-				playerHasUnlit = true;
+				openFlameItem = tempItem;
+				playerHasFlame = true;
 			}
-			else
+			if (tempItem->getName() == directObject)
 			{
-				cout << "You cannot light that item on fire." << endl;
+				if (tempItem->getType() == "unlit")
+				{
+					// creates a pointer to the same item as temp (as in the inventory)
+					unlitItem = tempItem;
+					playerHasUnlit = true;
+				}
+				else
+				{
+					cout << "You cannot light that item on fire." << endl;
+				}
 			}
 		}
 	}
@@ -1350,8 +1451,13 @@ bool Game::lightItemFromAction(string directObject)
 				{
 					// change that inventory item to the new one we created above
 					// points the playerInventory item to the new item
-					player->addItemToInventory(newItem);
+					player->unequip(unlitItem);
 					player->removeItemFromInventory(directObject);
+
+					player->addItemToInventory(newItem);
+
+					// since it's now an open flame, equip it
+					player->equip(newItem);
 
 					cout << "You lit the " << directObject << " with the " << openFlameItem->getName() << "." << endl;
 				}
@@ -1359,11 +1465,12 @@ bool Game::lightItemFromAction(string directObject)
 		}
 		else if (!playerHasUnlit)
 		{
+			cout << "You do not have anything to light in your hand." << endl;
 		}
 	}
 	else if (!playerHasFlame)
 	{
-		cout << "You do not have any open flames in your inventory." << endl;
+		cout << "You do not have an open flame in your hand." << endl;
 		return false;
 	}
 	return true;
@@ -1374,9 +1481,22 @@ void Game::roomToPlayerItem(Input userin, string action)
 	Item* tempItem = currentRoom->removeItemFromInventory(userin.getDirectObject());
 	if (tempItem != NULL)
 	{
-		player->addItemToInventory(tempItem);
-		currentRoom->updateTemp();
-		cout << "You put the " << tempItem->getName() << " in your bag." << endl;
+		// if the item is an open flame, place it directly in your hand
+		if (tempItem->getType() == "open_flame")
+		{
+			player->addItemToInventory(tempItem);
+			currentRoom->updateTemp();
+			player->equip(tempItem);
+
+			cout << "You take the " << tempItem->getName() << " in your hand." << endl;
+		}
+		// otherwise allow it to be in the bag
+		else
+		{
+			player->addItemToInventory(tempItem);
+			currentRoom->updateTemp();
+			cout << "You put the " << tempItem->getName() << " in your bag." << endl;
+		}
 	}
 	else
 	{
@@ -1391,7 +1511,6 @@ void Game::playerToRoomItem(Input userin, string action)
 	{
 		currentRoom->addItemToInventory(tempItem);
 		currentRoom->updateTemp();
-		cout << "You drop the " << tempItem->getName() << "." << endl;
 
 
 		if (tempItem->getName() == "base")

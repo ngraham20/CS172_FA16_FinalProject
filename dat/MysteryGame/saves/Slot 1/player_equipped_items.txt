@@ -1,0 +1,2 @@
+candle open_flame 1
+NULL

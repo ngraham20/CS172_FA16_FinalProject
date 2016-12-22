@@ -18,6 +18,7 @@ public:
 
 	Coordinates getLocation();
 	vector<Item*> getInventory();
+	vector<Item*> getEquipped();
 	void addItemToInventory(Item* item);
 	Item* removeItemFromInventory(string itemName);
 	void setLocation(Coordinates roomLocation);
@@ -31,7 +32,7 @@ public:
 	bool equip(Item* item);
 
 	// moves the item back into player inventory, and sets the equipped vector location to NULL
-	bool unequip(string name);
+	bool unequip(Item* item);
 
 private:
 	Coordinates currentLocation;
