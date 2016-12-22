@@ -923,8 +923,6 @@ bool Game::changeRoom(int relativeY, int relativeX, int relativeZ)
 	// checks which direciton the player wants to move
 	Coordinates coordinates = currentRoom->getLocation();
 
-	// TODO delete any unneeded rooms (for pre-loading)
-
 	constexpr int maxLoadedRooms = 7;
 
 	for (int i = 0; i < maxLoadedRooms; i++)
