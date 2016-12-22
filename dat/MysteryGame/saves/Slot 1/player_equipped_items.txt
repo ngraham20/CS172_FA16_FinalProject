@@ -1,2 +1,2 @@
-candle open_flame 1
-stick unlit 0
+key tool 0
+flaming_stick open_flame 1

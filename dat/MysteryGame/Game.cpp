@@ -1561,20 +1561,31 @@ void Game::printPlayerInventory()
 
 	if (tempinventory.size() != 0)
 	{
+		int inventoryCount = 0;
+
 		for (int i = 0; i < tempinventory.size(); i++)
 		{
 			Item* tempItem = tempinventory.at(i);
 
-			string newString = "";
-			cout << "| ";
-
-			for (int i = 0; i < tempItem->getName().length(); i++)
+			if (player->getEquipped().at(0) != tempItem && player->getEquipped().at(1) != tempItem)
 			{
-				string tempString = tempItem->getName();
-				newString += toupper(tempString[i]);
+				inventoryCount++;
+
+				string newString = "";
+				cout << "| ";
+
+				for (int i = 0; i < tempItem->getName().length(); i++)
+				{
+					string tempString = tempItem->getName();
+					newString += toupper(tempString[i]);
+				}
+				cout << newString;
+				cout << " |" << endl;
 			}
-			cout << newString;
-			cout << " |" << endl;
+		}
+		if (inventoryCount == 0)
+		{
+			cout << "| EMPTY |" << endl;
 		}
 	}
 	else
