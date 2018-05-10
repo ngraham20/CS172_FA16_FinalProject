@@ -1,0 +1,2 @@
+stick unlit 0.0
+key tool 0.0

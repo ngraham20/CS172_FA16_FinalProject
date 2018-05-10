@@ -1,0 +1,5 @@
+Each of these folders is an ORIGIN folder. This means that at the begining of the game,
+the program will read from these to write to the room properties.
+
+The temp folder holds all temporary files to be used while in game. The files whithin
+this folder and within all sub-folders will be deleted upon game end.

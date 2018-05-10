@@ -1,0 +1,2 @@
+You are standing in a simple, square room with doors leading north, south,
+east, and west. Guarding each door are two suits of armor.
